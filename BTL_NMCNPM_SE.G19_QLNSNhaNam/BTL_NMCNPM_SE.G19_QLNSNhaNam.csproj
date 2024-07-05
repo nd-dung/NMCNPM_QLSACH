@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\cBanhangController.cs" />
+    <Compile Include="Controllers\cDangnhapController.cs" />
     <Compile Include="Controllers\cNhanvienController.cs" />
     <Compile Include="Controllers\cPhieunhapController.cs" />
     <Compile Include="Global.asax.cs">
@@ -185,6 +186,7 @@
     <Content Include="Views\cNhanvien\vNhanvien.cshtml" />
     <Content Include="Views\cPhieunhap\vPhieunhap.cshtml" />
     <Content Include="Views\cSach\vSach.cshtml" />
+    <Content Include="Views\cDangnhap\vDangnhap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
