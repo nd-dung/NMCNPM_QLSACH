@@ -16,7 +16,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "cBanhang", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
