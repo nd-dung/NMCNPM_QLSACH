@@ -3,6 +3,9 @@
     -- --06/07/2024 Update proc
     -- Message khi commit sẽ là: Update database
 -- Tạo bảng tblNhanVien
+CREATE DATABASE dbQuanlyBanHangNhaSachNhaNam
+GO
+
 CREATE TABLE tblNhanVien (
     sMaNV NCHAR(10) PRIMARY KEY,
     sTenNV NVARCHAR(100),
