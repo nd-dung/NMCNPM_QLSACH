@@ -19,7 +19,7 @@ CREATE TABLE tblNhanVien (
     bTrangthai BIT,
     sCCCD NVARCHAR(20)
 );
-drop table vwNhanVienWithPassword
+
 -- Tạo bảng tblTaiKhoan
 CREATE TABLE tblTaiKhoan (
     sMaNV NCHAR(10) PRIMARY KEY,
@@ -269,8 +269,10 @@ BEGIN
     INNER JOIN tblTaiKhoan TK ON NV.sMaNV = TK.sMaNV;
 END;
 
-CREATE VIEW vwNhanVienWithPassword
+CREATE VIEW viewNVPW
 AS
-SELECT nv.*, tk.sMatKhau
-FROM vwNhanVienWithPassword nv
-JOIN tblTaiKhoan tk ON nv.sMaNV = tk.sMaNV;
+SELECT nv.*,
+       COALESCE(tk.sMatkhau, '') AS sMatkhau
+FROM tblNhanVien nv
+LEFT JOIN tblTaiKhoan tk ON nv.sMaNV = tk.sMaNV;
+select * from viewnvpw

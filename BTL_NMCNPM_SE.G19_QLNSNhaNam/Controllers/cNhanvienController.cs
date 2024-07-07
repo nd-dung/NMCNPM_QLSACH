@@ -13,28 +13,29 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         // GET: cNhanvien
         public ActionResult Index()
         {
-            
+
             databaseEntities2 db = new databaseEntities2();
+            
             List<viewNVPW> listNV = db.viewNVPWs.ToList();
-            return View("~/Views/cNhanvien/vNhanvien.cshtml",listNV);
+            return View("~/Views/cNhanvien/vNhanvien.cshtml", listNV);
         }
         [HttpPost]
         public ActionResult Create(viewNVPW nv)
         {
-            nv.bVaitro = false;
+           
             databaseEntities2 db = new databaseEntities2();
-            tblNhanVien nv2= new tblNhanVien();
+            tblNhanVien nv2 = new tblNhanVien();
             nv2.sMaNV = nv.sMaNV;
             nv2.sTenNV = nv.sTenNV;
-            nv2.sDiachi=nv.sDiachi;
+            nv2.sDiachi = nv.sDiachi;
             nv2.sCCCD = nv.sCCCD;
             nv2.bGioitinh = nv.bGioitinh;
             nv2.bTrangthai = nv.bTrangthai;
             nv2.bVaitro = false;
-            nv2.dNgaysinh=nv.dNgaysinh;
-            nv2.dNgayvaolam=nv.dNgayvaolam;
+            nv2.dNgaysinh = nv.dNgaysinh;
+            nv2.dNgayvaolam = nv.dNgayvaolam;
             nv2.fLuong = nv.fLuong;
-            nv2.sSĐT = nv2.sSĐT;
+            nv2.sSĐT = nv.sSĐT;
             db.tblNhanViens.Add(nv2);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -45,7 +46,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         {
             databaseEntities2 db = new databaseEntities2();
             tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == id).FirstOrDefault();
-            nvien.bTrangthai=false;
+            nvien.bTrangthai = false;
 
             db.SaveChanges();
 
@@ -74,14 +75,14 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
                 tk.sMatkhau = nv.sMatkhau;
                 db.SaveChanges();
             }
-            catch  { };
+            catch { };
             return RedirectToAction("Index");
         }
 
         public ActionResult Search(string searchtext)
         {
-        
-                databaseEntities2 db = new databaseEntities2();
+
+            databaseEntities2 db = new databaseEntities2();
             List<viewNVPW> viewNVPWList = db.viewNVPWs.Where(
     v => v.sMaNV.ToLower().Contains(searchtext.ToLower()) ||
          v.sDiachi.ToLower().Contains(searchtext.ToLower()) ||
@@ -89,15 +90,15 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
          (v.bTrangthai ?? false ? "Làm" : "Nghỉ").ToLower().Contains(searchtext.ToLower()) ||
 (v.bGioitinh ?? false ? "Nam" : "Nữ").ToLower().Contains(searchtext.ToLower()) ||
            v.dNgayvaolam.ToString().ToLower().Contains(searchtext.ToLower()) ||
-         v.sSĐT.ToLower().Contains(searchtext.ToLower())     ||
+         v.sSĐT.ToLower().Contains(searchtext.ToLower()) ||
          v.fLuong.ToString().ToLower().Contains(searchtext.ToLower()) ||
          (v.bVaitro ?? false ? "QL" : "searchtext").ToLower().Contains(searchtext.ToLower()) ||
          v.bTrangthai.ToString().ToLower().Contains(searchtext.ToLower()) ||
-         v.sCCCD.ToLower().Contains(searchtext.ToLower()) 
+         v.sCCCD.ToLower().Contains(searchtext.ToLower())
 ).ToList();
 
-         return  View("~/Views/cNhanvien/vNhanvien.cshtml", viewNVPWList);
+            return View("~/Views/cNhanvien/vNhanvien.cshtml", viewNVPWList);
         }
-      
+
     }
 }

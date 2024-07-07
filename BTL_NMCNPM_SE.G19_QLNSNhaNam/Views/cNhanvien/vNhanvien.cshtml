@@ -121,7 +121,7 @@
 
 
 
-    <!-- Modal Form --> 
+    <!-- Modal Form -->
     <div id="employeeModalU" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -131,7 +131,7 @@
                 <p id="pMaNVU"></p>
                 <input type="hidden" id="sMaNVU" name="sMaNV" value="">
                 <p>Tên nhân viên:</p>
-                <input type="text" id="sTenNVU" name="sTenNV" placeholder="Tên NV" >
+                <input type="text" id="sTenNVU" name="sTenNV" placeholder="Tên NV">
                 <p>Ngày sinh:</p>
                 <input type="date" id="dNgaysinhU" name="dNgaysinh" placeholder="Ngày sinh" required>
                 <p>Giới tính:</p>
@@ -162,7 +162,7 @@
                 <input type="text" id="sMatkhauU" name="sMatkhau" placeholder="Mật khẩu" required>
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-primary ">Cập nhật</button>
-                    <button type="reset"  class="btn btn-secondary close-btn">Hủy</button>
+                    <button type="reset" class="btn btn-secondary close-btn">Hủy</button>
                 </div>
             </form>
         </div>
@@ -249,7 +249,7 @@ var employees = @Html.Raw(Json.Encode(Model));
                 $('#employeeModal').css('display', 'block');
             });
 
-         
+
             // Close modal when clicking the close button
             $('.close, .close-btn').click(function () {
                 $('#employeeModal').css('display', 'none');
