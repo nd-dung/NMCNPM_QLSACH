@@ -72,8 +72,11 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
                 nvien.dNgayvaolam = nv.dNgayvaolam;
 
                 tblTaiKhoan tk = db.tblTaiKhoans.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
-                tk.sMatkhau = nv.sMatkhau;
-                db.SaveChanges();
+                if (tk != null)
+                {
+                    tk.sMatkhau = nv.sMatkhau;
+                }
+                    db.SaveChanges();
             }
             catch { };
             return RedirectToAction("Index");
