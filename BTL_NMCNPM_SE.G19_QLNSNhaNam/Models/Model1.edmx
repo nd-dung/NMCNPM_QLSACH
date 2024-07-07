@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="databaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblNhanVien">
+          <Key>
+            <PropertyRef Name="sMaNV" />
+          </Key>
+          <Property Name="sMaNV" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="sTenNV" Type="nvarchar" MaxLength="100" />
+          <Property Name="dNgaysinh" Type="date" />
+          <Property Name="bGioitinh" Type="bit" />
+          <Property Name="sDiachi" Type="nvarchar" MaxLength="100" />
+          <Property Name="dNgayvaolam" Type="date" />
+          <Property Name="sSĐT" Type="nvarchar" MaxLength="10" />
+          <Property Name="fLuong" Type="float" />
+          <Property Name="bVaitro" Type="bit" />
+          <Property Name="bTrangthai" Type="bit" />
+          <Property Name="sCCCD" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblTaiKhoan">
+          <Key>
+            <PropertyRef Name="sMaNV" />
+          </Key>
+          <Property Name="sMaNV" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="sMatkhau" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\DANGCAPVUTRU\SOURCE\REPOS\NMCNPM_QLSACH\BTL_NMCNPM_SE.G19_QLNSNHANAM\APP_DATA\DATABASE.MDF.dbo.viewNVPW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="viewNVPW">
+          <Key>
+            <PropertyRef Name="sMaNV" />
+            <PropertyRef Name="sMatkhau" />
+          </Key>
+          <Property Name="sMaNV" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="sTenNV" Type="nvarchar" MaxLength="100" />
+          <Property Name="dNgaysinh" Type="date" />
+          <Property Name="bGioitinh" Type="bit" />
+          <Property Name="sDiachi" Type="nvarchar" MaxLength="100" />
+          <Property Name="dNgayvaolam" Type="date" />
+          <Property Name="sSĐT" Type="nvarchar" MaxLength="10" />
+          <Property Name="fLuong" Type="float" />
+          <Property Name="bVaitro" Type="bit" />
+          <Property Name="bTrangthai" Type="bit" />
+          <Property Name="sCCCD" Type="nvarchar" MaxLength="20" />
+          <Property Name="sMatkhau" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblTaiKhoan_tblNhanVien">
+          <End Role="tblNhanVien" Type="Self.tblNhanVien" Multiplicity="1" />
+          <End Role="tblTaiKhoan" Type="Self.tblTaiKhoan" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblNhanVien">
+              <PropertyRef Name="sMaNV" />
+            </Principal>
+            <Dependent Role="tblTaiKhoan">
+              <PropertyRef Name="sMaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="databaseModelStoreContainer">
+          <EntitySet Name="tblNhanVien" EntityType="Self.tblNhanVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTaiKhoan" EntityType="Self.tblTaiKhoan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="viewNVPW" EntityType="Self.viewNVPW" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [viewNVPW].[sMaNV] AS [sMaNV], 
+    [viewNVPW].[sTenNV] AS [sTenNV], 
+    [viewNVPW].[dNgaysinh] AS [dNgaysinh], 
+    [viewNVPW].[bGioitinh] AS [bGioitinh], 
+    [viewNVPW].[sDiachi] AS [sDiachi], 
+    [viewNVPW].[dNgayvaolam] AS [dNgayvaolam], 
+    [viewNVPW].[sSĐT] AS [sSĐT], 
+    [viewNVPW].[fLuong] AS [fLuong], 
+    [viewNVPW].[bVaitro] AS [bVaitro], 
+    [viewNVPW].[bTrangthai] AS [bTrangthai], 
+    [viewNVPW].[sCCCD] AS [sCCCD], 
+    [viewNVPW].[sMatkhau] AS [sMatkhau]
+    FROM [dbo].[viewNVPW] AS [viewNVPW]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tblTaiKhoan_tblNhanVien" Association="Self.FK_tblTaiKhoan_tblNhanVien">
+            <End Role="tblNhanVien" EntitySet="tblNhanVien" />
+            <End Role="tblTaiKhoan" EntitySet="tblTaiKhoan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="databaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="databaseEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblNhanViens" EntityType="databaseModel.tblNhanVien" />
+          <EntitySet Name="tblTaiKhoans" EntityType="databaseModel.tblTaiKhoan" />
+          <AssociationSet Name="FK_tblTaiKhoan_tblNhanVien" Association="databaseModel.FK_tblTaiKhoan_tblNhanVien">
+            <End Role="tblNhanVien" EntitySet="tblNhanViens" />
+            <End Role="tblTaiKhoan" EntitySet="tblTaiKhoans" />
+          </AssociationSet>
+          <EntitySet Name="viewNVPWs" EntityType="databaseModel.viewNVPW" />
+        </EntityContainer>
+        <EntityType Name="tblNhanVien">
+          <Key>
+            <PropertyRef Name="sMaNV" />
+          </Key>
+          <Property Name="sMaNV" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="sTenNV" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dNgaysinh" Type="DateTime" Precision="0" />
+          <Property Name="bGioitinh" Type="Boolean" />
+          <Property Name="sDiachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dNgayvaolam" Type="DateTime" Precision="0" />
+          <Property Name="sSĐT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="fLuong" Type="Double" />
+          <Property Name="bVaitro" Type="Boolean" />
+          <Property Name="bTrangthai" Type="Boolean" />
+          <Property Name="sCCCD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblTaiKhoan" Relationship="databaseModel.FK_tblTaiKhoan_tblNhanVien" FromRole="tblNhanVien" ToRole="tblTaiKhoan" />
+        </EntityType>
+        <EntityType Name="tblTaiKhoan">
+          <Key>
+            <PropertyRef Name="sMaNV" />
+          </Key>
+          <Property Name="sMaNV" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="sMatkhau" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="tblNhanVien" Relationship="databaseModel.FK_tblTaiKhoan_tblNhanVien" FromRole="tblTaiKhoan" ToRole="tblNhanVien" />
+        </EntityType>
+        <Association Name="FK_tblTaiKhoan_tblNhanVien">
+          <End Type="databaseModel.tblNhanVien" Role="tblNhanVien" Multiplicity="1" />
+          <End Type="databaseModel.tblTaiKhoan" Role="tblTaiKhoan" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblNhanVien">
+              <PropertyRef Name="sMaNV" />
+            </Principal>
+            <Dependent Role="tblTaiKhoan">
+              <PropertyRef Name="sMaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="viewNVPW">
+          <Key>
+            <PropertyRef Name="sMaNV" />
+            <PropertyRef Name="sMatkhau" />
+          </Key>
+          <Property Name="sMaNV" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="sTenNV" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dNgaysinh" Type="DateTime" Precision="0" />
+          <Property Name="bGioitinh" Type="Boolean" />
+          <Property Name="sDiachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dNgayvaolam" Type="DateTime" Precision="0" />
+          <Property Name="sSĐT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="fLuong" Type="Double" />
+          <Property Name="bVaitro" Type="Boolean" />
+          <Property Name="bTrangthai" Type="Boolean" />
+          <Property Name="sCCCD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="sMatkhau" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="databaseModelStoreContainer" CdmEntityContainer="databaseEntities2">
+          <EntitySetMapping Name="tblNhanViens">
+            <EntityTypeMapping TypeName="databaseModel.tblNhanVien">
+              <MappingFragment StoreEntitySet="tblNhanVien">
+                <ScalarProperty Name="sCCCD" ColumnName="sCCCD" />
+                <ScalarProperty Name="bTrangthai" ColumnName="bTrangthai" />
+                <ScalarProperty Name="bVaitro" ColumnName="bVaitro" />
+                <ScalarProperty Name="fLuong" ColumnName="fLuong" />
+                <ScalarProperty Name="sSĐT" ColumnName="sSĐT" />
+                <ScalarProperty Name="dNgayvaolam" ColumnName="dNgayvaolam" />
+                <ScalarProperty Name="sDiachi" ColumnName="sDiachi" />
+                <ScalarProperty Name="bGioitinh" ColumnName="bGioitinh" />
+                <ScalarProperty Name="dNgaysinh" ColumnName="dNgaysinh" />
+                <ScalarProperty Name="sTenNV" ColumnName="sTenNV" />
+                <ScalarProperty Name="sMaNV" ColumnName="sMaNV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTaiKhoans">
+            <EntityTypeMapping TypeName="databaseModel.tblTaiKhoan">
+              <MappingFragment StoreEntitySet="tblTaiKhoan">
+                <ScalarProperty Name="sMatkhau" ColumnName="sMatkhau" />
+                <ScalarProperty Name="sMaNV" ColumnName="sMaNV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="viewNVPWs">
+            <EntityTypeMapping TypeName="databaseModel.viewNVPW">
+              <MappingFragment StoreEntitySet="viewNVPW">
+                <ScalarProperty Name="sMatkhau" ColumnName="sMatkhau" />
+                <ScalarProperty Name="sCCCD" ColumnName="sCCCD" />
+                <ScalarProperty Name="bTrangthai" ColumnName="bTrangthai" />
+                <ScalarProperty Name="bVaitro" ColumnName="bVaitro" />
+                <ScalarProperty Name="fLuong" ColumnName="fLuong" />
+                <ScalarProperty Name="sSĐT" ColumnName="sSĐT" />
+                <ScalarProperty Name="dNgayvaolam" ColumnName="dNgayvaolam" />
+                <ScalarProperty Name="sDiachi" ColumnName="sDiachi" />
+                <ScalarProperty Name="bGioitinh" ColumnName="bGioitinh" />
+                <ScalarProperty Name="dNgaysinh" ColumnName="dNgaysinh" />
+                <ScalarProperty Name="sTenNV" ColumnName="sTenNV" />
+                <ScalarProperty Name="sMaNV" ColumnName="sMaNV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
