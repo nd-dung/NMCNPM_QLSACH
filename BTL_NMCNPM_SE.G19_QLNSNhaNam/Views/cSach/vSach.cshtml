@@ -4,5 +4,121 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>vSach</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Your Page Title</title>
+    <link href="~/Front-end/css/book.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý Sách</h1>
+        <div class="book-actions">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Nhập tên sách để tìm kiếm...">
+                <button id="searchBtn" class="btn btn-secondary">Tìm kiếm</button>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: end; margin: 16px 0;   ">
+            <button id="addBookBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm Sách Mới</button>
+        </div>
+
+
+        <table class="book-table">
+            <thead>
+                <tr>
+                    <th>Mã Sách</th>
+                    <th>Tên Sách</th>
+                    <th>Tác Giả</th>
+                    <th>Đơn Giá</th>
+                    <th>Số Lượng</th>
+                    <th>NXB</th>
+                    <th>Thể Loại</th>
+                    <th>Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>S001</td>
+                    <td>Đắc Nhân Tâm</td>
+                    <td>Dale Carnegie</td>
+                    <td>500,000 đ</td>
+                    <td>50</td>
+                    <td>NXB Tổnng hợp TP.HCM</td>
+                    <td>Kỹ năng sống</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-secondary">Sửa</button>
+                        <button class="btn btn-secondary">Xóa</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>S002</td>
+                    <td>Nhà Giả Kim</td>
+                    <td>Paulo Coelho</td>
+                    <td>80,000 đ</td>
+                    <td>30</td>
+                    <td>NXB Văn Học</td>
+                    <td>Tiểu thuyết</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-secondary">Sửa</button>
+                        <button class="btn btn-secondary">Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button class="btn btn-secondary" id="prevPage">Trước</button>
+            <span id="currentPage">Trang 1</span>
+            <button class="btn btn-secondary" id="nextPage">Sau</button>
+        </div>
+    </div>
+
+    <!-- Modal thêm/sửa sách -->
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Thêm Sách Mới</h2>
+            <form id="bookForm">
+                <input type="text" id="masach" placeholder="Mã Sách" required>
+                <input type="text" id="tensach" placeholder="Tên Sách" required>
+                <input type="text" id="tacgia" placeholder="Tác Giả" required>
+                <input type="number" id="dongia" placeholder="Đơn Giá" required>
+                <input type="number" id="soluong" placeholder="Số Lượng" required>
+                <input type="text" id="nxb" placeholder="Nhà Xuất Bản" required>
+                <input type="text" id="theloai" placeholder="Thể Loại" required>
+                <button type="submit" class="btn btn-primary">Lưu</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Open modal when clicking "Thêm Nhân Viên"
+            $('#addBookBtn').click(function () {
+                $('#bookModal').css('display', 'block');
+            });
+
+
+            // Close modal when clicking the close button
+            $('.close, .close-btn').click(function () {
+                $('#bookModal').css('display', 'none');
+            });
+
+            // Close modal when clicking outside of the modal
+            $(window).click(function (event) {
+                if (event.target.id === 'bookModal') {
+                    $('#bookModal').css('display', 'none');
+                }
+            });
+
+
+        });
+
+    </script>
+</body>
+</html>
+
 
