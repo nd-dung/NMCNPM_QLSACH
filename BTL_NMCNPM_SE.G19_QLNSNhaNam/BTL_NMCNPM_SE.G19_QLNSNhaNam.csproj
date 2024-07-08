@@ -164,6 +164,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\BSACH.mdf" />
+    <Content Include="App_Data\BSACH_log.ldf">
+      <DependentUpon>BSACH.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\database.mdf" />
     <Content Include="App_Data\database_log.ldf">
       <DependentUpon>database.mdf</DependentUpon>
@@ -186,6 +190,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Front-end\css\style_employeesManagement.css" />
+    <Content Include="Front-end\css\style_login.css" />
     <Content Include="Front-end\css\style_navbar.css" />
     <Content Include="Front-end\js\js_navbar.js" />
     <Content Include="Global.asax" />
@@ -240,7 +245,7 @@
     <Content Include="Views\cNhanvien\vNhanvien.cshtml" />
     <Content Include="Views\cPhieunhap\vPhieunhap.cshtml" />
     <Content Include="Views\cSach\vSach.cshtml" />
-    <Content Include="Views\cDangnhap\vDangnhap.cshtml" />
+    <Content Include="Views\cDangnhap\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

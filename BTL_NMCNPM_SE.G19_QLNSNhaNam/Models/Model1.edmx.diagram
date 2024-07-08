@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c209dcdd5db34ff8a74f34b36823307a" Name="Diagram1">
-        <EntityTypeShape EntityType="databaseModel.tblNhanVien" Width="1.5" PointX="3.375" PointY="1" />
-        <EntityTypeShape EntityType="databaseModel.tblTaiKhoan" Width="1.5" PointX="5.625" PointY="1.875" />
-        <AssociationConnector Association="databaseModel.FK_tblTaiKhoan_tblNhanVien" />
-        <EntityTypeShape EntityType="databaseModel.viewNVPW" Width="1.5" PointX="0.75" PointY="0.75" />
+      <Diagram DiagramId="10c9f92b84de4922b9dc88a265eec58b" Name="Diagram1">
+        <EntityTypeShape EntityType="BSACHModel.tblNhanVien" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BSACHModel.tblTaiKhoan" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BSACHModel.viewNVPW" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="BSACHModel.FK_tblTaiKhoan_tblNhanVien" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

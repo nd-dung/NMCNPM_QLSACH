@@ -14,7 +14,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult Index()
         {
 
-            databaseEntities2 db = new databaseEntities2();
+            BSACHEntities db = new BSACHEntities();
             
             List<viewNVPW> listNV = db.viewNVPWs.ToList();
             return View("~/Views/cNhanvien/vNhanvien.cshtml", listNV);
@@ -23,7 +23,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult Create(viewNVPW nv)
         {
            
-            databaseEntities2 db = new databaseEntities2();
+            BSACHEntities db = new BSACHEntities();
             tblNhanVien nv2 = new tblNhanVien();
             nv2.sMaNV = nv.sMaNV;
             nv2.sTenNV = nv.sTenNV;
@@ -44,7 +44,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         [HttpPost]
         public ActionResult Delete(string id)
         {
-            databaseEntities2 db = new databaseEntities2();
+            BSACHEntities db = new BSACHEntities();
             tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == id).FirstOrDefault();
             nvien.bTrangthai = false;
 
@@ -57,7 +57,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         {
             try
             {
-                databaseEntities2 db = new databaseEntities2();
+                BSACHEntities db = new BSACHEntities();
                 tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
 
                 nvien.sTenNV = nv.sTenNV;
@@ -72,7 +72,8 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
                 nvien.dNgayvaolam = nv.dNgayvaolam;
 
                 tblTaiKhoan tk = db.tblTaiKhoans.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
-                tk.sMatkhau = nv.sMatkhau;
+                if (tk != null)
+                { tk.sMatkhau = nv.sMatkhau; }
                 db.SaveChanges();
             }
             catch { };
@@ -82,7 +83,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult Search(string searchtext)
         {
 
-            databaseEntities2 db = new databaseEntities2();
+            BSACHEntities db = new BSACHEntities();
             List<viewNVPW> viewNVPWList = db.viewNVPWs.Where(
     v => v.sMaNV.ToLower().Contains(searchtext.ToLower()) ||
          v.sDiachi.ToLower().Contains(searchtext.ToLower()) ||
