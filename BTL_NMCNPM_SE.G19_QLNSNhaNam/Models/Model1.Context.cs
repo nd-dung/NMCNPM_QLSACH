@@ -13,10 +13,10 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class databaseEntities2 : DbContext
+    public partial class DB : DbContext
     {
-        public databaseEntities2()
-            : base("name=databaseEntities2")
+        public DB()
+            : base("name=DB")
         {
         }
     
