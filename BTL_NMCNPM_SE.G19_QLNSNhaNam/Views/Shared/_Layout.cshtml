@@ -9,9 +9,9 @@
 <body>
     <nav class="navbar">
         <div class="navbar-container">
-            <p class = "navbar-brand">Nhã Nam</p>
+            <p class="navbar-brand">Nhã Nam</p>
             <ul class="navbar-menu">
-                <li>@Html.ActionLink("Bán hàng", "Index", "cBanhang")</li>
+                <li>@Html.ActionLink("Bán hàng", "vBanhang", "cBanhang")</li>
                 <li class="dropdown">
                     <a>Quản lý</a>
                     <ul class="dropdown-menu">
@@ -23,8 +23,8 @@
                 </li>
             </ul>
             <div class="navbar-right">
-                <p class="navbar-user">@User.Identity.Name</p>
-                @Html.ActionLink("Đăng xuất", "Logout", "Account", null, new { @class = "navbar-user" })
+                <p class="navbar-user">@HttpContext.Current.Session["User"]</p>
+                @Html.ActionLink("Đăng xuất", "Logout", "cDangnhap", null, new { @class = "navbar-user" })
             </div>
             <div class="hamburger">
                 <span></span>
@@ -43,7 +43,7 @@
                             <li>@Html.ActionLink("Quản lý doanh thu", "Index", "RevenueManagement")</li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("Đăng xuất", "Logout", "Account")</li>
+                    <li>@Html.ActionLink("Đăng xuất", "Logout", "cDangnhap")</li>
                 </ul>
             </div>
         </div>

@@ -43,8 +43,8 @@
           <Property Name="sMaNV" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="sTenNV" Type="nvarchar" MaxLength="100" />
           <Property Name="dNgaysinh" Type="date" />
-          <Property Name="bGioiTinh" Type="bit" />
-          <Property Name="sDiaChi" Type="nvarchar" MaxLength="100" />
+          <Property Name="bGioitinh" Type="bit" />
+          <Property Name="sDiachi" Type="nvarchar" MaxLength="100" />
           <Property Name="dNgayvaolam" Type="date" />
           <Property Name="sSĐT" Type="nvarchar" MaxLength="10" />
           <Property Name="fLuong" Type="float" />
@@ -79,7 +79,7 @@
             <PropertyRef Name="sMaNV" />
           </Key>
           <Property Name="sMaNV" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="sMatKhau" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="sMatkhau" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.View_XemChiTietNhap' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -158,8 +158,8 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.viewNVPW' does no
           <Property Name="sMaNV" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="sTenNV" Type="nvarchar" MaxLength="100" />
           <Property Name="dNgaysinh" Type="date" />
-          <Property Name="bGioiTinh" Type="bit" />
-          <Property Name="sDiaChi" Type="nvarchar" MaxLength="100" />
+          <Property Name="bGioitinh" Type="bit" />
+          <Property Name="sDiachi" Type="nvarchar" MaxLength="100" />
           <Property Name="dNgayvaolam" Type="date" />
           <Property Name="sSĐT" Type="nvarchar" MaxLength="10" />
           <Property Name="fLuong" Type="float" />
@@ -290,6 +290,7 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
           <EntitySet Name="tblChiTietHD" EntityType="Self.tblChiTietHD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblChiTietNhap" EntityType="Self.tblChiTietNhap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblHoaDon" EntityType="Self.tblHoaDon" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="BSACHModelStoreContainer">
           <EntitySet Name="tblNhanVien" EntityType="Self.tblNhanVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblNhap" EntityType="Self.tblNhap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSach" EntityType="Self.tblSach" Schema="dbo" store:Type="Tables" />
@@ -351,8 +352,8 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
     [viewNVPW].[sMaNV] AS [sMaNV], 
     [viewNVPW].[sTenNV] AS [sTenNV], 
     [viewNVPW].[dNgaysinh] AS [dNgaysinh], 
-    [viewNVPW].[bGioiTinh] AS [bGioiTinh], 
-    [viewNVPW].[sDiaChi] AS [sDiaChi], 
+    [viewNVPW].[bGioitinh] AS [bGioitinh], 
+    [viewNVPW].[sDiachi] AS [sDiachi], 
     [viewNVPW].[dNgayvaolam] AS [dNgayvaolam], 
     [viewNVPW].[sSĐT] AS [sSĐT], 
     [viewNVPW].[fLuong] AS [fLuong], 
@@ -466,8 +467,8 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
           <Property Name="sMaNV" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="sTenNV" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="dNgaysinh" Type="DateTime" Precision="0" />
-          <Property Name="bGioiTinh" Type="Boolean" />
-          <Property Name="sDiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="bGioitinh" Type="Boolean" />
+          <Property Name="sDiachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="dNgayvaolam" Type="DateTime" Precision="0" />
           <Property Name="sSĐT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="fLuong" Type="Double" />
@@ -509,7 +510,7 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
             <PropertyRef Name="sMaNV" />
           </Key>
           <Property Name="sMaNV" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="sMatKhau" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="sMatkhau" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="tblNhanVien" Relationship="Self.FK_tblTaiKhoan_tblNhanVien" FromRole="tblTaiKhoan" ToRole="tblNhanVien" />
         </EntityType>
         <EntityType Name="View_XemChiTietNhap">
@@ -577,8 +578,8 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
           <Property Name="sMaNV" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="sTenNV" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="dNgaysinh" Type="DateTime" Precision="0" />
-          <Property Name="bGioiTinh" Type="Boolean" />
-          <Property Name="sDiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="bGioitinh" Type="Boolean" />
+          <Property Name="sDiachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="dNgayvaolam" Type="DateTime" Precision="0" />
           <Property Name="sSĐT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="fLuong" Type="Double" />
@@ -903,6 +904,8 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
                 <ScalarProperty Name="dNgaysinh" ColumnName="dNgaysinh" />
                 <ScalarProperty Name="bGioiTinh" ColumnName="bGioiTinh" />
                 <ScalarProperty Name="sDiaChi" ColumnName="sDiaChi" />
+                <ScalarProperty Name="bGioitinh" ColumnName="bGioitinh" />
+                <ScalarProperty Name="sDiachi" ColumnName="sDiachi" />
                 <ScalarProperty Name="dNgayvaolam" ColumnName="dNgayvaolam" />
                 <ScalarProperty Name="sSĐT" ColumnName="sSĐT" />
                 <ScalarProperty Name="fLuong" ColumnName="fLuong" />

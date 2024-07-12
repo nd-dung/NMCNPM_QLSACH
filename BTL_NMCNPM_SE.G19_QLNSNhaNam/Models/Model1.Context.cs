@@ -14,9 +14,12 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
     using System.Data.Entity.Infrastructure;
     
     public partial class dbQuanlyBanHangNhaSachNhaNamEntities1 : DbContext
+    public partial class BSACHEntities : DbContext
     {
         public dbQuanlyBanHangNhaSachNhaNamEntities1()
             : base("name=dbQuanlyBanHangNhaSachNhaNamEntities1")
+        public BSACHEntities()
+            : base("name=BSACHEntities")
         {
         }
     

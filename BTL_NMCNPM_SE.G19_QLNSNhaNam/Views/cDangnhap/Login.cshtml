@@ -1,0 +1,42 @@
+﻿@model BTL_NMCNPM_SE.G19_QLNSNhaNam.Models.tblTaiKhoan
+
+@{
+    ViewBag.Title = "Login";
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VNG Corporation - Đăng nhập</title>
+    <link rel="stylesheet" href="~/Front-end/css/style_login.css">
+    <link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+</head>
+<body>
+    <div class="container">
+        <div class="image-section"></div>
+        <div class="login-section">
+            <img src="https://upload.wikimedia.org/wikipedia/vi/2/24/Logo_Nh%C3%A3_Nam.jpg" alt="VNG Corporation" class="logo">
+            <div class="login-form">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.sMaNV, new { htmlAttributes = new { @class = "form-control", type = "text", placeholder = "Tên đăng nhập" } })
+                    @Html.ValidationMessageFor(model => model.sMaNV, "", new { @class = "text-danger" })
+
+                    @Html.EditorFor(model => model.sMatkhau, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Mật khẩu" } })
+                    @Html.ValidationMessageFor(model => model.sMatkhau, "", new { @class = "text-danger" })
+                    <small style="color:red">@ViewBag.LoginFail</small>
+                    <button class="btn login-button">Đăng nhập</button>
+
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

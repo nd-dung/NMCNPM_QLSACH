@@ -20,7 +20,12 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         // GET: cBanhang
         public ActionResult Index()
         {
-            return View("~/Views/cBanhang/vBanhang.cshtml");
+            if (Session["User"] == null)
+            {
+                return  RedirectToAction("Login", "cDangnhap");
+            }
+            else return View("~/Views/cBanhang/vBanhang.cshtml");
+
         }
 
         public ActionResult Search(string searchQuery)

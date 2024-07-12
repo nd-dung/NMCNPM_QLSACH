@@ -17,8 +17,8 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
         public string sMaNV { get; set; }
         public string sTenNV { get; set; }
         public Nullable<System.DateTime> dNgaysinh { get; set; }
-        public Nullable<bool> bGioiTinh { get; set; }
-        public string sDiaChi { get; set; }
+        public Nullable<bool> bGioitinh { get; set; }
+        public string sDiachi { get; set; }
         public Nullable<System.DateTime> dNgayvaolam { get; set; }
         public string sSĐT { get; set; }
         public Nullable<double> fLuong { get; set; }
