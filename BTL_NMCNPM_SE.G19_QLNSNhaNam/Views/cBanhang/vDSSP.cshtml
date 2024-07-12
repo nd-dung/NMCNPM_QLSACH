@@ -1,0 +1,27 @@
+﻿@model List<BTL_NMCNPM_SE.G19_QLNSNhaNam.Models.View_XemDanhSachSach>
+
+@if (Model != null && Model.Any())
+{
+    <table>
+        <thead>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.sMasach</td>
+                    <td>@product.sTensach</td>
+                    <td>@product.sTenTG</td>
+                    <td>@String.Format("{0:N0} đ", product.iDongia)</td>
+                    <td>
+                        <button class="add-to-cart">Thêm vào HĐ</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Không tìm thấy sách phù hợp.</p>
+}

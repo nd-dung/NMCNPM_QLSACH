@@ -1,9 +1,371 @@
-﻿
-@{
-    ViewBag.Title = "vBanhang";
+﻿@{
+    ViewBag.Title = "Quản Lý Bán Hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
-<h2>vBanhang</h2>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Bán Hàng</title>
+    <link rel="stylesheet" href="~/Front-end/css/style_quanLybanHang.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+        <h1>Quản lý Bán Hàng</h1>
 
+        <div class="sales-section">
+
+            <!-- Tìm kiếm -->
+            <div id="search">
+                <div class="search-section">
+                    <input type="text" id="productSearch" placeholder="Nhập tên sách...">
+                    <button id="searchButton">Tìm kiếm</button>
+                </div>
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>Mã sách</th>
+                            <th>Tên sách</th>
+                            <th>Tên TG</th>
+                            <th>Đơn giá</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <!-- Kết quả tìm kiếm sẽ được thêm vào đây -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Hóa đơn -->
+            <div class="cart">
+                <h2>Hóa đơn</h2>
+
+                <form id="invoiceForm">
+                    <table id="cartTable">
+                        <thead>
+                            <tr>
+                                <th>Mã sách</th>
+                                <th>Tên sách</th>
+                                <th>Số lượng</th>
+                                <th>Đơn giá</th>
+                                <th>Thành tiền</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Các mục trong giỏ hàng sẽ được thêm vào đây -->
+                        </tbody>
+                    </table>
+                    <div class="cart-total">
+                        <p>Tổng cộng: <span id="totalAmount">0 đ</span></p>
+                    </div>
+                    <div class="button-container">
+                        <button type="button" id="checkoutButton">Thanh toán</button>
+                        <button type="button" id="invoicePrintButton">In hóa đơn</button>
+                        <button type="reset" id="refreshButton">Tải lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Phần Hóa đơn gần đây -->
+        <div class="recent-invoices-section">
+            <h2>Hóa đơn gần đây</h2>
+            <div id="recentInvoices">
+                <!-- Hóa đơn gần đây sẽ hiển thị vào đây -->
+            </div>
+        </div>
+
+        <div id="checkoutModal" class="modal" style="display: none">
+            <div class="modal-content">
+                <h2>Xác nhận thanh toán</h2>
+                <p>Tổng tiền: <span id="modalTotalAmount"></span></p>
+                <button id="confirmPayment">Xác nhận</button>
+                <button id="cancelPayment">Hủy</button>
+            </div>
+        </div>
+
+
+        <!-- Modal cho chi tiết hóa đơn -->
+        <div id="invoiceDetailsModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="invoiceDetailsContent">
+                    <!-- Chi tiết hóa đơn sẽ được load vào đây -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal cho biểu mẫu in hóa đơn -->
+    <div id="invoicePrintModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="invoicePrintContent">
+                <!-- Nội dung hóa đơn sẽ được load vào đây -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var currentInvoiceId = null;
+
+        $(document).ready(function () {
+            loadRecentInvoices();
+            setTimeout(function () {
+                $(".alert").fadeOut("slow");
+            }, 1000);
+
+            // Tìm kiếm
+            $('#searchButton').click(function () {
+                var searchQuery = $('#productSearch').val();
+                $.get('@Url.Action("Search", "cBanhang")', { searchQuery: searchQuery }, function (data) {
+                    $('#productTableBody').html(data);
+                });
+            });
+
+            // Thanh toán
+            $('#checkoutButton').click(function () {
+                modalTotalAmount.textContent = totalAmount.textContent;
+                checkoutModal.style.display = 'block';
+
+            });
+
+            // Tải lại
+            $('#refreshButton').click(function () {
+                $('#productSearch').val('');
+                $('#productTableBody').empty();
+
+                $('#cartTable tbody').empty();
+                $('#totalAmount').text('0 đ');
+
+                $('#invoicePrintButton').hide();
+
+                currentInvoiceId = null;
+            });
+
+            // Xác nhận thanh toán
+            $('#confirmPayment').click(function () {
+                checkoutModal.style.display = 'none';
+                alert("Thanh toán thành công!")
+
+                var invoiceDetails = [];
+                $('#cartTable tbody tr').each(function () {
+                    var row = $(this);
+                    var detail = {
+                        sMaSach: row.find('td:eq(0)').text().trim(),
+                        iSoLuong: parseInt(row.find('.quantity').val()),
+                        fDongia: parseFloat(row.find('td:eq(3)').text()),
+                        fThanhtien: parseFloat(row.find('td:eq(4)').text())
+                    };
+                    invoiceDetails.push(detail);
+                });
+
+                var maNV =  '@HttpContext.Current.Session["User"]';
+                var invoiceData = {
+                    sMaNV: maNV.trim(),
+                    dNgaylap: new Date().toISOString(),
+                    fTongHD: parseFloat($('#totalAmount').text().replace(' đ', '')),
+                    tblChitietHDs: invoiceDetails,
+
+                };
+
+                $.ajax({
+                    url: '@Url.Action("SaveInvoice", "cBanhang")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(invoiceData),
+                    success: function (response) {
+                        console.log("Response from server:", response);
+                        alert(response.message);
+                        if (response.success) {
+                            // Hiển thị nút In hóa đơn
+                            currentInvoiceId = response.invoiceId || response.sMaHD;
+                            console.log("Current Invoice ID:", currentInvoiceId);
+                            $('#invoicePrintButton').show();
+                            loadRecentInvoices();
+                        }
+                    }
+                });
+            });
+
+            // In hóa đơn
+            $('#invoicePrintButton').click(function () {
+                if (currentInvoiceId) {
+                    $.ajax({
+                        url: '@Url.Action("PrintInvoice", "cBanhang")',
+                        data: { maHD: currentInvoiceId },
+                        success: function(data) {
+                            $('#invoicePrintContent').html(data);
+                            $('#invoicePrintModal').show();
+                            $('#invoicePrintModal').focus();
+                        }
+                    });
+                } else {
+                    alert('Không có hóa đơn để in. Vui lòng thanh toán trước.');
+                }
+            });
+
+            // Đóng modal hóa đơn
+            $('.close').click(function() {
+                $('#invoicePrintModal').hide();
+            });
+
+            // Hủy thanh toán
+            $('#cancelPayment').click(function () {
+                checkoutModal.style.display = 'none';
+            });
+
+            // Thêm vào hóa đơn
+            $('#cartTable').on('click', '.remove-item', function () {
+                $(this).closest('tr').remove();
+                updateTotal();
+            });
+
+            // Tăng số lượng sản phẩm trong hóa đơn
+            $('#cartTable').on('input', '.quantity', function () {
+                updateRowTotal($(this).closest('tr'));
+                updateTotal();
+            });
+
+            $(document).ready(function () {
+                // Load hóa đơn gần đây
+                $.get('@Url.Action("GetRecentInvoices", "cBanhang")', function(data) {
+                    $('#recentInvoices').html(data);
+                }).fail(function() {
+                    console.error("Failed to load recent invoices.");
+                });
+            });
+
+            // Load sản phẩm vào hóa đơn
+            $('#productTableBody').on('click', '.add-to-cart', function () {
+                var row = $(this).closest('tr');
+                var product = {
+                    sMasach: row.find('td:eq(0)').text().trim(),
+                    sTensach: decodeHtmlEntities(row.find('td:eq(1)').html().trim()),
+                    //sTenTG: row.find('td:eq(2)').text(),
+                    iDongia: parseFloat(cleanDongiaString(row.find('td:eq(3)').text()))
+                };
+                addToCart(product);
+            });
+
+            // Hàm thêm sản phẩm
+            function addToCart(product) {
+                var existingRow = $('#cartTable tbody tr').filter(function () {
+                    return $(this).find('td:first').text() === product.sMasach;
+                });
+
+                if (existingRow.length > 0) {
+                    var quantityInput = existingRow.find('.quantity');
+                    quantityInput.val(parseInt(quantityInput.val()) + 1);
+                    updateRowTotal(existingRow);
+                } else {
+                    var newRow = '<tr>' +
+                        '<td>' + product.sMasach + '</td>' +
+                        '<td>' + product.sTensach + '</td>' +
+                        '<td><input type="number" class="quantity" style="border:none; padding: 2px" value="1" min="1"></td>' +
+                        '<td>' + product.iDongia + '</td>' +
+                        '<td class="row-total">' + product.iDongia + '</td>' +
+                        '<td><button type="button" class="remove-item">Xóa</button></td>' +
+                        '</tr>';
+                    $('#cartTable tbody').append(newRow);
+                }
+                updateTotal();
+            }
+
+            // Xử lý sự kiện khi thay đổi số lượng
+            $('#cartTable').on('input', '.quantity', function () {
+                var value = $(this).val();
+                value = Math.max(1, Math.floor(Number(value)) || 1);
+                $(this).val(value);
+                updateRowTotal($(this).closest('tr'));
+                updateTotal();
+            });
+
+            // Hàm cập nhật Thành tiền
+            function updateRowTotal(row) {
+                var quantity = parseInt(row.find('.quantity').val());
+                var price = parseFloat(row.find('td:eq(3)').text());
+                var total = quantity * price;
+                row.find('.row-total').text(total + ' đ');
+            }
+
+            // Hàn cập nhật Tổng hóa đơn
+            function updateTotal() {
+                var total = 0;
+                $('#cartTable tbody tr').each(function () {
+                    total += parseFloat($(this).find('.row-total').text());
+                });
+                $('#totalAmount').text(total + ' đ');
+            }
+
+            // Giari mã Entity -> HTML
+            function decodeHtmlEntities(str) {
+                var txt = document.createElement("textarea");
+                txt.innerHTML = str;
+                return txt.value;
+            }
+
+            function cleanDongiaString(dongiaStr) {
+                // Loại bỏ ký tự "đ" và dấu phân cách hàng nghìn
+                return dongiaStr.replace(/[^\d]/g, '');
+            }
+
+            // Hàm tải hóa đơn gần đây
+            function loadRecentInvoices() {
+                $.ajax({
+                    url: '@Url.Action("GetRecentInvoices", "cBanhang")',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#recentInvoices').html(data);
+                    },
+                    error: function () {
+                        alert("Không thể tải hóa đơn gần đây.");
+                    }
+                });
+            }
+
+            // Xem chi tiết trong HĐGĐ
+            $(document).on('click', '.view-details', function() {
+                var currentRow = $(this).closest("tr");
+                var sMaHD = currentRow.find("td:eq(0)").text().trim();
+
+                $.ajax({
+                    url: '@Url.Action("ViewInvoiceDetails", "cBanhang")',
+                    type: 'POST',
+                    data: { maHD: sMaHD },
+                    success: function (response) {
+                        $('#invoiceDetailsContent').html(response);
+                        $('#invoiceDetailsModal').show();
+
+                        $('.close').click(function () {
+                            $('#invoiceDetailsModal').hide();
+                        });
+
+                        $('#printInvoiceButton').click(function () {
+                            window.print();
+                        });
+
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
