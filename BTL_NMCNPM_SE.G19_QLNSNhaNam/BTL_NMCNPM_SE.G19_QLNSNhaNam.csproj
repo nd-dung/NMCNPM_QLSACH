@@ -149,7 +149,9 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="Front-end\css\PrintStyles.css" />
     <Content Include="Front-end\css\style_navbar.css" />
+    <Content Include="Front-end\css\style_quanLybanHang.css" />
     <Content Include="Front-end\js\js_navbar.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -187,6 +189,9 @@
     <Content Include="Views\cPhieunhap\vPhieunhap.cshtml" />
     <Content Include="Views\cSach\vSach.cshtml" />
     <Content Include="Views\cDangnhap\vDangnhap.cshtml" />
+    <Content Include="Views\cBanhang\vChitietHD.cshtml" />
+    <Content Include="Views\cBanhang\vDSSP.cshtml" />
+    <Content Include="Views\cBanhang\vHoadonGanday.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
