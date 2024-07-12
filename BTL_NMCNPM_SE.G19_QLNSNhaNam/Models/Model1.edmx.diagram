@@ -4,28 +4,29 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="10c9f92b84de4922b9dc88a265eec58b" Name="Diagram1">
-        <EntityTypeShape EntityType="BSACHModel.tblNhanVien" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BSACHModel.tblTaiKhoan" Width="1.5" PointX="3.25" PointY="1.125" IsExpanded="true" />
-        <AssociationConnector Association="BSACHModel.FK_tblTaiKhoan_tblNhanVien" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="BSACHModel.tblChiTietHD" Width="1.5" PointX="7.625" PointY="2.625" />
-        <EntityTypeShape EntityType="BSACHModel.tblChiTietNhap" Width="1.5" PointX="10.625" PointY="2.625" />
-        <EntityTypeShape EntityType="BSACHModel.tblHoaDon" Width="1.5" PointX="5.375" PointY="7.75" />
-        <EntityTypeShape EntityType="BSACHModel.tblNhap" Width="1.5" PointX="8.375" PointY="7.625" />
-        <EntityTypeShape EntityType="BSACHModel.tblSach" Width="1.5" PointX="5.375" PointY="2.5" />
-        <AssociationConnector Association="BSACHModel.FK_tblChiTietHD_tblHoaDon" />
-        <AssociationConnector Association="BSACHModel.FK_tblChiTietHD_tblSach" />
-        <AssociationConnector Association="BSACHModel.FK_tblChiTietNhap_tblNhap" />
-        <AssociationConnector Association="BSACHModel.FK_tblChiTietNhap_tblSach" />
-        <AssociationConnector Association="BSACHModel.FK_tblHoaDon_tblNhanVien" />
-        <AssociationConnector Association="BSACHModel.FK_tblNhap_tblNhanVien" />
-        <EntityTypeShape EntityType="BSACHModel.viewNVPW" Width="1.5" PointX="3.25" PointY="3" />
-        <EntityTypeShape EntityType="BSACHModel.View_XemChiTietNhap" Width="1.5" PointX="0.75" PointY="5.125" />
-        <EntityTypeShape EntityType="BSACHModel.View_XemDanhSachHoaDon" Width="1.5" PointX="3.25" PointY="6.75" />
-        <EntityTypeShape EntityType="BSACHModel.View_XemDanhSachSach" Width="1.5" PointX="0.75" PointY="7.5" />
-        <EntityTypeShape EntityType="BSACHModel.View_XemDanhSachNhanVien" Width="1.5" PointX="0.75" PointY="10.25" />
-        <EntityTypeShape EntityType="BSACHModel.View_XemDanhSachPhieuNhap" Width="1.5" PointX="10.75" PointY="5.75" />
-        <EntityTypeShape EntityType="BSACHModel.vwNhanvienHoadonChitietHD" Width="1.5" PointX="3.25" PointY="9.375" />
+      <Diagram DiagramId="e6e0a5d3055947ab898cee647aa85de5" Name="Diagram1">
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.tblChiTietHD" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.tblChiTietNhap" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.tblHoaDon" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.tblNhanVien" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.tblNhap" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.tblSach" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.tblTaiKhoan" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.View_XemChiTietNhap" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.View_XemDanhSachHoaDon" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.View_XemDanhSachNhanVien" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.View_XemDanhSachPhieuNhap" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.View_XemDanhSachSach" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.viewNVPW" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.vwNhanvienHoadonChitietHD" Width="1.5" PointX="5.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbQuanlyBanHangNhaSachNhaNamModel1.vwNhanvienHoadonChitietHD1" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="dbQuanlyBanHangNhaSachNhaNamModel1.FK_tblChiTietHD_tblHoaDon" ManuallyRouted="false" />
+        <AssociationConnector Association="dbQuanlyBanHangNhaSachNhaNamModel1.FK_tblChiTietHD_tblSach" ManuallyRouted="false" />
+        <AssociationConnector Association="dbQuanlyBanHangNhaSachNhaNamModel1.FK_tblChiTietNhap_tblNhap" ManuallyRouted="false" />
+        <AssociationConnector Association="dbQuanlyBanHangNhaSachNhaNamModel1.FK_tblChiTietNhap_tblSach" ManuallyRouted="false" />
+        <AssociationConnector Association="dbQuanlyBanHangNhaSachNhaNamModel1.FK_tblHoaDon_tblNhanVien" ManuallyRouted="false" />
+        <AssociationConnector Association="dbQuanlyBanHangNhaSachNhaNamModel1.FK_tblNhap_tblNhanVien" ManuallyRouted="false" />
+        <AssociationConnector Association="dbQuanlyBanHangNhaSachNhaNamModel1.FK_tblTaiKhoan_tblNhanVien" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

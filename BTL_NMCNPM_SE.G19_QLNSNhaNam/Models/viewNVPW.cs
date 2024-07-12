@@ -25,6 +25,6 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
         public Nullable<bool> bVaitro { get; set; }
         public Nullable<bool> bTrangthai { get; set; }
         public string sCCCD { get; set; }
-        public string sMatKhau { get; set; }
+        public string sMatkhau { get; set; }
     }
 }

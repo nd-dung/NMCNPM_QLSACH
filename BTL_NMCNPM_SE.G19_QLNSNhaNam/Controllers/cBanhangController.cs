@@ -10,9 +10,9 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
 {
     public class cBanhangController : Controller
     {
-        protected readonly BSACHEntities db = new BSACHEntities();
+        protected readonly dbQuanlyBanHangNhaSachNhaNamEntities1 db = new dbQuanlyBanHangNhaSachNhaNamEntities1();
 
-        //public cBanhangController(BSACHEntities dbContext)
+        //public cBanhangController(dbQuanlyBanHangNhaSachNhaNamEntities1 dbContext)
         //{
         //     db = dbContext;
         //}
@@ -26,7 +26,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult Search(string searchQuery)
         {
             var DSSachList = GetSearchResults(searchQuery);
-            return PartialView("~/Views/cBanhang/_vDSSP.cshtml", DSSachList);
+            return PartialView("~/Views/cBanhang/vDSSP.cshtml", DSSachList);
         }
 
         public List<View_XemDanhSachSach> GetSearchResults(string searchQuery)
@@ -41,7 +41,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult GetRecentInvoices()
         {
             var recentInvoices = GetRecentInvoicesData();
-            return PartialView("~/Views/cBanhang/_vHoadonGanday.cshtml", recentInvoices);
+            return PartialView("~/Views/cBanhang/vHoadonGanday.cshtml", recentInvoices);
         }
 
         public List<View_XemDanhSachHoaDon> GetRecentInvoicesData()
@@ -58,7 +58,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult ViewInvoiceDetails(string maHD)
         {
             var details = ViewInvoiceDetailsData(maHD);
-            return PartialView("~/Views/cBanhang/_vChitietHD.cshtml", details);
+            return PartialView("~/Views/cBanhang/vChitietHD.cshtml", details);
         }
 
         public List<vwNhanvienHoadonChitietHD> ViewInvoiceDetailsData(string RepMaHD)
@@ -163,7 +163,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
             {
                 return Content("Không tìm thấy thông tin hóa đơn.");
             }
-            return PartialView("_vChitietHD", invoiceDetails);
+            return PartialView("vChitietHD", invoiceDetails);
         }
 
         protected override void Dispose(bool disposing)

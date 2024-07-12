@@ -33,10 +33,10 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
         public Nullable<bool> bTrangthai { get; set; }
         public string sCCCD { get; set; }
     
-        public virtual tblTaiKhoan tblTaiKhoan { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblHoaDon> tblHoaDons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblNhap> tblNhaps { get; set; }
+        public virtual tblTaiKhoan tblTaiKhoan { get; set; }
     }
 }
