@@ -40,7 +40,7 @@
           <Key>
             <PropertyRef Name="sMaNV" />
           </Key>
-          <Property Name="sMaNV" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="sMaNV" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="sTenNV" Type="nvarchar" MaxLength="100" />
           <Property Name="dNgaysinh" Type="date" />
           <Property Name="bGioitinh" Type="bit" />
@@ -78,8 +78,8 @@
           <Key>
             <PropertyRef Name="sMaNV" />
           </Key>
-          <Property Name="sMaNV" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="sMatkhau" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="sMaNV" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="sMatkhau" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.View_XemChiTietNhap' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -464,7 +464,7 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
           <Key>
             <PropertyRef Name="sMaNV" />
           </Key>
-          <Property Name="sMaNV" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="sMaNV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="sTenNV" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="dNgaysinh" Type="DateTime" Precision="0" />
           <Property Name="bGioitinh" Type="Boolean" />
@@ -791,8 +791,8 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
                 <ScalarProperty Name="sMaNV" ColumnName="sMaNV" />
                 <ScalarProperty Name="sTenNV" ColumnName="sTenNV" />
                 <ScalarProperty Name="dNgaysinh" ColumnName="dNgaysinh" />
-                <ScalarProperty Name="bGioiTinh" ColumnName="bGioiTinh" />
-                <ScalarProperty Name="sDiaChi" ColumnName="sDiaChi" />
+                <ScalarProperty Name="bGioitinh" ColumnName="bGioitinh" />
+                <ScalarProperty Name="sDiachi" ColumnName="sDiachi" />
                 <ScalarProperty Name="dNgayvaolam" ColumnName="dNgayvaolam" />
                 <ScalarProperty Name="sSĐT" ColumnName="sSĐT" />
                 <ScalarProperty Name="fLuong" ColumnName="fLuong" />

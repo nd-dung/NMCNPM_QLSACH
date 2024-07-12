@@ -1,4 +1,6 @@
-﻿using BTL_NMCNPM_SE.G19_QLNSNhaNam.Models;
+﻿
+using BTL_NMCNPM_SE.G19_QLNSNhaNam.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -86,6 +88,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
             BSACHEntities db = new BSACHEntities();
             List<viewNVPW> viewNVPWList = db.viewNVPWs.Where(
     v => v.sMaNV.ToLower().Contains(searchtext.ToLower()) ||
+    v.sTenNV.ToLower().Contains(searchtext.ToLower()) ||
          v.sDiachi.ToLower().Contains(searchtext.ToLower()) ||
          v.dNgaysinh.ToString().ToLower().Contains(searchtext.ToLower()) ||
          (v.bTrangthai ?? false ? "Làm" : "Nghỉ").ToLower().Contains(searchtext.ToLower()) ||

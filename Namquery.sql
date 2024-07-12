@@ -5,7 +5,7 @@
 -- Tạo bảng vwNhanVienWithPassword
 CREATE DATABASE dbQuanlyBanHangNhaSachNhaNam
 GO
-select * from tblnhanvien
+
 CREATE TABLE tblNhanVien (
     sMaNV NCHAR(10) PRIMARY KEY,
     sTenNV NVARCHAR(100),
@@ -23,11 +23,9 @@ CREATE TABLE tblNhanVien (
 -- Tạo bảng tblTaiKhoan
 CREATE TABLE tblTaiKhoan (
     sMaNV NCHAR(10) PRIMARY KEY,
-    sMatkhau NCHAR(100) NOT NULL,
+    sMatkhau NCHAR(10) NOT NULL,
     CONSTRAINT FK_tblTaiKhoan_tblNhanVien FOREIGN KEY (sMaNV) REFERENCES tblNhanVien(sMaNV)
 );
-
-drop table tbltaikhoan
 
 -- Tạo bảng tblSach
 CREATE TABLE tblSach (
@@ -84,7 +82,7 @@ CREATE TABLE tblChiTietNhap (
 );
 
 -- Thêm dữ liệu
-INSERT INTO vwNhanVienWithPassword (sMaNV, sTenNV, dNgaysinh, bGioiTinh, sDiaChi, dNgayvaolam, sSĐT, fLuong, bVaitro, bTrangthai, sCCCD)
+INSERT INTO tblnhanvien (sMaNV, sTenNV, dNgaysinh, bGioiTinh, sDiaChi, dNgayvaolam, sSĐT, fLuong, bVaitro, bTrangthai, sCCCD)
 VALUES 
 ('NV001', N'Nguyễn Văn A', '1990-01-01', 1, N'123 Đường ABC, Quận XYZ, TP HCM', '2020-01-01', '0987654321', 10000000, 0, 1, '1234567890123'),
 ('NV002', N'Trần Thị B', '1995-05-05', 0, N'456 Đường XYZ, Quận ABC, TP HCM', '2021-01-01', '0901234567', 8000000, 0, 1, '2345678901234'),
