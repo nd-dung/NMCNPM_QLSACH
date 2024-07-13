@@ -6,7 +6,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
 {
     public class cDoanhthuController : Controller
     {
-        protected readonly BSACHEntities db = new BSACHEntities();
+        protected readonly dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
 
         public ActionResult Index()
         {
@@ -81,7 +81,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
                     .Select(g => new
                     {
                         bookName = g.Key,
-                        soldQuantity = g.Sum(ct => ct.iSoLuong ?? 0),
+                        soldQuantity = g.Sum(ct => ct.iSoluong ?? 0),
                         revenue = g.Sum(ct => ct.fThanhtien ?? 0)
                     })
                     .OrderByDescending(x => x.soldQuantity)

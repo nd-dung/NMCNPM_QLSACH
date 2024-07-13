@@ -38,7 +38,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
         public virtual DbSet<View_XemDanhSachNhanVien> View_XemDanhSachNhanVien { get; set; }
         public virtual DbSet<View_XemDanhSachPhieuNhap> View_XemDanhSachPhieuNhap { get; set; }
         public virtual DbSet<View_XemDanhSachSach> View_XemDanhSachSach { get; set; }
-        public virtual DbSet<vwNhanvienHoadonChitietHD> vwNhanvienHoadonChitietHDs { get; set; }
         public virtual DbSet<viewNVPW> viewNVPWs { get; set; }
+        public virtual DbSet<vwNhanvienHoadonChitietHD> vwNhanvienHoadonChitietHDs { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="dbQuanlyBanHangNhaSachNhaNamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="dbQuanlyBanHangNhaSachNhaNamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblChiTietHD">
           <Key>
             <PropertyRef Name="sMaHD" />
@@ -412,7 +412,8 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
             <End Role="tblTaiKhoan" EntitySet="tblTaiKhoan" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="dbQuanlyBanHangNhaSachNhaNamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -577,6 +578,23 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
           <Property Name="sNXB" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="sTheloai" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="viewNVPW">
+          <Key>
+            <PropertyRef Name="sMaNV" />
+          </Key>
+          <Property Name="sMaNV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sTenNV" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dNgaysinh" Type="DateTime" Precision="0" />
+          <Property Name="bGioitinh" Type="Boolean" />
+          <Property Name="sDiachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dNgayvaolam" Type="DateTime" Precision="0" />
+          <Property Name="sSĐT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="fLuong" Type="Double" />
+          <Property Name="bVaitro" Type="Boolean" />
+          <Property Name="bTrangthai" Type="Boolean" />
+          <Property Name="sCCCD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="sMatkhau" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="vwNhanvienHoadonChitietHD">
           <Key>
             <PropertyRef Name="sMaHD" />
@@ -691,6 +709,7 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
           <EntitySet Name="View_XemDanhSachNhanVien" EntityType="Self.View_XemDanhSachNhanVien" />
           <EntitySet Name="View_XemDanhSachPhieuNhap" EntityType="Self.View_XemDanhSachPhieuNhap" />
           <EntitySet Name="View_XemDanhSachSach" EntityType="Self.View_XemDanhSachSach" />
+          <EntitySet Name="viewNVPWs" EntityType="Self.viewNVPW" />
           <EntitySet Name="vwNhanvienHoadonChitietHDs" EntityType="Self.vwNhanvienHoadonChitietHD" />
           <AssociationSet Name="FK_tblChiTietHD_tblHoaDon" Association="Self.FK_tblChiTietHD_tblHoaDon">
             <End Role="tblHoaDon" EntitySet="tblHoaDons" />
@@ -720,25 +739,7 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
             <End Role="tblNhanVien" EntitySet="tblNhanViens" />
             <End Role="tblTaiKhoan" EntitySet="tblTaiKhoans" />
           </AssociationSet>
-          <EntitySet Name="viewNVPWs" EntityType="dbQuanlyBanHangNhaSachNhaNamModel.viewNVPW" />
         </EntityContainer>
-        <EntityType Name="viewNVPW">
-          <Key>
-            <PropertyRef Name="sMaNV" />
-          </Key>
-          <Property Name="sMaNV" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="sTenNV" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="dNgaysinh" Type="DateTime" Precision="0" />
-          <Property Name="bGioitinh" Type="Boolean" />
-          <Property Name="sDiachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="dNgayvaolam" Type="DateTime" Precision="0" />
-          <Property Name="sSĐT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="fLuong" Type="Double" />
-          <Property Name="bVaitro" Type="Boolean" />
-          <Property Name="bTrangthai" Type="Boolean" />
-          <Property Name="sCCCD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="sMatkhau" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -899,6 +900,24 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="viewNVPWs">
+            <EntityTypeMapping TypeName="dbQuanlyBanHangNhaSachNhaNamModel.viewNVPW">
+              <MappingFragment StoreEntitySet="viewNVPW">
+                <ScalarProperty Name="sMaNV" ColumnName="sMaNV" />
+                <ScalarProperty Name="sTenNV" ColumnName="sTenNV" />
+                <ScalarProperty Name="dNgaysinh" ColumnName="dNgaysinh" />
+                <ScalarProperty Name="bGioitinh" ColumnName="bGioitinh" />
+                <ScalarProperty Name="sDiachi" ColumnName="sDiachi" />
+                <ScalarProperty Name="dNgayvaolam" ColumnName="dNgayvaolam" />
+                <ScalarProperty Name="sSĐT" ColumnName="sSĐT" />
+                <ScalarProperty Name="fLuong" ColumnName="fLuong" />
+                <ScalarProperty Name="bVaitro" ColumnName="bVaitro" />
+                <ScalarProperty Name="bTrangthai" ColumnName="bTrangthai" />
+                <ScalarProperty Name="sCCCD" ColumnName="sCCCD" />
+                <ScalarProperty Name="sMatkhau" ColumnName="sMatkhau" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vwNhanvienHoadonChitietHDs">
             <EntityTypeMapping TypeName="dbQuanlyBanHangNhaSachNhaNamModel.vwNhanvienHoadonChitietHD">
               <MappingFragment StoreEntitySet="vwNhanvienHoadonChitietHD">
@@ -911,24 +930,6 @@ warning 6002: The table/view 'dbQuanlyBanHangNhaSachNhaNam.dbo.vwNhanvienHoadonC
                 <ScalarProperty Name="iSoLuong" ColumnName="iSoLuong" />
                 <ScalarProperty Name="fDongia" ColumnName="fDongia" />
                 <ScalarProperty Name="fThanhtien" ColumnName="fThanhtien" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="viewNVPWs">
-            <EntityTypeMapping TypeName="dbQuanlyBanHangNhaSachNhaNamModel.viewNVPW">
-              <MappingFragment StoreEntitySet="viewNVPW">
-                <ScalarProperty Name="sMatkhau" ColumnName="sMatkhau" />
-                <ScalarProperty Name="sCCCD" ColumnName="sCCCD" />
-                <ScalarProperty Name="bTrangthai" ColumnName="bTrangthai" />
-                <ScalarProperty Name="bVaitro" ColumnName="bVaitro" />
-                <ScalarProperty Name="fLuong" ColumnName="fLuong" />
-                <ScalarProperty Name="sSĐT" ColumnName="sSĐT" />
-                <ScalarProperty Name="dNgayvaolam" ColumnName="dNgayvaolam" />
-                <ScalarProperty Name="sDiachi" ColumnName="sDiachi" />
-                <ScalarProperty Name="bGioitinh" ColumnName="bGioitinh" />
-                <ScalarProperty Name="dNgaysinh" ColumnName="dNgaysinh" />
-                <ScalarProperty Name="sTenNV" ColumnName="sTenNV" />
-                <ScalarProperty Name="sMaNV" ColumnName="sMaNV" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
