@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTL_NMCNPM_SE.G19_QLNSNhaNam", "BTL_NMCNPM_SE.G19_QLNSNhaNam\BTL_NMCNPM_SE.G19_QLNSNhaNam.csproj", "{3ED6324F-2E6C-4023-9343-7AAF278B8615}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTL_NMCNPM_SE.G19_QLNSNhaNam.Tests", "BTL_NMCNPM_SE.G19_QLNSNhaNam.Tests\BTL_NMCNPM_SE.G19_QLNSNhaNam.Tests.csproj", "{52C78B92-6517-4CC1-A7DE-CA2F9BDF4B24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3ED6324F-2E6C-4023-9343-7AAF278B8615}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ED6324F-2E6C-4023-9343-7AAF278B8615}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ED6324F-2E6C-4023-9343-7AAF278B8615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52C78B92-6517-4CC1-A7DE-CA2F9BDF4B24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C78B92-6517-4CC1-A7DE-CA2F9BDF4B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C78B92-6517-4CC1-A7DE-CA2F9BDF4B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C78B92-6517-4CC1-A7DE-CA2F9BDF4B24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
