@@ -92,7 +92,7 @@ BEGIN TRY
     (N'NV003', N'Lê Văn Cường', '1988-11-10', 1, N'Đà Nẵng', '2019-12-01', N'0923456789', 11000000, 0, 1, N'003456789012'),
     (N'NV004', N'Phạm Thị Dung', '1995-02-25', 0, N'Hải Phòng', '2021-06-01', N'0934567890', 9000000, 0, 1, N'004567890123'),
     (N'NV005', N'Hoàng Văn Em', '1993-07-30', 1, N'Cần Thơ', '2020-09-01', N'0945678901', 9800000, 0, 1, N'005678901234'),
-    (N'AD001', N'Đỗ Thị Fương', '1985-04-12', 0, N'Hà Nội', '2018-01-01', N'0956789012', 15000000, 1, 1, N'006789012345');
+    (N'ADMIN', N'Đỗ Thị Fương', '1985-04-12', 0, N'Hà Nội', '2018-01-01', N'0956789012', 15000000, 1, 1, N'006789012345');
 
     -- Thêm dữ liệu vào bảng tblTaiKhoan
     INSERT INTO tblTaiKhoan VALUES
@@ -101,7 +101,7 @@ BEGIN TRY
     (N'NV003', N'pass003@'),
     (N'NV004', N'pass004@'),
     (N'NV005', N'pass005@'),
-    (N'AD001', N'admin001@');
+    (N'ADMIN', N'admin001@');
 
     -- Thêm dữ liệu vào bảng tblSach (50 bản ghi)
     INSERT INTO tblSach VALUES
