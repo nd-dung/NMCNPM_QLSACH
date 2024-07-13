@@ -1,8 +1,185 @@
-﻿
+﻿@model List<BTL_NMCNPM_SE.G19_QLNSNhaNam.Models.tblSach>
 @{
     ViewBag.Title = "vSach";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>vSach</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Your Page Title</title>
+    <link href="~/Front-end/css/book.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý Sách</h1>
+        <form action="/cSach/index">
+            <div class="book-actions">
+                <div class="search-bar">
+                    <input type="search" id="searchInput" name="searchInput" value="@ViewBag.Search" placeholder="Nhập tên sách để tìm kiếm...">
+                    <button id="searchBtn" type="submit" class="btn btn-secondary">Tìm kiếm</button>
+                </div>
+            </div>
+        </form>
+
+        <div style="display: flex; justify-content: end; margin: 16px 0;   ">
+            <button id="addBookBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm Sách Mới</button>
+        </div>
+
+
+        <table class="book-table">
+            <thead>
+                <tr>
+                    <th>Mã Sách</th>
+                    <th>Tên Sách</th>
+                    <th>Tác Giả</th>
+                    <th>Đơn Giá</th>
+                    <th>Số Lượng</th>
+                    <th>NXB</th>
+                    <th>Thể Loại</th>
+                    <th>Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.sMasach</td>
+                        <td>@item.sTensach</td>
+                        <td>@item.sTenTG</td>
+                        <td>@item.iDongia</td>
+                        <td>@item.iSoluong</td>
+                        <td>@item.sNXB</td>
+                        <td>@item.sTheloai</td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary" onclick="onUpdate('@item.sMasach')">Sửa</button>
+                            <button class="btn btn-danger" onclick="confirmDelete('@item.sMasach')">Xóa</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button class="btn btn-secondary" id="prevPage">Trước</button>
+            <span id="currentPage">Trang 1</span>
+            <button class="btn btn-secondary" id="nextPage">Sau</button>
+        </div>
+    </div>
+
+    <!-- Modal thêm/sửa sách -->
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle" class="mb-2">Thêm Sách Mới</h2>
+            <form action="/cSach/add" id="bookForm" method="post">
+                <p id="labelMaSach">Mã sách:</p>
+                <input type="text" id="sMasach" name="sMasach" placeholder="Nhập Mã Sách" required>
+                <p>Tên sách:</p>
+                <input type="text" id="sTensach" name="sTensach" placeholder="Nhập Tên Sách" required>
+                <p>Tác giả:</p>
+                <input type="text" id="sTenTG" name="sTenTG" placeholder="Nhập Tác giả" required>
+                <p>Đơn Giá:</p>
+                <input type="number" id="iDongia" name="iDongia" placeholder="Nhập Đơn giá" required>
+                <p>Số Lượng:</p>
+                <input type="number" id="iSoluong" name="iSoluong" placeholder="Nhập Số lượng" required>
+                <p>Nhà Xuất Bản:</p>
+                <input type="text" id="sNXB" name="sNXB" placeholder="Nhập Nhà xuất bản" required>
+                <p>Thể Loại:</p>
+                <input type="text" id="sTheloai" name="sTheloai" placeholder="Nhập Thể loại" required>
+                <div class="form-buttons">
+                    <button type="submit" id="bookModalBtn" class="btn btn-primary">Thêm</button>
+                    <button type="reset" class="btn btn-secondary close-btn">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Open modal when clicking "Thêm Nhân Viên"
+            $('#addBookBtn').click(function () {
+                clearForm();
+                $('#bookModal').css('display', 'block');
+            });
+
+
+            // Close modal when clicking the close button
+            $('.close, .close-btn').click(function () {
+                clearForm();
+                $('#bookModal').css('display', 'none');
+            });
+
+            // Close modal when clicking outside of the modal
+            $(window).click(function (event) {
+                if (event.target.id === 'bookModal') {
+                    clearForm();
+                    $('#bookModal').css('display', 'none');
+                }
+            });
+        });
+
+        function onUpdate(maSach) {
+            document.getElementById('modalTitle').textContent = "Sửa Sách"
+            document.getElementById('bookForm').action = "/cSach/update"
+            document.getElementById('bookModalBtn').textContent = "Sửa"
+
+            var listSach = @Html.Raw(Json.Encode(Model));
+            for (var i = 0; i < listSach.length; i++) {
+                 if (listSach[i].sMasach === maSach) {
+                     sach = listSach[i];
+                       break;
+                    }
+            }
+            document.getElementById('sMasach').type = "hidden";
+            document.getElementById('labelMaSach').style.display = "none";
+            $('#bookModal').css('display', 'block');
+            document.getElementById('sMasach').value = sach.sMasach;
+            document.getElementById('sTensach').value = sach.sTensach;
+            document.getElementById('sTenTG').value = sach.sTenTG;
+            document.getElementById('iDongia').value = sach.iDongia;
+            document.getElementById('iSoluong').value = sach.iSoluong;
+            document.getElementById('sNXB').value = sach.sNXB;
+            document.getElementById('sTheloai').value = sach.sTheloai;
+        }
+
+        function clearForm() {
+            document.getElementById('sMasach').value = "";
+            document.getElementById('sTensach').value = "";
+            document.getElementById('sTenTG').value = "";
+            document.getElementById('iDongia').value = "";
+            document.getElementById('iSoluong').value = "";
+            document.getElementById('sNXB').value = "";
+            document.getElementById('sTheloai').value = "";
+            document.getElementById('modalTitle').textContent = "Thêm Sách"
+            document.getElementById('bookForm').action = "/cSach/add"
+            document.getElementById('bookModalBtn').textContent = "Thêm"
+            document.getElementById('sMasach').type = "block";
+            document.getElementById('labelMaSach').style.display = "block";
+        }
+
+
+        function confirmDelete(sMasach) {
+            if (confirm("Bạn có chắc chắn muốn xóa sách này?")) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "cSach")',
+                    type: 'POST',
+                    data: { sMasach: sMasach },
+                    success: function(result) {
+                            // Chuyển hướng đến hành động Index sau khi xóa thành công
+                            window.location.href = '@Url.Action("Index", "cSach")';
+                    },
+                    error: function() {
+                        alert('Có lỗi xảy ra khi xóa nhân viên. Vui lòng thử lại.');
+                    }
+                });
+            }
+        }
+
+    </script>
+</body>
+</html>
+
 
