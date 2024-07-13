@@ -14,11 +14,11 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
     
     public partial class tblChiTietNhap
     {
-        public string sMaPN { get; set; }
-        public string sMaSach { get; set; }
+        public string MaPN { get; set; }
+        public string Masach { get; set; }
         public Nullable<int> iSoluong { get; set; }
-        public Nullable<double> fDonGia { get; set; }
-        public Nullable<double> fThanhTien { get; set; }
+        public Nullable<double> fDongia { get; set; }
+        public Nullable<double> fThanhtien { get; set; }
     
         public virtual tblNhap tblNhap { get; set; }
         public virtual tblSach tblSach { get; set; }

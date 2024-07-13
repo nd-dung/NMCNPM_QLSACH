@@ -12,15 +12,12 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblChiTietHD
+    public partial class View_XemChiTietHoaDon
     {
         public string sMaHD { get; set; }
         public string sMasach { get; set; }
         public Nullable<int> iSoluong { get; set; }
         public Nullable<double> fDongia { get; set; }
         public Nullable<double> fThanhtien { get; set; }
-    
-        public virtual tblHoaDon tblHoaDon { get; set; }
-        public virtual tblSach tblSach { get; set; }
     }
 }

@@ -13,13 +13,10 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class dbQuanlyBanHangNhaSachNhaNamEntities1 : DbContext
-    public partial class BSACHEntities : DbContext
+    public partial class dbQuanlyBanHangNhaSachNhaNamEntities : DbContext
     {
-        public dbQuanlyBanHangNhaSachNhaNamEntities1()
-            : base("name=dbQuanlyBanHangNhaSachNhaNamEntities1")
-        public BSACHEntities()
-            : base("name=BSACHEntities")
+        public dbQuanlyBanHangNhaSachNhaNamEntities()
+            : base("name=dbQuanlyBanHangNhaSachNhaNamEntities")
         {
         }
     
@@ -35,12 +32,13 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
         public virtual DbSet<tblNhap> tblNhaps { get; set; }
         public virtual DbSet<tblSach> tblSaches { get; set; }
         public virtual DbSet<tblTaiKhoan> tblTaiKhoans { get; set; }
+        public virtual DbSet<View_XemChiTietHoaDon> View_XemChiTietHoaDon { get; set; }
         public virtual DbSet<View_XemChiTietNhap> View_XemChiTietNhap { get; set; }
         public virtual DbSet<View_XemDanhSachHoaDon> View_XemDanhSachHoaDon { get; set; }
         public virtual DbSet<View_XemDanhSachNhanVien> View_XemDanhSachNhanVien { get; set; }
         public virtual DbSet<View_XemDanhSachPhieuNhap> View_XemDanhSachPhieuNhap { get; set; }
         public virtual DbSet<View_XemDanhSachSach> View_XemDanhSachSach { get; set; }
-        public virtual DbSet<viewNVPW> viewNVPWs { get; set; }
         public virtual DbSet<vwNhanvienHoadonChitietHD> vwNhanvienHoadonChitietHDs { get; set; }
+        public virtual DbSet<viewNVPW> viewNVPWs { get; set; }
     }
 }

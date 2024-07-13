@@ -14,10 +14,10 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
     
     public partial class View_XemChiTietNhap
     {
-        public string sMaPN { get; set; }
-        public string sMaSach { get; set; }
+        public string MaPN { get; set; }
+        public string Masach { get; set; }
         public Nullable<int> iSoluong { get; set; }
-        public Nullable<double> fDonGia { get; set; }
-        public Nullable<double> fThanhTien { get; set; }
+        public Nullable<double> fDongia { get; set; }
+        public Nullable<double> fThanhtien { get; set; }
     }
 }

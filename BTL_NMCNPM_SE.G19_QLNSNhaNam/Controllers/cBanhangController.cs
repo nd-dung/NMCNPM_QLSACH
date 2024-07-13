@@ -10,7 +10,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
 {
     public class cBanhangController : Controller
     {
-        protected readonly dbQuanlyBanHangNhaSachNhaNamEntities1 db = new dbQuanlyBanHangNhaSachNhaNamEntities1();
+        protected readonly dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
 
         //public cBanhangController(dbQuanlyBanHangNhaSachNhaNamEntities1 dbContext)
         //{
@@ -99,8 +99,8 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
                         var chiTietHD = new tblChiTietHD
                         {
                             sMaHD = maHD,
-                            sMaSach = detail.sMaSach,
-                            iSoLuong = detail.iSoLuong,
+                            sMasach = detail.sMasach,
+                            iSoluong = detail.iSoluong,
                             fDongia = detail.fDongia,
                             fThanhtien = detail.fThanhtien
                         };

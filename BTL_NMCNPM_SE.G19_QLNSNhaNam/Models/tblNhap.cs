@@ -20,7 +20,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
             this.tblChiTietNhaps = new HashSet<tblChiTietNhap>();
         }
     
-        public string sMaPN { get; set; }
+        public string MaPN { get; set; }
         public string sMaNV { get; set; }
         public Nullable<System.DateTime> dNgaylap { get; set; }
         public Nullable<bool> bLoai { get; set; }

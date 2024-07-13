@@ -16,7 +16,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult Index()
         {
 
-            BSACHEntities db = new BSACHEntities();
+            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
             
             List<viewNVPW> listNV = db.viewNVPWs.ToList();
             return View("~/Views/cNhanvien/vNhanvien.cshtml", listNV);
@@ -25,7 +25,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult Create(viewNVPW nv)
         {
            
-            BSACHEntities db = new BSACHEntities();
+            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
             tblNhanVien nv2 = new tblNhanVien();
             nv2.sMaNV = nv.sMaNV;
             nv2.sTenNV = nv.sTenNV;
@@ -46,7 +46,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         [HttpPost]
         public ActionResult Delete(string id)
         {
-            BSACHEntities db = new BSACHEntities();
+            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
             tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == id).FirstOrDefault();
             nvien.bTrangthai = false;
 
@@ -59,7 +59,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         {
             try
             {
-                BSACHEntities db = new BSACHEntities();
+                dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
                 tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
 
                 nvien.sTenNV = nv.sTenNV;
@@ -85,7 +85,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult Search(string searchtext)
         {
 
-            BSACHEntities db = new BSACHEntities();
+            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
             List<viewNVPW> viewNVPWList = db.viewNVPWs.Where(
     v => v.sMaNV.ToLower().Contains(searchtext.ToLower()) ||
     v.sTenNV.ToLower().Contains(searchtext.ToLower()) ||

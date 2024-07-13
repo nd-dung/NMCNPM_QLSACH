@@ -11,7 +11,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
     public class cDangnhapController : Controller
     {
         // GET: cDangnhap
-        BSACHEntities db1 = new BSACHEntities();
+        dbQuanlyBanHangNhaSachNhaNamEntities db1 = new dbQuanlyBanHangNhaSachNhaNamEntities();
         public ActionResult Index()
         {
             return View();
