@@ -1,4 +1,4 @@
-* {
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,14 +11,14 @@ body {
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-weight: 700;
 }
 
@@ -29,46 +29,128 @@ h1 {
     align-items: center;
 }
 
-.search-bar input {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    .search-bar input {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .search-bar button {
+        padding: 10px 20px;
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 10px;
+        font-weight: 500;
+    }
+
+.table-container {
+    overflow-x: auto;
+    max-width: 100%;
 }
 
-.search-bar button {
-    padding: 10px 20px;
-    background-color: #2ecc71;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 10px;
-    font-weight: 500;
-}
-
-table {
+#employeeTable {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
+    #employeeTable th,
+    #employeeTable td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        white-space: nowrap;
+    }
 
-th {
-    background-color: #3498db;
-    color: white;
-    font-weight: 700;
-}
+    #employeeTable th {
+        background-color: #3498db;
+        color: white;
+        font-weight: 700;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
 
-tr:hover {
-    background-color: #f5f5f5;
-}
+    #employeeTable tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    #employeeTable th:nth-child(1),
+    #employeeTable td:nth-child(1) {
+        min-width: 80px;
+    }
+    /* Mã NV */
+
+    #employeeTable th:nth-child(2),
+    #employeeTable td:nth-child(2) {
+        min-width: 150px;
+    }
+    /* Tên NV */
+
+    #employeeTable th:nth-child(3),
+    #employeeTable td:nth-child(3) {
+        min-width: 100px;
+    }
+    /* Ngày sinh */
+
+    #employeeTable th:nth-child(4),
+    #employeeTable td:nth-child(4) {
+        min-width: 80px;
+    }
+    /* Giới tính */
+
+    #employeeTable th:nth-child(5),
+    #employeeTable td:nth-child(5) {
+        min-width: 150px;
+    }
+    /* Địa chỉ */
+
+    #employeeTable th:nth-child(6),
+    #employeeTable td:nth-child(6) {
+        min-width: 120px;
+    }
+    /* Ngày vào làm */
+
+    #employeeTable th:nth-child(7),
+    #employeeTable td:nth-child(7) {
+        min-width: 100px;
+    }
+    /* Trạng thái */
+
+    #employeeTable th:nth-child(8),
+    #employeeTable td:nth-child(8) {
+        min-width: 80px;
+    }
+    /* Vai trò */
+
+    #employeeTable th:nth-child(9),
+    #employeeTable td:nth-child(9) {
+        min-width: 100px;
+    }
+    /* Lương */
+
+    #employeeTable th:nth-child(10),
+    #employeeTable td:nth-child(10) {
+        min-width: 120px;
+    }
+    /* Số điện thoại */
+
+    #employeeTable th:nth-child(11),
+    #employeeTable td:nth-child(11) {
+        min-width: 100px;
+    }
+    /* Mật khẩu */
+
+    #employeeTable th:nth-child(12),
+    #employeeTable td:nth-child(12) {
+        min-width: 120px;
+    }
+/* Thao Tác */
 
 .action-buttons button {
     padding: 5px 10px;
@@ -89,7 +171,6 @@ tr:hover {
     color: white;
 }
 
-/* Modal Styles */
 /* Modal Styles */
 .modal {
     display: none;
@@ -123,9 +204,9 @@ tr:hover {
     color: #888;
 }
 
-.close:hover {
-    color: #000;
-}
+    .close:hover {
+        color: #000;
+    }
 
 #modalTitle {
     text-align: center;
@@ -133,55 +214,25 @@ tr:hover {
     font-weight: 700;
 }
 
-#employeeForm {
-    display: flex;
-    flex-direction: column;
-    max-width: 100%;
-}
-#employeeForm input {
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
-
-#employeeForm p {
-    margin-bottom: 3px;
-}
-
-
-#employeeFormU {
+#employeeForm, #employeeFormU {
     display: flex;
     flex-direction: column;
     max-width: 100%;
 }
 
-    #employeeFormU input {
-        padding: 15px;
+    #employeeForm input, #employeeFormU input,
+    #employeeForm select, #employeeFormU select {
+        padding: 12px;
         margin-bottom: 10px;
-        border-radius: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
     }
 
-    #employeeFormU p {
-        margin-bottom: 3px;
+    #employeeForm p, #employeeFormU p {
+        margin-bottom: 5px;
+        font-weight: 500;
     }
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.form-group input,
-.form-group select {
-    width: calc(100% - 20px);
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
 
 .form-buttons {
     display: flex;
@@ -189,14 +240,14 @@ tr:hover {
     margin-top: 1.5rem;
 }
 
-.form-buttons button {
-    padding: 12px 20px;
-    margin-left: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-}
+    .form-buttons button {
+        padding: 12px 20px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+    }
 
 .btn-primary {
     background-color: #3498db;
@@ -208,4 +259,18 @@ tr:hover {
     color: white;
 }
 
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .search-bar {
+        flex-direction: column;
+    }
 
+        .search-bar input {
+            margin-bottom: 10px;
+        }
+
+        .search-bar button {
+            width: 100%;
+            margin-left: 0;
+        }
+}
