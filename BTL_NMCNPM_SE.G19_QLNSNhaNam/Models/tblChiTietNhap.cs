@@ -12,11 +12,15 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTaiKhoan
+    public partial class tblChiTietNhap
     {
-        public string sMaNV { get; set; }
-        public string sMatKhau { get; set; }
+        public string sMaPN { get; set; }
+        public string sMaSach { get; set; }
+        public Nullable<int> iSoluong { get; set; }
+        public Nullable<double> fDonGia { get; set; }
+        public Nullable<double> fThanhTien { get; set; }
     
-        public virtual tblNhanVien tblNhanVien { get; set; }
+        public virtual tblNhap tblNhap { get; set; }
+        public virtual tblSach tblSach { get; set; }
     }
 }

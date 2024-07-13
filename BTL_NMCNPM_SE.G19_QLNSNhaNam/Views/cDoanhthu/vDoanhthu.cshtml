@@ -1,9 +1,236 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "vDoanhthu";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Doanh Thu</title>
+    <link rel="stylesheet" href="~/Front-end/css/style_revenueManagement.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý Doanh Thu</h1>
+        <div class="filter-section">
+            <div class="filter-group">
+                <label for="employee">Chọn nhân viên:</label>
+                <input type="text" id="employee" placeholder="Nhập thông tin nhân viên" />
+            </div>
+            <div class="filter-group">
+                <label for="book">Tên sách:</label>
+                <input type="text" id="book" placeholder="Nhập thông tin sách">
+            </div>
+            <div class="filter-group">
+                <label for="startDate">Từ ngày:</label>
+                <input type="date" id="startDate">
+            </div>
+            <div class="filter-group">
+                <label for="endDate">Đến ngày:</label>
+                <input type="date" id="endDate">
+            </div>
+            <button id="filterButton">Lọc</button>
+        </div>
+        <div class="summary-section">
+            <h2>Tổng quan doanh thu</h2>
+            <p>Tổng doanh thu: <span id="totalRevenue">0 đ</span></p>
+            <p>Số đơn hàng: <span id="orderCount">0</span></p>
+        </div>
+        <table id="revenueTable">
+            <thead>
+                <tr>
+                    <th>Mã HD</th>
+                    <th>Mã NV</th>
+                    <th>Ngày lập</th>
+                    <th>Tổng HD</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="charts-section">
+        <div class="chart-container">
+            <canvas id="categoryPieChart"></canvas>
+        </div>
+    </div>
 
-<h2>vDoanhthu</h2>
+    <div class="detailed-reports">
+        <h2>Báo cáo chi tiết</h2>
+        <div class="report-section">
+            <h3>Doanh thu theo thể loại sách</h3>
+            <table id="categoryRevenueTable">
+                <thead>
+                    <tr>
+                        <th>Thể loại</th>
+                        <th>Doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="report-section">
+            <h3>Doanh thu theo tác giả</h3>
+            <table id="authorRevenueTable">
+                <thead>
+                    <tr>
+                        <th>Tác giả</th>
+                        <th>Doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="report-section">
+            <h3>Sách bán chạy nhất</h3>
+            <table id="bestSellerTable">
+                <thead>
+                    <tr>
+                        <th>Tên sách</th>
+                        <th>Số lượng bán</th>
+                        <th>Doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#filterButton').click(function () {
+                var employee = $('#employee').val();
+                var book = $('#book').val();
+                var startDate = $('#startDate').val();
+                var endDate = $('#endDate').val();
 
+                $.ajax({
+                    url: '@Url.Action("FilterRevenue", "cDoanhthu")',
+                    type: 'GET',
+                    data: {
+                        employee: employee,
+                        book: book,
+                        startDate: startDate,
+                        endDate: endDate
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            updateAllData(response);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Đã xảy ra lỗi: " + error);
+                    }
+                });
+            });
+        });
+
+        function updateAllData(response) {
+            updateSummary(response);
+            updateRevenueTable(response.data);
+            updateCategoryPieChart(response.revenueByCategory);
+            updateCategoryRevenueTable(response.revenueByCategory);
+            updateAuthorRevenueTable(response.revenueByAuthor);
+            updateBestSellerTable(response.bestSellers);
+        }
+
+        function updateSummary(data) {
+            $('#totalRevenue').text(data.totalRevenue + ' đ');
+            $('#orderCount').text(data.orderCount);
+        }
+
+        function updateRevenueTable(data) {
+            var revenueTable = $('#revenueTable tbody');
+            revenueTable.empty();
+            $.each(data, function (index, item) {
+                var row = '<tr>' +
+                    '<td>' + item.sMaHD + '</td>' +
+                    '<td>' + item.sMaNV + '</td>' +
+                    '<td>' + item.dNgaylap + '</td>' +
+                    '<td>' + item.fTongHD + '</td>' +
+                    '</tr>';
+                revenueTable.append(row);
+            });
+        }
+
+        function updateCategoryPieChart(data) {
+            var ctx = document.getElementById('categoryPieChart').getContext('2d');
+
+            // Kiểm tra xem biểu đồ đã tồn tại chưa
+            if (window.categoryPieChart instanceof Chart) {
+                window.categoryPieChart.destroy();
+            }
+
+            window.categoryPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.map(item => item.category),
+                    datasets: [{
+                        data: data.map(item => item.revenue),
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(153, 102, 255)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Doanh thu theo thể loại sách'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCategoryRevenueTable(data) {
+            var table = $('#categoryRevenueTable tbody');
+            table.empty();
+            $.each(data, function (index, item) {
+                var row = '<tr>' +
+                    '<td>' + item.category + '</td>' +
+                    '<td>' + item.revenue + ' đ</td>' +
+                    '</tr>';
+                table.append(row);
+            });
+        }
+
+        function updateAuthorRevenueTable(data) {
+            var table = $('#authorRevenueTable tbody');
+            table.empty();
+            $.each(data, function (index, item) {
+                var row = '<tr>' +
+                    '<td>' + item.author + '</td>' +
+                    '<td>' + item.revenue + ' đ</td>' +
+                    '</tr>';
+                table.append(row);
+            });
+        }
+
+        function updateBestSellerTable(data) {
+            var table = $('#bestSellerTable tbody');
+            table.empty();
+            $.each(data, function (index, item) {
+                var row = '<tr>' +
+                    '<td>' + item.bookName + '</td>' +
+                    '<td>' + item.soldQuantity + '</td>' +
+                    '<td>' + item.revenue + ' đ</td>' +
+                    '</tr>';
+                table.append(row);
+            });
+        }
+    </script>
+</body>
+</html>

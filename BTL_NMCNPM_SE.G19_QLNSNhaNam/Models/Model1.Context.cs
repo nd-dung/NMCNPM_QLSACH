@@ -27,6 +27,17 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
     
         public virtual DbSet<tblNhanVien> tblNhanViens { get; set; }
         public virtual DbSet<tblTaiKhoan> tblTaiKhoans { get; set; }
+        public virtual DbSet<tblChiTietHD> tblChiTietHDs { get; set; }
+        public virtual DbSet<tblChiTietNhap> tblChiTietNhaps { get; set; }
+        public virtual DbSet<tblHoaDon> tblHoaDons { get; set; }
+        public virtual DbSet<tblNhap> tblNhaps { get; set; }
+        public virtual DbSet<tblSach> tblSaches { get; set; }
         public virtual DbSet<viewNVPW> viewNVPWs { get; set; }
+        public virtual DbSet<View_XemChiTietNhap> View_XemChiTietNhap { get; set; }
+        public virtual DbSet<View_XemDanhSachHoaDon> View_XemDanhSachHoaDon { get; set; }
+        public virtual DbSet<View_XemDanhSachSach> View_XemDanhSachSach { get; set; }
+        public virtual DbSet<View_XemDanhSachNhanVien> View_XemDanhSachNhanVien { get; set; }
+        public virtual DbSet<View_XemDanhSachPhieuNhap> View_XemDanhSachPhieuNhap { get; set; }
+        public virtual DbSet<vwNhanvienHoadonChitietHD> vwNhanvienHoadonChitietHDs { get; set; }
     }
 }
