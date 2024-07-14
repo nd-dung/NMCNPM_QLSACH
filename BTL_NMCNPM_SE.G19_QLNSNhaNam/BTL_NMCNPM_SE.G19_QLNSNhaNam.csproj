@@ -242,6 +242,7 @@
     <Content Include="Front-end\css\style_quanLybanHang.css" />
     <Content Include="Front-end\css\style_revenueManagement.css" />
     <Content Include="Front-end\js\js_navbar.js" />
+    <Content Include="Front-end\js\receiptManagement.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Models\Model1.Context.tt">
