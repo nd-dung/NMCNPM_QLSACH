@@ -15,86 +15,75 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         // GET: cNhanvien
         public ActionResult Index()
         {
-            if (Session["User"] == null)
-            {
-                return RedirectToAction("Login", "cDangnhap");
-            }
-            else if (Session["User"].Equals("ADMIN"))
-            {
-                dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
 
-                List<viewNVPW> listNV = db.viewNVPWs.ToList();
-                return View("~/Views/cNhanvien/vNhanvien.cshtml", listNV);
-            }
-            else
-            {
-                return RedirectToAction("Index", "cBanhang");
-            }
+            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
+
+            List<viewNVPW> listNV = db.viewNVPWs.ToList();
+            return View("~/Views/cNhanvien/vNhanvien.cshtml", listNV);
         }
         [HttpPost]
         public ActionResult Create(viewNVPW nv)
         {
-           
-            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
-            tblNhanVien nv2 = new tblNhanVien();
-            nv2.sMaNV = nv.sMaNV;
-            nv2.sTenNV = nv.sTenNV;
-            nv2.sDiachi = nv.sDiachi;
-            nv2.sCCCD = nv.sCCCD;
-            nv2.bGioitinh = nv.bGioitinh;
-            nv2.bTrangthai = nv.bTrangthai;
-            nv2.bVaitro = false;
-            nv2.dNgaysinh = nv.dNgaysinh;
-            nv2.dNgayvaolam = nv.dNgayvaolam;
-            nv2.fLuong = nv.fLuong;
-            nv2.sSĐT = nv.sSĐT;
-            db.tblNhanViens.Add(nv2);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public ActionResult Delete(string id)
-        {
-            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
-            tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == id).FirstOrDefault();
-            nvien.bTrangthai = false;
-
-            db.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
-        [HttpPost]
-        public ActionResult Update(viewNVPW nv)
-        {
             try
             {
                 dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
-                tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
-
-                nvien.sTenNV = nv.sTenNV;
-                nvien.dNgaysinh = nv.dNgaysinh;
-                nvien.fLuong = nv.fLuong;
-                nvien.sCCCD = nv.sCCCD;
-                nvien.sDiachi = nv.sDiachi;
-                nvien.sSĐT = nv.sSĐT;
-                nvien.bGioitinh = nv.bGioitinh;
-                nvien.bTrangthai = nv.bTrangthai;
-                nvien.bVaitro = nv.bVaitro;
-                nvien.dNgayvaolam = nv.dNgayvaolam;
-
-                tblTaiKhoan tk = db.tblTaiKhoans.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
-                if (tk != null)
-                { tk.sMatkhau = nv.sMatkhau; }
+                tblNhanVien nv2 = new tblNhanVien();
+                nv2.sMaNV = nv.sMaNV;
+                nv2.sTenNV = nv.sTenNV;
+                nv2.sDiachi = nv.sDiachi;
+                nv2.sCCCD = nv.sCCCD;
+                nv2.bGioitinh = nv.bGioitinh;
+                nv2.bTrangthai = nv.bTrangthai;
+                nv2.bVaitro = false;
+                nv2.dNgaysinh = nv.dNgaysinh;
+                nv2.dNgayvaolam = nv.dNgayvaolam;
+                nv2.fLuong = nv.fLuong;
+                nv2.sSĐT = nv.sSĐT;
+                db.tblNhanViens.Add(nv2);
                 db.SaveChanges();
+                return Content("Thêm nhân viên thành công"); // Return a success message
             }
-            catch { };
+            catch (Exception ex)
+            {
+                // Display an alert dialog with the error message
+                return Content("Mã nhân viên đã tồn tại: " + ex.Message); // Return the error message
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult Update(viewNVPW nv)
+        {
+
+            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
+            tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
+
+            nvien.sTenNV = nv.sTenNV;
+            nvien.dNgaysinh = nv.dNgaysinh;
+            nvien.fLuong = nv.fLuong;
+            nvien.sCCCD = nv.sCCCD;
+            nvien.sDiachi = nv.sDiachi;
+            nvien.sSĐT = nv.sSĐT;
+            nvien.bGioitinh = nv.bGioitinh;
+            nvien.bTrangthai = nv.bTrangthai;
+            nvien.bVaitro = nv.bVaitro;
+            nvien.dNgayvaolam = nv.dNgayvaolam;
+
+            tblTaiKhoan tk = db.tblTaiKhoans.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
+            if (tk != null)
+            { tk.sMatkhau = nv.sMatkhau; }
+            db.SaveChanges();
+
+
             return RedirectToAction("Index");
         }
 
         public ActionResult Search(string searchtext)
         {
-
+            if (searchtext.IsNullOrWhiteSpace())
+            {
+                return RedirectToAction("Index");
+            }
             dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
             List<viewNVPW> viewNVPWList = db.viewNVPWs.Where(
     v => v.sMaNV.ToLower().Contains(searchtext.ToLower()) ||
