@@ -15,8 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <div id="navbar-placeholder"></div>
-
     <div class="container">
         <h1>Quản lý Nhân viên</h1>
         <form action="/cnhanvien/search" method="post">
@@ -27,50 +25,48 @@
             </div>
         </form>
 
-        <table id="employeeTable">
-            <thead>
-                <tr>
-                    <th>Mã NV</th>
-                    <th>Tên NV</th>
-                    <th>Ngày sinh</th>
-                    <th>Giới tính</th>
-                    <th>Địa chỉ</th>
-                    <th>Ngày vào làm</th>
-                    <th>SĐT</th>
-                    <th>Chức vụ</th>
-                    <th>Lương</th>
-                    <th>CCCD</th>
-                    <th>Mật khẩu</th>
-                    <th>Thao Tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+        <div class="table-container">
+            <table id="employeeTable">
+                <thead>
                     <tr>
-                        <td>@item.sMaNV</td>
-                        <td>@item.sTenNV</td>
-                        <td>@(item.dNgaysinh?.ToString("d/M/yyyy"))</td>
-                        <td> @(item.bGioitinh ?? false ? "Nam" : "Nữ")
-                        <td>
-                        <td>@item.sDiachi</td>
-                        <td>@(item.dNgayvaolam?.ToString("d/M/yyyy"))</td>
-                        <td> @(item.bTrangthai ?? false ? "Làm" : "Nghỉ")
-                        <td>
-                        <td> @(item.bVaitro ?? false ? "QL" : "NV")
-                        <td>
-                        <td>@item.fLuong</td>
-                        <td>@item.sSĐT</td>
-                        <td>************</td>
-                        <td class="action-buttons">
-                            <button class="edit-btn" onclick="onUpdateNV('@item.sMaNV')">Sửa</button>
-                            <button class="delete-btn" onclick="confirmDelete('@item.sMaNV')">Xóa</button>
-                        </td>
+                        <th>Mã NV</th>
+                        <th>Tên NV</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                        <th>Ngày vào làm</th>
+                        <th>Trạng thái</th>
+                        <th>Vai trò</th>
+                        <th>Lương</th>
+                        <th>Số điện thoại</th>
+                        <th>Mật khẩu</th>
+                        <th>Thao Tác</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.sMaNV</td>
+                            <td>@item.sTenNV</td>
+                            <td>@(item.dNgaysinh?.ToString("d/M/yyyy"))</td>
+                            <td> @(item.bGioitinh ?? false ? "Nam" : "Nữ")</td>
+                            <td>@item.sDiachi</td>
+                            <td>@(item.dNgayvaolam?.ToString("d/M/yyyy"))</td>
+                            <td> @(item.bTrangthai ?? false ? "Làm" : "Nghỉ")</td>
+                            <td> @(item.bVaitro ?? false ? "QL" : "NV")</td>
+                            <td>@item.fLuong</td>
+                            <td>@item.sSĐT</td>
+                            <td>************</td>
+                            <td class="action-buttons">
+                                <button class="edit-btn" onclick="onUpdateNV('@item.sMaNV')">Sửa</button>
+                            </td>
+                        </tr>
+                    }
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
 
     </div>
     <!-- Modal Form -->
@@ -80,13 +76,13 @@
             <h2 id="modalTitle">Thêm Nhân Viên</h2>
             <form action="/cnhanvien/Create" id="employeeForm" method="post">
                 <p>Mã nhân viên:</p>
-                <input type="text" id="sMaNV" name="sMaNV" placeholder="Mã NV" required>
+                <input type="text" id="sMaNVI" name="sMaNVI" placeholder="Mã NV">
                 <p>Tên nhân viên:</p>
-                <input type="text" id="sTenNV" name="sTenNV" placeholder="Tên NV" required>
+                <input type="text" id="sTenNV" name="sTenNV" placeholder="Tên NV">
                 <p>Ngày sinh:</p>
-                <input type="date" id="dNgaysinh" name="dNgaysinh" placeholder="Ngày sinh" required>
+                <input type="date" id="dNgaysinh" name="dNgaysinh" placeholder="Ngày sinh">
                 <p>Giới tính:</p>
-                <select id="bGioiTinh" name="bGioiTinh" required>
+                <select id="bGioiTinh" name="bGioiTinh">
                     <option value="">Chọn giới tính</option>
                     <option value=true>Nam</option>
                     <option value=false>Nữ</option>
@@ -94,23 +90,23 @@
                 </select>
 
                 <p>Trạng thái:</p>
-                <select id="bTrangThai" name="bTrangThai" required>
+                <select id="bTrangThai" name="bTrangThai">
                     <option value="">Chọn trạng thái</option>
                     <option value=true>Làm</option>
                     <option value=false>Nghỉ làm</option>
                 </select>
                 <p>Địa chỉ:</p>
-                <input type="text" id="sDiaChi" name="sDiaChi" placeholder="Địa chỉ" required>
+                <input type="text" id="sDiaChi" name="sDiaChi" placeholder="Địa chỉ">
                 <p>Ngày vào làm:</p>
-                <input type="date" id="dNgayvaolam" name="dNgayvaolam" placeholder="Ngày vào làm" required>
+                <input type="date" id="dNgayvaolam" name="dNgayvaolam" placeholder="Ngày vào làm">
                 <p>Số điện thoại:</p>
-                <input type="text" id="sSĐT" name="sSĐT" placeholder="SĐT" required>
+                <input type="text" id="sSĐT" name="sSĐT" placeholder="SĐT">
                 <p>Lương:</p>
-                <input type="text" id="fLuong" name="fLuong" placeholder="Lương" required>
+                <input type="text" id="fLuong" name="fLuong" placeholder="Lương">
                 <p>CCCD:</p>
-                <input type="text" id="sCCCD" name="sCCCD" placeholder="CCCD" required>
+                <input type="text" id="sCCCD" name="sCCCD" placeholder="CCCD">
                 <p>Mật khẩu:</p>
-                <input type="text" id="sMatkhau" name="sMatkhau" placeholder="Mật khẩu" required>
+                <input type="text" id="sMatkhau" name="sMatkhau" placeholder="Mật khẩu">
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-primary">Thêm</button>
                     <button type="reset" class="btn btn-secondary close-btn">Hủy</button>
@@ -133,9 +129,9 @@
                 <p>Tên nhân viên:</p>
                 <input type="text" id="sTenNVU" name="sTenNV" placeholder="Tên NV">
                 <p>Ngày sinh:</p>
-                <input type="date" id="dNgaysinhU" name="dNgaysinh" placeholder="Ngày sinh" required>
+                <input type="date" id="dNgaysinhU" name="dNgaysinh" placeholder="Ngày sinh">
                 <p>Giới tính:</p>
-                <select id="bGioiTinhU" name="bGioiTinh" required>
+                <select id="bGioiTinhU" name="bGioiTinh">
                     <option value="">Chọn giới tính</option>
                     <option value=true>Nam</option>
                     <option value=false>Nữ</option>
@@ -143,23 +139,23 @@
                 </select>
 
                 <p>Trạng thái:</p>
-                <select id="bTrangThaiU" name="bTrangThai" required>
+                <select id="bTrangThaiU" name="bTrangThai">
                     <option value="">Chọn trạng thái</option>
                     <option value=true>Làm</option>
                     <option value=false>Nghỉ làm</option>
                 </select>
                 <p>Địa chỉ:</p>
-                <input type="text" id="sDiaChiU" name="sDiaChi" placeholder="Địa chỉ" required>
+                <input type="text" id="sDiaChiU" name="sDiaChi" placeholder="Địa chỉ">
                 <p>Ngày vào làm:</p>
-                <input type="date" id="dNgayvaolamU" name="dNgayvaolam" placeholder="Ngày vào làm" required>
+                <input type="date" id="dNgayvaolamU" name="dNgayvaolam" placeholder="Ngày vào làm">
                 <p>Số điện thoại:</p>
-                <input type="text" id="sSĐTU" name="sSĐT" placeholder="SĐT" required>
+                <input type="text" id="sSĐTU" name="sSĐT" placeholder="SĐT">
                 <p>Lương:</p>
-                <input type="text" id="fLuongU" name="fLuong" placeholder="Lương" required>
+                <input type="text" id="fLuongU" name="fLuong" placeholder="Lương">
                 <p>CCCD:</p>
-                <input type="text" id="sCCCDU" name="sCCCD" placeholder="CCCD" required>
+                <input type="text" id="sCCCDU" name="sCCCD" placeholder="CCCD">
                 <p>Mật khẩu:</p>
-                <input type="text" id="sMatkhauU" name="sMatkhau" placeholder="Mật khẩu" required>
+                <input type="text" id="sMatkhauU" name="sMatkhau" placeholder="Mật khẩu">
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-primary ">Cập nhật</button>
                     <button type="reset" class="btn btn-secondary close-btn">Hủy</button>
@@ -171,18 +167,16 @@
 
     <script>
                 function onUpdateNV(maNV) {
-    // Find the employee by maNV in the model
-var employees = @Html.Raw(Json.Encode(Model));
+
+                 var employees = @Html.Raw(Json.Encode(Model));
     for (var i = 0; i < employees.length; i++) {
         if (employees[i].sMaNV === maNV) {
             employee = employees[i];
             break;
         }
     }
-
             $('#employeeModalU').css('display', 'block');
             document.getElementById('pMaNVU').textContent = employee.sMaNV;
-
             document.getElementById('sMaNVU').value = employee.sMaNV;
             document.getElementById('sTenNVU').value = employee.sTenNV;
             document.getElementById('dNgaysinhU').value = convertJsonDate(employee.dNgaysinh);
@@ -208,23 +202,7 @@ var employees = @Html.Raw(Json.Encode(Model));
             return formattedDate;
         }
 
-        function confirmDelete(maNV) {
-    if (confirm("Bạn có chắc chắn muốn xóa nhân viên này?")) {
-        $.ajax({
-            url: '@Url.Action("Delete", "cNhanvien")',
-            type: 'POST',
-            data: { id: maNV },
-            success: function(result) {
-                    // Chuyển hướng đến hành động Index sau khi xóa thành công
-                    window.location.href = '@Url.Action("Index", "cNhanvien")';
 
-            },
-            error: function() {
-                alert('Có lỗi xảy ra khi xóa nhân viên. Vui lòng thử lại.');
-            }
-        });
-    }
-        }
 
                 function searchNV(searchKey) {
 
@@ -240,9 +218,6 @@ var employees = @Html.Raw(Json.Encode(Model));
         });
     }
 
-        $(function () {
-            $("#navbar-placeholder").load("navbar.html");
-        });
         $(document).ready(function () {
             // Open modal when clicking "Thêm Nhân Viên"
             $('#addButton').click(function () {
@@ -267,106 +242,180 @@ var employees = @Html.Raw(Json.Encode(Model));
 
         });
 
+        const formA = document.getElementById('employeeForm')
 
-        const formU = document.getElementById('employeeFormU');
-        formU.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the form from submitting
-        // Get the form inputs
-        const sMaNVU = document.getElementById('sMaNVU');
-        const sTenNVU = document.getElementById('sTenNVU');
-        const dNgaysinhU = document.getElementById('dNgaysinhU');
-        const bGioiTinhU = document.getElementById('bGioiTinhU');
-        const bTrangThaiU = document.getElementById('bTrangThaiU');
-        const sDiaChiU = document.getElementById('sDiaChiU');
-        const dNgayvaolamU = document.getElementById('dNgayvaolamU');
-        const sSĐTU = document.getElementById('sSĐTU');
-        const fLuongU = document.getElementById('fLuongU');
-        const sCCCDU = document.getElementById('sCCCDU');
-                const sMatkhauU = document.getElementById('sMatkhauU');
-                if (checkValid(sMaNVU,sTenNVU,dNgaysinhU,bGioiTinhU,sDiaChiU,dNgayvaolamU,sSĐTU,fLuongU,sCCCDU,sMatkhauU)) {
+        // Trong form thêm mới
+        formA.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (checkRong(false,
+                document.getElementById('sMaNVI'),
+                document.getElementById('sTenNV'),
+                document.getElementById('dNgaysinh'),
+                document.getElementById('bGioiTinh'),
+                document.getElementById('bTrangThai'),
+                document.getElementById('sDiaChi'),
+                document.getElementById('dNgayvaolam'),
+                document.getElementById('sSĐT'),
+                document.getElementById('fLuong'),
+                document.getElementById('sCCCD'),
+                document.getElementById('sMatkhau')
+            )) {
 
-                    formU.submit();
-                }
-
-            });
-        const form = document.getElementById('employeeForm');
-      form.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the form from submitting
-            // Get the form inputs
-            const sMaNV= document.getElementById('sMaNV');
-            const sTenNV = document.getElementById('sTenNV');
-            const dNgaysinh = document.getElementById('dNgaysinh');
-            const bGioiTinh= document.getElementById('bGioiTinh');
-            const bTrangThai = document.getElementById('bTrangThai');
-            const sDiaChi = document.getElementById('sDiaChi');
-            const dNgayvaolam = document.getElementById('dNgayvaolam');
-            const sSĐT = document.getElementById('sSĐT');
-            const fLuong = document.getElementById('fLuong');
-            const sCCCD = document.getElementById('sCCCD');
-            const sMatkhauU = document.getElementById('sMatkhau');
-            if (checkValid(sMaNV, sTenNV, dNgaysinh, bGioiTinh, sDiaChi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) ){
-
-                form.submit();
+                return;
             }
 
+            if (checkValid(document.getElementById('sSĐT'), document.getElementById('sCCCD'), document.getElementById('fLuong'))) {
+                SendNV(
+                    $('#sMaNVI').val(),
+                    $('#sTenNV').val(),
+                    $('#dNgaysinh').val(),
+                    $('#bGioiTinh').val(),
+                    $('#bTrangThai').val(),
+                    $('#sDiaChi').val(),
+                    $('#dNgayvaolam').val(),
+                    $('#sSĐT').val(),
+                    $('#fLuong').val(),
+                    $('#sCCCD').val(),
+                    $('#sMatkhau').val()
+                );
+            }
         });
 
-        function checkValid(sMaNVU,sTenNVU, dNgaysinhU, bGioiTinhU, sDiaChiU, dNgayvaolamU, sSĐTU, fLuongU, sCCCDU, sMatkhauU) {
-            // Perform validation checks
+        function SendNV(sMaNV, sTenNV, dNgaysinh, bGioitinh, bTrangthai, sDiachi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) {
+  $.ajax({
+    url: '@Url.Action("Create", "cNhanVien")',
+    type: 'POST',
+    data: {
+      sMaNV: sMaNV,
+      sTenNV: sTenNV,
+      dNgaysinh: dNgaysinh,
+      bGioitinh: bGioitinh,
+      bTrangthai: bTrangthai,
+      sDiachi: sDiachi,
+      dNgayvaolam: dNgayvaolam,
+      sSĐT: sSĐT,
+      fLuong: fLuong,
+      sCCCD: sCCCD,
+      sMatkhau: sMatkhau
+    },
+    success: function(result) {
+      alert(result);
+      window.location.href = '@Url.Action("Index", "cNhanVien")';
+    },
+    error: function(xhr, status, error) {
+      alert('Error: ' + error);
+    }
+  });
+}
+        }
 
-            let isValid = true;
-            if (!sMaNVU.value.trim()) {
-                isValid = false;
-                alert("Không được để trống tên");
+
+
+        const formU = document.getElementById('employeeFormU')
+
+        // Trong form cập nhật
+        formU.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (checkRong(true,
+                document.getElementById('sMaNVU'),
+                document.getElementById('sTenNVU'),
+                document.getElementById('dNgaysinhU'),
+                document.getElementById('bGioiTinhU'),
+                document.getElementById('bTrangThaiU'),
+                document.getElementById('sDiaChiU'),
+                document.getElementById('dNgayvaolamU'),
+                document.getElementById('sSĐTU'),
+                document.getElementById('fLuongU'),
+                document.getElementById('sCCCDU'),
+                document.getElementById('sMatkhauU')
+            )) {
+                return;
+            }
+            if (checkValid(document.getElementById('sSĐTU'), document.getElementById('sCCCDU'), document.getElementById('fLuongU'))) {
+                formU.submit();
+            }
+        });
+
+        function checkRong(isUpdate, sMaNV, sTenNV, dNgaysinh, bGioiTinh, bTrangThai, sDiaChi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) {
+            let isValid = false;
+            if (isUpdate == false) {
+                if (!sMaNV.value.trim()) {
+                    isValid = true;
+                    alert("Bạn cần nhập đủ thông tin Mã Nhân Viên");
+                }
+            }
+            if (!sTenNV.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin tên");
             }
 
-            if (!sTenNVU.value.trim()) {
-                isValid = false;
-                alert("Không được để trống tên");
+            if (!dNgaysinh.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin ngày sinh");
             }
 
-            if (!dNgaysinhU.value==="") {
-                isValid = false;
-                alert("Vui lòng nhập ngày sinh");
+            if (!bGioiTinh.value) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin giới tính");
+            }
+            if (!bTrangThai.value) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin Trạng Thái");
             }
 
-            if (!bGioiTinhU.value) {
-                isValid = false;
-                alert("Vui lòng chọn giới tính");
+            if (!sDiaChi.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin địa chỉ");
             }
 
-            if (!sDiaChiU.value.trim()) {
-                isValid = false;
-                alert("Vui lòng nhập địa chỉ");
+            if (!dNgayvaolam.value) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin ngày vào làm");
             }
 
-            if (!dNgayvaolamU.value) {
-                isValid = false;
-                alert("Vui lòng nhập ngày vào làm");
+            if (!sSĐT.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin số điện thoại");
             }
 
-            if (!sSĐTU.value.trim()) {
-                isValid = false;
-                alert("Vui lòng nhập số điện thoại");
+            if (!fLuong.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin lương");
             }
 
-            if (isNaN(fLuongU.value) || fLuongU.value <= 0) {
-                isValid = false;
-                alert("Vui lòng nhập lương hợp lệ");
+            if (!sCCCD.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin CCCD");
             }
 
-            if (!sCCCDU.value.trim()) {
-                isValid = false;
-                alert("Vui lòng nhập CCCD");
-            }
-
-            if (!sMatkhauU.value.trim()) {
-                isValid = false;
-                alert("Vui lòng nhập mật khẩu");
+            if (!sMatkhau.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin mật khẩu");
             }
 
             return isValid;
         }
+
+
+
+        function checkValid(sSDT, sCCCD,fLuong) {
+            let isValid = true
+            if (isNaN(sSDT.value.trim()) || sSDT.value.trim().length > 12) {
+                alert("Số điện thoại phải là số và không vượt quá 12 kí tự")
+                isValid=false
+            }
+            if (isNaN(sCCCD.value.trim()) || sCCCD.value.trim().length > 12) {
+                alert("Số điện thoại phải là số và không vượt quá 12 kí tự")
+                isValid = false
+            }
+            if (isNaN(fLuong.value.trim()) || fLuong.value.trim().length > 12) {
+                alert("Số điện thoại phải là số và không vượt quá 12 kí tự")
+                isValid = false
+            }
+            return isValid
+        }
+
+
 
     </script>
 </body>
