@@ -14,24 +14,31 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
 
         public ActionResult Index(string searchInput = "")
         {
-            List<tblSach> listSach = db.tblSaches.Where(
-                row => row.sTensach.Contains(searchInput)).ToList();
-            ViewBag.Search = searchInput.Trim();
-
-            var settings = new JsonSerializerSettings
+            if (Session["User"] == null)
             {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects
-            };
-            ViewBag.JsonListSach = JsonConvert.SerializeObject(listSach, Formatting.None, settings);
-
-            // Đảm bảo ViewBag.JsonListSach không bao giờ null
-            if (string.IsNullOrEmpty(ViewBag.JsonListSach))
-            {
-                ViewBag.JsonListSach = "[]";
+                return RedirectToAction("Login", "cDangnhap");
             }
+            else
+            {
+                List<tblSach> listSach = db.tblSaches.Where(
+                row => row.sTensach.Contains(searchInput)).ToList();
+                ViewBag.Search = searchInput.Trim();
 
-            return View("~/Views/cSach/vSach.cshtml", listSach);
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                };
+                ViewBag.JsonListSach = JsonConvert.SerializeObject(listSach, Formatting.None, settings);
+
+                // Đảm bảo ViewBag.JsonListSach không bao giờ null
+                if (string.IsNullOrEmpty(ViewBag.JsonListSach))
+                {
+                    ViewBag.JsonListSach = "[]";
+                }
+
+                return View("~/Views/cSach/vSach.cshtml", listSach);
+            }
         }
 
         public ActionResult Detail(string sMasach)

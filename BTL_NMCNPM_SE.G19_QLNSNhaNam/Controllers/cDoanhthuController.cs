@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,7 +11,18 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
 
         public ActionResult Index()
         {
-            return View("~/Views/cDoanhthu/vDoanhthu.cshtml");
+            if (Session["User"] == null)
+            {
+                return RedirectToAction("Login", "cDangnhap");
+            }
+            else if (Session["User"].Equals("ADMIN"))
+            {
+                return View("~/Views/cDoanhthu/vDoanhthu.cshtml");
+            }
+            else
+            {
+                return RedirectToAction("Index", "cBanhang");
+            }
         }
 
         [HttpGet]

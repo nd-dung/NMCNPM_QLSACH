@@ -15,11 +15,21 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         // GET: cNhanvien
         public ActionResult Index()
         {
+            if (Session["User"] == null)
+            {
+                return RedirectToAction("Login", "cDangnhap");
+            }
+            else if (Session["User"].Equals("ADMIN"))
+            {
+                dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
 
-            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
-            
-            List<viewNVPW> listNV = db.viewNVPWs.ToList();
-            return View("~/Views/cNhanvien/vNhanvien.cshtml", listNV);
+                List<viewNVPW> listNV = db.viewNVPWs.ToList();
+                return View("~/Views/cNhanvien/vNhanvien.cshtml", listNV);
+            }
+            else
+            {
+                return RedirectToAction("Index", "cBanhang");
+            }
         }
         [HttpPost]
         public ActionResult Create(viewNVPW nv)

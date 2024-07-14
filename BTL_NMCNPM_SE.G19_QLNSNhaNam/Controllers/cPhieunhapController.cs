@@ -14,9 +14,16 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         // GET: cPhieunhap
         public ActionResult Index()
         {
-            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
-            List<tblNhap> listNV = db.tblNhaps.ToList();
-            return View("~/Views/cPhieunhap/vPhieunhap.cshtml", listNV);
+            if (Session["User"] == null)
+            {
+                return RedirectToAction("Login", "cDangnhap");
+            }
+            else
+            {
+                dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
+                List<tblNhap> listNV = db.tblNhaps.ToList();
+                return View("~/Views/cPhieunhap/vPhieunhap.cshtml", listNV);
+            }
         }
         [HttpPost]
         public ActionResult Create(tblNhap bn)
