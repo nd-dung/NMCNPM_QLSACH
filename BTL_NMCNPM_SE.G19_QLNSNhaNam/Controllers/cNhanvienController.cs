@@ -86,10 +86,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
 
         public ActionResult Search(string searchtext)
         {
-            if (searchtext.IsNullOrWhiteSpace())
-            {
-                return RedirectToAction("Index");
-            }
+
             dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
             List<viewNVPW> viewNVPWList = db.viewNVPWs.Where(
     v => v.sMaNV.ToLower().Contains(searchtext.ToLower()) ||

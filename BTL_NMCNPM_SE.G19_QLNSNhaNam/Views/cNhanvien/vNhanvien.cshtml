@@ -17,7 +17,7 @@
 <body>
     <div class="container">
         <h1>Quản lý Nhân viên</h1>
-        <form action="/cnhanvien/search" method="post">
+        <form id="formSearch" action="/cnhanvien/search" method="post">
             <div class="search-bar">
                 <input id="searchtext" name="searchtext" type="text" placeholder="Nhập tên nhân viên để tìm kiếm...">
                 <button type="submit" id="searchButton" class="btn btn-search">Tìm kiếm</button>
@@ -202,21 +202,19 @@
             return formattedDate;
         }
 
-
-
-                function searchNV(searchKey) {
-
-        $.ajax({
-            url: '@Url.Action("Search", "cNhanvien")',
-            type: 'POST',
-            data: { nv: searchKey },
-            success: function(result) {
-
-            },
-            error: function() {
+        const formS = document.getElementById('formSearch')
+        formS.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (document.getElementById('searchtext').value.trim() == "") {
+                alert("Vui lòng nhập từ khóa!");
+                return;
+            }
+            else {
+                formS.submit();
             }
         });
-    }
+
+
 
         $(document).ready(function () {
             // Open modal when clicking "Thêm Nhân Viên"
