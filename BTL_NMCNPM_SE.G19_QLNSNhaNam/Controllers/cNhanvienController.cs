@@ -22,7 +22,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
             return View("~/Views/cNhanvien/vNhanvien.cshtml", listNV);
         }
         [HttpPost]
-        public ActionResult Create(viewNVPW nv)
+        public ActionResult Create(tblNhanVien nv)
         {
             try
             {
