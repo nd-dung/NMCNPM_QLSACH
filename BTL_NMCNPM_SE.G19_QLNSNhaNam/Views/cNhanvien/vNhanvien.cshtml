@@ -265,7 +265,7 @@
             }
 
             if (checkValid(document.getElementById('sSĐT'), document.getElementById('sCCCD'), document.getElementById('fLuong'))) {
-                SendNV(
+                SendNV(false,
                     $('#sMaNVI').val(),
                     $('#sTenNV').val(),
                     $('#dNgaysinh').val(),
@@ -281,9 +281,17 @@
             }
         });
 
-        function SendNV(sMaNV, sTenNV, dNgaysinh, bGioitinh, bTrangthai, sDiachi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) {
-  $.ajax({
-    url: '@Url.Action("Create", "cNhanVien")',
+        function SendNV(updatemode,sMaNV, sTenNV, dNgaysinh, bGioitinh, bTrangthai, sDiachi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) {
+            let action = '';
+            if (updatemode == false) {
+                action = '@Url.Action("Create", "cNhanVien")';
+            }
+            else {
+                action = '@Url.Action("Update", "cNhanVien")';
+            }
+
+            $.ajax({
+    url: action,
     type: 'POST',
     data: {
       sMaNV: sMaNV,
@@ -307,7 +315,7 @@
     }
   });
 }
-        }
+
 
 
 
@@ -332,7 +340,19 @@
                 return;
             }
             if (checkValid(document.getElementById('sSĐTU'), document.getElementById('sCCCDU'), document.getElementById('fLuongU'))) {
-                formU.submit();
+                SendNV(true,
+                    $('#sMaNVU').val(),
+                    $('#sTenNVU').val(),
+                    $('#dNgaysinhU').val(),
+                    $('#bGioiTinhU').val(),
+                    $('#bTrangThaiU').val(),
+                    $('#sDiaChiU').val(),
+                    $('#dNgayvaolamU').val(),
+                    $('#sSĐTU').val(),
+                    $('#fLuongU').val(),
+                    $('#sCCCDU').val(),
+                    $('#sMatkhauU').val()
+                );
             }
         });
 

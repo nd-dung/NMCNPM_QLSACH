@@ -55,27 +55,33 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         public ActionResult Update(viewNVPW nv)
         {
 
-            dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
-            tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
 
-            nvien.sTenNV = nv.sTenNV;
-            nvien.dNgaysinh = nv.dNgaysinh;
-            nvien.fLuong = nv.fLuong;
-            nvien.sCCCD = nv.sCCCD;
-            nvien.sDiachi = nv.sDiachi;
-            nvien.sSĐT = nv.sSĐT;
-            nvien.bGioitinh = nv.bGioitinh;
-            nvien.bTrangthai = nv.bTrangthai;
-            nvien.bVaitro = nv.bVaitro;
-            nvien.dNgayvaolam = nv.dNgayvaolam;
+            try
+            {
+                dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
+                tblNhanVien nvien = db.tblNhanViens.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
+                nvien.sTenNV = nv.sTenNV;
+                nvien.dNgaysinh = nv.dNgaysinh;
+                nvien.fLuong = nv.fLuong;
+                nvien.sCCCD = nv.sCCCD;
+                nvien.sDiachi = nv.sDiachi;
+                nvien.sSĐT = nv.sSĐT;
+                nvien.bGioitinh = nv.bGioitinh;
+                nvien.bTrangthai = nv.bTrangthai;
+                nvien.bVaitro = nv.bVaitro;
+                nvien.dNgayvaolam = nv.dNgayvaolam;
+                tblTaiKhoan tk = db.tblTaiKhoans.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
+                if (tk != null)
+                { tk.sMatkhau = nv.sMatkhau; }
+                db.SaveChanges();
 
-            tblTaiKhoan tk = db.tblTaiKhoans.Where(row => row.sMaNV == nv.sMaNV).FirstOrDefault();
-            if (tk != null)
-            { tk.sMatkhau = nv.sMatkhau; }
-            db.SaveChanges();
-
-
-            return RedirectToAction("Index");
+                return Content("Cập nhật nhân viên thành công"); // Return a success message
+            }
+            catch (Exception ex)
+            {
+                // Display an alert dialog with the error message
+                return Content("Cập nhật nhân viên thất bại: " + ex.Message); // Return the error message
+            }
         }
 
         public ActionResult Search(string searchtext)
