@@ -1,8 +1,440 @@
-﻿
+﻿@model List<BTL_NMCNPM_SE.G19_QLNSNhaNam.Models.viewNVPW>
 @{
-    ViewBag.Title = "vNhanvien";
+    ViewBag.Title = "Quản lí nhân Viên";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>vNhanvien</h2>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Nhân Viên</title>
+    <link rel="stylesheet" href="~/Front-end/css/style_employeesManagement.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý Nhân viên</h1>
+        <form id="formSearch" action="/cnhanvien/search" method="post">
+            <div class="search-bar">
+                <input id="searchtext" name="searchtext" type="text" placeholder="Nhập tên nhân viên để tìm kiếm...">
+                <button type="submit" id="searchButton" class="btn btn-search">Tìm kiếm</button>
+                <button type="button" id="addButton" class="btn btn-primary">Thêm Nhân Viên</button>
+            </div>
+        </form>
 
+        <div class="table-container">
+            <table id="employeeTable">
+                <thead>
+                    <tr>
+                        <th>Mã NV</th>
+                        <th>Tên NV</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                        <th>Ngày vào làm</th>
+                        <th>Trạng thái</th>
+                        <th>Vai trò</th>
+                        <th>Lương</th>
+                        <th>Số điện thoại</th>
+                        <th>Mật khẩu</th>
+                        <th>Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.sMaNV</td>
+                            <td>@item.sTenNV</td>
+                            <td>@(item.dNgaysinh?.ToString("d/M/yyyy"))</td>
+                            <td> @(item.bGioitinh ?? false ? "Nam" : "Nữ")</td>
+                            <td>@item.sDiachi</td>
+                            <td>@(item.dNgayvaolam?.ToString("d/M/yyyy"))</td>
+                            <td> @(item.bTrangthai ?? false ? "Làm" : "Nghỉ")</td>
+                            <td> @(item.bVaitro ?? false ? "QL" : "NV")</td>
+                            <td>@item.fLuong</td>
+                            <td>@item.sSĐT</td>
+                            <td>************</td>
+                            <td class="action-buttons">
+                                <button class="edit-btn" onclick="onUpdateNV('@item.sMaNV')">Sửa</button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <!-- Modal Form -->
+    <div id="employeeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Thêm Nhân Viên</h2>
+            <form action="/cnhanvien/Create" id="employeeForm" method="post">
+                <p>Mã nhân viên:</p>
+                <input type="text" id="sMaNVI" name="sMaNVI" placeholder="Mã NV">
+                <p>Tên nhân viên:</p>
+                <input type="text" id="sTenNV" name="sTenNV" placeholder="Tên NV">
+                <p>Ngày sinh:</p>
+                <input type="date" id="dNgaysinh" name="dNgaysinh" placeholder="Ngày sinh">
+                <p>Giới tính:</p>
+                <select id="bGioiTinh" name="bGioiTinh">
+                    <option value="">Chọn giới tính</option>
+                    <option value=true>Nam</option>
+                    <option value=false>Nữ</option>
+
+                </select>
+
+                <p>Trạng thái:</p>
+                <select id="bTrangThai" name="bTrangThai">
+                    <option value="">Chọn trạng thái</option>
+                    <option value=true>Làm</option>
+                    <option value=false>Nghỉ làm</option>
+                </select>
+                <p>Địa chỉ:</p>
+                <input type="text" id="sDiaChi" name="sDiaChi" placeholder="Địa chỉ">
+                <p>Ngày vào làm:</p>
+                <input type="date" id="dNgayvaolam" name="dNgayvaolam" placeholder="Ngày vào làm">
+                <p>Số điện thoại:</p>
+                <input type="text" id="sSĐT" name="sSĐT" placeholder="SĐT">
+                <p>Lương:</p>
+                <input type="text" id="fLuong" name="fLuong" placeholder="Lương">
+                <p>CCCD:</p>
+                <input type="text" id="sCCCD" name="sCCCD" placeholder="CCCD">
+                <p>Mật khẩu:</p>
+                <input type="text" id="sMatkhau" name="sMatkhau" placeholder="Mật khẩu">
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                    <button type="reset" class="btn btn-secondary close-btn">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Form -->
+    <div id="employeeModalU" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Sửa Nhân Viên</h2>
+            <form action="/cnhanvien/Update" id="employeeFormU" method="post">
+                <p>Mã nhân viên:</p>
+                <p id="pMaNVU"></p>
+                <input type="hidden" id="sMaNVU" name="sMaNV" value="">
+                <p>Tên nhân viên:</p>
+                <input type="text" id="sTenNVU" name="sTenNV" placeholder="Tên NV">
+                <p>Ngày sinh:</p>
+                <input type="date" id="dNgaysinhU" name="dNgaysinh" placeholder="Ngày sinh">
+                <p>Giới tính:</p>
+                <select id="bGioiTinhU" name="bGioiTinh">
+                    <option value="">Chọn giới tính</option>
+                    <option value=true>Nam</option>
+                    <option value=false>Nữ</option>
+
+                </select>
+
+                <p>Trạng thái:</p>
+                <select id="bTrangThaiU" name="bTrangThai">
+                    <option value="">Chọn trạng thái</option>
+                    <option value=true>Làm</option>
+                    <option value=false>Nghỉ làm</option>
+                </select>
+                <p>Địa chỉ:</p>
+                <input type="text" id="sDiaChiU" name="sDiaChi" placeholder="Địa chỉ">
+                <p>Ngày vào làm:</p>
+                <input type="date" id="dNgayvaolamU" name="dNgayvaolam" placeholder="Ngày vào làm">
+                <p>Số điện thoại:</p>
+                <input type="text" id="sSĐTU" name="sSĐT" placeholder="SĐT">
+                <p>Lương:</p>
+                <input type="text" id="fLuongU" name="fLuong" placeholder="Lương">
+                <p>CCCD:</p>
+                <input type="text" id="sCCCDU" name="sCCCD" placeholder="CCCD">
+                <p>Mật khẩu:</p>
+                <input type="text" id="sMatkhauU" name="sMatkhau" placeholder="Mật khẩu">
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary ">Cập nhật</button>
+                    <button type="reset" class="btn btn-secondary close-btn">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+                function onUpdateNV(maNV) {
+
+                 var employees = @Html.Raw(Json.Encode(Model));
+    for (var i = 0; i < employees.length; i++) {
+        if (employees[i].sMaNV === maNV) {
+            employee = employees[i];
+            break;
+        }
+    }
+            $('#employeeModalU').css('display', 'block');
+            document.getElementById('pMaNVU').textContent = employee.sMaNV;
+            document.getElementById('sMaNVU').value = employee.sMaNV;
+            document.getElementById('sTenNVU').value = employee.sTenNV;
+            document.getElementById('dNgaysinhU').value = convertJsonDate(employee.dNgaysinh);
+            document.getElementById('bGioiTinhU').value = employee.bGioitinh;
+            document.getElementById('bTrangThaiU').value = employee.bTrangthai;
+            document.getElementById('sDiaChiU').value = employee.sDiachi;
+            document.getElementById('dNgayvaolamU').value = convertJsonDate(employee.dNgayvaolam);
+            document.getElementById('sSĐTU').value = employee.sSĐT;
+            document.getElementById('fLuongU').value = employee.fLuong;
+            document.getElementById('sCCCDU').value = employee.sCCCD;
+            document.getElementById('sMatkhauU').value = employee.sMatkhau;
+        }
+        function convertJsonDate(jsonDate) {
+            // Extract timestamp from "/Date(799657200000)/"
+            var timestamp = parseInt(jsonDate.match(/\d+/)[0]);
+
+            // Create a Date object
+            var date = new Date(timestamp);
+
+            // Format Date object to YYYY-MM-DD
+            var formattedDate = date.toISOString().slice(0, 10);
+
+            return formattedDate;
+        }
+
+        const formS = document.getElementById('formSearch')
+        formS.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (document.getElementById('searchtext').value.trim() == "") {
+                alert("Vui lòng nhập từ khóa!");
+                return;
+            }
+            else {
+                formS.submit();
+            }
+        });
+
+
+
+        $(document).ready(function () {
+            // Open modal when clicking "Thêm Nhân Viên"
+            $('#addButton').click(function () {
+                $('#employeeModal').css('display', 'block');
+            });
+
+
+            // Close modal when clicking the close button
+            $('.close, .close-btn').click(function () {
+                $('#employeeModal').css('display', 'none');
+                $('#employeeModalU').css('display', 'none');
+            });
+
+            // Close modal when clicking outside of the modal
+            $(window).click(function (event) {
+                if (event.target.id === 'employeeModal') {
+                    $('#employeeModal').css('display', 'none');
+                    $('#employeeModalU').css('display', 'none');
+                }
+            });
+
+
+        });
+
+        const formA = document.getElementById('employeeForm')
+
+        // Trong form thêm mới
+        formA.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (checkRong(false,
+                document.getElementById('sMaNVI'),
+                document.getElementById('sTenNV'),
+                document.getElementById('dNgaysinh'),
+                document.getElementById('bGioiTinh'),
+                document.getElementById('bTrangThai'),
+                document.getElementById('sDiaChi'),
+                document.getElementById('dNgayvaolam'),
+                document.getElementById('sSĐT'),
+                document.getElementById('fLuong'),
+                document.getElementById('sCCCD'),
+                document.getElementById('sMatkhau')
+            )) {
+
+                return;
+            }
+
+            if (checkValid(document.getElementById('sSĐT'), document.getElementById('sCCCD'), document.getElementById('fLuong'))) {
+                SendNV(false,
+                    $('#sMaNVI').val(),
+                    $('#sTenNV').val(),
+                    $('#dNgaysinh').val(),
+                    $('#bGioiTinh').val(),
+                    $('#bTrangThai').val(),
+                    $('#sDiaChi').val(),
+                    $('#dNgayvaolam').val(),
+                    $('#sSĐT').val(),
+                    $('#fLuong').val(),
+                    $('#sCCCD').val(),
+                    $('#sMatkhau').val()
+                );
+            }
+        });
+
+        function SendNV(updatemode,sMaNV, sTenNV, dNgaysinh, bGioitinh, bTrangthai, sDiachi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) {
+            let action = '';
+            if (updatemode == false) {
+                action = '@Url.Action("Create", "cNhanVien")';
+            }
+            else {
+                action = '@Url.Action("Update", "cNhanVien")';
+            }
+
+            $.ajax({
+    url: action,
+    type: 'POST',
+    data: {
+      sMaNV: sMaNV,
+      sTenNV: sTenNV,
+      dNgaysinh: dNgaysinh,
+      bGioitinh: bGioitinh,
+      bTrangthai: bTrangthai,
+      sDiachi: sDiachi,
+      dNgayvaolam: dNgayvaolam,
+      sSĐT: sSĐT,
+      fLuong: fLuong,
+      sCCCD: sCCCD,
+      sMatkhau: sMatkhau
+    },
+    success: function(result) {
+      alert(result);
+      window.location.href = '@Url.Action("Index", "cNhanVien")';
+    },
+    error: function(xhr, status, error) {
+      alert('Error: ' + error);
+    }
+  });
+}
+
+
+
+
+        const formU = document.getElementById('employeeFormU')
+
+        // Trong form cập nhật
+        formU.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (checkRong(true,
+                document.getElementById('sMaNVU'),
+                document.getElementById('sTenNVU'),
+                document.getElementById('dNgaysinhU'),
+                document.getElementById('bGioiTinhU'),
+                document.getElementById('bTrangThaiU'),
+                document.getElementById('sDiaChiU'),
+                document.getElementById('dNgayvaolamU'),
+                document.getElementById('sSĐTU'),
+                document.getElementById('fLuongU'),
+                document.getElementById('sCCCDU'),
+                document.getElementById('sMatkhauU')
+            )) {
+                return;
+            }
+            if (checkValid(document.getElementById('sSĐTU'), document.getElementById('sCCCDU'), document.getElementById('fLuongU'))) {
+                SendNV(true,
+                    $('#sMaNVU').val(),
+                    $('#sTenNVU').val(),
+                    $('#dNgaysinhU').val(),
+                    $('#bGioiTinhU').val(),
+                    $('#bTrangThaiU').val(),
+                    $('#sDiaChiU').val(),
+                    $('#dNgayvaolamU').val(),
+                    $('#sSĐTU').val(),
+                    $('#fLuongU').val(),
+                    $('#sCCCDU').val(),
+                    $('#sMatkhauU').val()
+                );
+            }
+        });
+
+        function checkRong(isUpdate, sMaNV, sTenNV, dNgaysinh, bGioiTinh, bTrangThai, sDiaChi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) {
+            let isValid = false;
+            if (isUpdate == false) {
+                if (!sMaNV.value.trim()) {
+                    isValid = true;
+                    alert("Bạn cần nhập đủ thông tin Mã Nhân Viên");
+                }
+            }
+            if (!sTenNV.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin tên");
+            }
+
+            if (!dNgaysinh.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin ngày sinh");
+            }
+
+            if (!bGioiTinh.value) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin giới tính");
+            }
+            if (!bTrangThai.value) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin Trạng Thái");
+            }
+
+            if (!sDiaChi.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin địa chỉ");
+            }
+
+            if (!dNgayvaolam.value) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin ngày vào làm");
+            }
+
+            if (!sSĐT.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin số điện thoại");
+            }
+
+            if (!fLuong.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin lương");
+            }
+
+            if (!sCCCD.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin CCCD");
+            }
+
+            if (!sMatkhau.value.trim()) {
+                isValid = true;
+                alert("Bạn cần nhập đủ thông tin mật khẩu");
+            }
+
+            return isValid;
+        }
+
+
+
+        function checkValid(sSDT, sCCCD,fLuong) {
+            let isValid = true
+            if (isNaN(sSDT.value.trim()) || sSDT.value.trim().length > 12) {
+                alert("Số điện thoại phải là số và không vượt quá 12 kí tự")
+                isValid=false
+            }
+            if (isNaN(sCCCD.value.trim()) || sCCCD.value.trim().length > 12) {
+                alert("Số điện thoại phải là số và không vượt quá 12 kí tự")
+                isValid = false
+            }
+            if (isNaN(fLuong.value.trim()) || fLuong.value.trim().length > 12) {
+                alert("Số điện thoại phải là số và không vượt quá 12 kí tự")
+                isValid = false
+            }
+            return isValid
+        }
+
+
+
+    </script>
+</body>
+</html>

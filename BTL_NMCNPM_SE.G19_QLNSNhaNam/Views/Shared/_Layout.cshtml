@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Nhã Nam Bookstore</title>
     <link rel="stylesheet" href="~/Front-end/css/style_navbar.css">
+    @RenderSection("Styles", required: false)
+
 </head>
 <body>
     <nav class="navbar">
         <div class="navbar-container">
-            <p class = "navbar-brand">Nhã Nam</p>
+            <p class="navbar-brand">Nhã Nam</p>
             <ul class="navbar-menu">
                 <li>@Html.ActionLink("Bán hàng", "Index", "cBanhang")</li>
                 <li class="dropdown">
@@ -23,8 +25,8 @@
                 </li>
             </ul>
             <div class="navbar-right">
-                <p class="navbar-user">@User.Identity.Name</p>
-                @Html.ActionLink("Đăng xuất", "Logout", "Account", null, new { @class = "navbar-user" })
+                <p class="navbar-user" id="sMaNV">@HttpContext.Current.Session["User"]</p>
+                @Html.ActionLink("Đăng xuất", "Logout", "cDangnhap", null, new { @class = "navbar-user" })
             </div>
             <div class="hamburger">
                 <span></span>
@@ -33,17 +35,17 @@
             </div>
             <div class="mobile-menu">
                 <ul>
-                    <li>@Html.ActionLink("Bán hàng", "Index", "Sales")</li>
+                    <li>@Html.ActionLink("Bán hàng", "Index", "cBanhang")</li>
                     <li class="mobile-dropdown">
                         <a>Quản lý</a>
                         <ul class="mobile-submenu">
-                            <li>@Html.ActionLink("Quản lý nhân viên", "Index", "EmployeeManagement")</li>
-                            <li>@Html.ActionLink("Quản lý phiếu nhập", "Index", "ReceiptManagement")</li>
-                            <li>@Html.ActionLink("Quản lý sách", "Index", "BookManagement")</li>
-                            <li>@Html.ActionLink("Quản lý doanh thu", "Index", "RevenueManagement")</li>
+                            <li>@Html.ActionLink("Quản lý nhân viên", "Index", "cNhanvien")</li>
+                            <li>@Html.ActionLink("Quản lý phiếu nhập", "Index", "cPhieunhap")</li>
+                            <li>@Html.ActionLink("Quản lý sách", "Index", "cSach")</li>
+                            <li>@Html.ActionLink("Quản lý doanh thu", "Index", "cDoanhthu")</li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("Đăng xuất", "Logout", "Account")</li>
+                    <li>@Html.ActionLink("Đăng xuất", "Logout", "cDangnhap")</li>
                 </ul>
             </div>
         </div>
@@ -57,6 +59,7 @@
         </footer>
     </div>
     <script src="~/Front-end/js/js_navbar.js"></script>
+    @RenderSection("Scripts", required: false)
 
 </body>
 </html>

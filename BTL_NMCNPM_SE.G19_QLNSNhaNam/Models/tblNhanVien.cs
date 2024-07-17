@@ -12,26 +12,31 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblSach
+    public partial class tblNhanVien
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblSach()
+        public tblNhanVien()
         {
-            this.tblChiTietHDs = new HashSet<tblChiTietHD>();
-            this.tblChiTietNhaps = new HashSet<tblChiTietNhap>();
+            this.tblHoaDons = new HashSet<tblHoaDon>();
+            this.tblNhaps = new HashSet<tblNhap>();
         }
     
-        public string sMasach { get; set; }
-        public string sTensach { get; set; }
-        public string sTenTG { get; set; }
-        public Nullable<int> iDongia { get; set; }
-        public Nullable<int> iSoluong { get; set; }
-        public string sNXB { get; set; }
-        public string sTheloai { get; set; }
+        public string sMaNV { get; set; }
+        public string sTenNV { get; set; }
+        public Nullable<System.DateTime> dNgaysinh { get; set; }
+        public Nullable<bool> bGioitinh { get; set; }
+        public string sDiachi { get; set; }
+        public Nullable<System.DateTime> dNgayvaolam { get; set; }
+        public string sSĐT { get; set; }
+        public Nullable<double> fLuong { get; set; }
+        public Nullable<bool> bVaitro { get; set; }
+        public Nullable<bool> bTrangthai { get; set; }
+        public string sCCCD { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblChiTietHD> tblChiTietHDs { get; set; }
+        public virtual ICollection<tblHoaDon> tblHoaDons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblChiTietNhap> tblChiTietNhaps { get; set; }
+        public virtual ICollection<tblNhap> tblNhaps { get; set; }
+        public virtual tblTaiKhoan tblTaiKhoan { get; set; }
     }
 }

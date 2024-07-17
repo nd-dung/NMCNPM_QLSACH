@@ -1,8 +1,98 @@
-﻿
+﻿@model List<BTL_NMCNPM_SE.G19_QLNSNhaNam.Models.tblNhap>
+
 @{
     ViewBag.Title = "cPhieunhap";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>cPhieunhap</h2>
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Phiếu</title>
+    <link rel="stylesheet" href="~/Front-end/css/style_receiptManagement.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+        <h1 id="tittle">Quản lý Phiếu</h1>
+        <h1 id="tittle2" hidden>Phiếu nhập sách</h1>
+        <!-- Actions -->
+        <div class="actions">
+            <button id="createReceiptBtn" class="btn btn-primary">Tạo Phiếu Nhập</button>
+            <button id="createReturnBtn" class="btn btn-secondary">Tạo Phiếu Đổi Trả</button>
+        </div>
+
+        <!-- Form for Invoice Check -->
+        <div id="invoiceCheckForm" class="form-group" style="display: none;">
+            <label for="invoiceCodeCheck">Mã phiếu nhập</label>
+            <input type="text" id="invoiceCodeCheck" placeholder="Nhập mã hóa đơn">
+            <button id="checkInvoiceBtn" class="btn btn-primary">Tạo</button>
+            <span class="error-message" id="invoiceCheckError"></span>
+        </div>
+
+        <!-- Form for Receipts and Returns -->
+        <form id="recordForm" style="display: none;" method="post" action="/cphieunhap/Create">
+            <input type="hidden" id="recordId">
+            <div class="form-group">
+                <label for="recordCode">Mã Phiếu</label>
+                <input type="text" id="recordCode">
+            </div>
+            <div class="form-group">
+                <label for="employeeId">Mã Nhân Viên</label>
+                <input type="text" id="employeeId">
+            </div>
+            <div class="form-group">
+                <label for="recordDate">Ngày Lập</label>
+                <input type="date" id="recordDate" readonly>
+            </div>
+            <div class="form-group">
+                <label for="recordType">Loại Phiếu</label>
+                <select id="recordType" required>
+                    <option value="">Vui lòng chọn loại phiếu</option>
+                    <option value="nhap_kho">Nhập kho</option>
+                    <option value="doi_tra">Đổi trả</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="invoiceCode">Mã Hóa Đơn</label>
+                <input type="text" id="invoiceCode" readonly>
+            </div>
+            <div class="form-group">
+                <label for="bookCode">Mã Sách</label>
+                <input type="text" id="bookCode" placeholder="Nhập mã sách" required>
+                <span class="error-message" id="bookCodeError"></span>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Số Lượng</label>
+                <input type="number" id="quantity" min="1" required>
+                <span class="error-message" id="quantityError"></span>
+            </div>
+            <div class="form-group">
+                <label for="unitPrice">Đơn Giá</label>
+                <input type="number" id="unitPrice" min="0" required>
+                <span class="error-message" id="unitPriceError"></span>
+            </div>
+            <div class="form-group">
+                <label for="totalPrice">Thành Tiền</label>
+                <input type="text" id="totalPrice" readonly>
+            </div>
+        </form>
+
+        <button type="submit" id="printBtn" class="btn btn-secondary" style="display: none;">
+            In
+            Phiếu
+        </button>
+    </div>
+
+    <script src="~/Front-end/js/receiptManagement.js"></script>
+</body>
+
+</html>
 

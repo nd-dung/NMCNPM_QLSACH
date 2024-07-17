@@ -122,28 +122,31 @@
         });
 
         function onUpdate(maSach) {
-            document.getElementById('modalTitle').textContent = "Sửa Sách"
-            document.getElementById('bookForm').action = "/cSach/update"
-            document.getElementById('bookModalBtn').textContent = "Sửa"
+        document.getElementById('modalTitle').textContent = "Sửa Sách"
+        document.getElementById('bookForm').action = "/cSach/update"
+        document.getElementById('bookModalBtn').textContent = "Sửa"
 
-            var listSach = @Html.Raw(Json.Encode(Model));
-            for (var i = 0; i < listSach.length; i++) {
-                 if (listSach[i].sMasach === maSach) {
-                     sach = listSach[i];
-                       break;
-                    }
+        var listSach = @Html.Raw(ViewBag.JsonListSach);
+        if (listSach && listSach.length > 0) {
+            var sach = listSach.find(function(s) { return s.sMasach === maSach; });
+            if (sach) {
+                document.getElementById('sMasach').type = "hidden";
+                document.getElementById('labelMaSach').style.display = "none";
+                $('#bookModal').css('display', 'block');
+                document.getElementById('sMasach').value = sach.sMasach;
+                document.getElementById('sTensach').value = sach.sTensach;
+                document.getElementById('sTenTG').value = sach.sTenTG;
+                document.getElementById('iDongia').value = sach.iDongia;
+                document.getElementById('iSoluong').value = sach.iSoluong;
+                document.getElementById('sNXB').value = sach.sNXB;
+                document.getElementById('sTheloai').value = sach.sTheloai;
+            } else {
+                console.error('Không tìm thấy sách với mã: ' + maSach);
             }
-            document.getElementById('sMasach').type = "hidden";
-            document.getElementById('labelMaSach').style.display = "none";
-            $('#bookModal').css('display', 'block');
-            document.getElementById('sMasach').value = sach.sMasach;
-            document.getElementById('sTensach').value = sach.sTensach;
-            document.getElementById('sTenTG').value = sach.sTenTG;
-            document.getElementById('iDongia').value = sach.iDongia;
-            document.getElementById('iSoluong').value = sach.iSoluong;
-            document.getElementById('sNXB').value = sach.sNXB;
-            document.getElementById('sTheloai').value = sach.sTheloai;
+        } else {
+            console.error('Danh sách sách trống hoặc không hợp lệ');
         }
+    }
 
         function clearForm() {
             document.getElementById('sMasach').value = "";
