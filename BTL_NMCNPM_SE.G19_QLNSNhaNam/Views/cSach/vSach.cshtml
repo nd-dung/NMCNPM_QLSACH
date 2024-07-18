@@ -74,21 +74,36 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 id="modalTitle" class="mb-2">Thêm Sách Mới</h2>
-            <form action="/cSach/add" id="bookForm" method="post">
-                <p id="labelMaSach">Mã sách:</p>
-                <input type="text" id="sMasach" name="sMasach" placeholder="Nhập Mã Sách" required>
-                <p>Tên sách:</p>
-                <input type="text" id="sTensach" name="sTensach" placeholder="Nhập Tên Sách" required>
-                <p>Tác giả:</p>
-                <input type="text" id="sTenTG" name="sTenTG" placeholder="Nhập Tác giả" required>
-                <p>Đơn Giá:</p>
-                <input type="number" id="iDongia" name="iDongia" placeholder="Nhập Đơn giá" required>
-                <p>Số Lượng:</p>
-                <input type="number" id="iSoluong" name="iSoluong" placeholder="Nhập Số lượng" required>
-                <p>Nhà Xuất Bản:</p>
-                <input type="text" id="sNXB" name="sNXB" placeholder="Nhập Nhà xuất bản" required>
-                <p>Thể Loại:</p>
-                <input type="text" id="sTheloai" name="sTheloai" placeholder="Nhập Thể loại" required>
+            <form action="/cSach/add" id="bookForm" method="post" >
+                <p id="labelMaSach" class="label">Mã sách:</p>
+                <input type="text" id="sMasach" name="sMasach" placeholder="Nhập Mã Sách" maxlength="10">
+                <p id="errorMaSach" class="error"></p>
+
+                <p class="label">Tên sách:</p>
+                <input type="text" id="sTensach" name="sTensach" placeholder="Nhập Tên Sách"  maxlength="100">
+                <p id="errorTenSach" class="error"></p>
+
+                <p class="label">Tác giả:</p>
+                <input type="text" id="sTenTG" name="sTenTG" placeholder="Nhập Tác giả"  maxlength="100" >
+                <p id="errorTenTG" class="error"></p>
+
+                <p class="label">Đơn Giá:</p>
+                <input type="number" id="iDongia" name="iDongia" placeholder="Nhập Đơn giá" >
+                <p id="errorDonGia" class="error"></p>
+
+                <p class="label">Số Lượng:</p>
+                <input type="number" id="iSoluong" name="iSoluong" placeholder="Nhập Số lượng" >
+                <p id="errorSoLuong" class="error"></p>
+
+                <p class="label">Nhà Xuất Bản:</p>
+                <input type="text" id="sNXB" name="sNXB" placeholder="Nhập Nhà xuất bản"  maxlength="100">
+                <p id="errorNXB" class="error"></p>
+
+                <p class="label">Thể Loại:</p>
+                <input type="text" id="sTheloai" name="sTheloai" placeholder="Nhập Thể loại" >
+                <p id="errorTheLoai" class="error"></p>
+
+
                 <div class="form-buttons">
                     <button type="submit" id="bookModalBtn" class="btn btn-primary">Thêm</button>
                     <button type="reset" class="btn btn-secondary close-btn">Hủy</button>
@@ -98,10 +113,12 @@
     </div>
 
     <script>
+
         $(document).ready(function () {
             // Open modal when clicking "Thêm Nhân Viên"
             $('#addBookBtn').click(function () {
                 clearForm();
+                resetError();
                 $('#bookModal').css('display', 'block');
             });
 
@@ -109,6 +126,7 @@
             // Close modal when clicking the close button
             $('.close, .close-btn').click(function () {
                 clearForm();
+                resetError();
                 $('#bookModal').css('display', 'none');
             });
 
@@ -116,37 +134,38 @@
             $(window).click(function (event) {
                 if (event.target.id === 'bookModal') {
                     clearForm();
+                    resetError();
                     $('#bookModal').css('display', 'none');
                 }
             });
         });
 
         function onUpdate(maSach) {
-        document.getElementById('modalTitle').textContent = "Sửa Sách"
-        document.getElementById('bookForm').action = "/cSach/update"
-        document.getElementById('bookModalBtn').textContent = "Sửa"
+            document.getElementById('modalTitle').textContent = "Sửa Sách"
+            document.getElementById('bookForm').action = "/cSach/update"
+            document.getElementById('bookModalBtn').textContent = "Sửa"
 
-        var listSach = @Html.Raw(ViewBag.JsonListSach);
-        if (listSach && listSach.length > 0) {
-            var sach = listSach.find(function(s) { return s.sMasach === maSach; });
-            if (sach) {
-                document.getElementById('sMasach').type = "hidden";
-                document.getElementById('labelMaSach').style.display = "none";
-                $('#bookModal').css('display', 'block');
-                document.getElementById('sMasach').value = sach.sMasach;
-                document.getElementById('sTensach').value = sach.sTensach;
-                document.getElementById('sTenTG').value = sach.sTenTG;
-                document.getElementById('iDongia').value = sach.iDongia;
-                document.getElementById('iSoluong').value = sach.iSoluong;
-                document.getElementById('sNXB').value = sach.sNXB;
-                document.getElementById('sTheloai').value = sach.sTheloai;
+            var listSach = @Html.Raw(ViewBag.JsonListSach);
+            if (listSach && listSach.length > 0) {
+                var sach = listSach.find(function(s) { return s.sMasach === maSach; });
+                if (sach) {
+                    document.getElementById('sMasach').type = "hidden";
+                    document.getElementById('labelMaSach').style.display = "none";
+                    $('#bookModal').css('display', 'block');
+                    document.getElementById('sMasach').value = sach.sMasach;
+                    document.getElementById('sTensach').value = sach.sTensach;
+                    document.getElementById('sTenTG').value = sach.sTenTG;
+                    document.getElementById('iDongia').value = sach.iDongia;
+                    document.getElementById('iSoluong').value = sach.iSoluong;
+                    document.getElementById('sNXB').value = sach.sNXB;
+                    document.getElementById('sTheloai').value = sach.sTheloai;
+                } else {
+                    console.error('Không tìm thấy sách với mã: ' + maSach);
+                }
             } else {
-                console.error('Không tìm thấy sách với mã: ' + maSach);
+                console.error('Danh sách sách trống hoặc không hợp lệ');
             }
-        } else {
-            console.error('Danh sách sách trống hoặc không hợp lệ');
         }
-    }
 
         function clearForm() {
             document.getElementById('sMasach').value = "";
@@ -180,6 +199,115 @@
                 });
             }
         }
+
+        const formAdd = document.getElementById('bookForm');
+
+
+        function checkValid() {
+            let sMaSach = document.getElementById('sMasach');
+            let sTenSach = document.getElementById('sTensach');
+            let sTenTG = document.getElementById('sTenTG');
+            let iDongia = document.getElementById('iDongia');
+            let iSoluong = document.getElementById('iSoluong');
+            let sNXB = document.getElementById('sNXB');
+            let sTheloai = document.getElementById('sTheloai');
+            let isValid = true;
+            console.log("checkValid được gọi ", iDongia.value, iSoluong.value);
+
+            if (!sMaSach.value.trim()) {
+                isValid = false;
+                document.getElementById("errorMaSach").innerHTML = "Vui lòng nhập mã sách";
+            }
+
+            if (!sTenSach.value.trim()) {
+                isValid = false;
+                document.getElementById("errorTenSach").innerHTML = "Vui lòng nhập tên sách";
+            }
+
+            if (!sTenTG.value.trim()) {
+                isValid = false;
+                document.getElementById("errorTenTG").innerHTML = "Vui lòng nhập tên tác giả";
+            }
+
+            if (!iDongia.value.trim()) {
+                isValid = false;
+                document.getElementById("errorDonGia").innerHTML = "Vui lòng nhập đơn giá";
+            }
+            if (iDongia.value < 0) {
+                isValid = false;
+                document.getElementById("errorDonGia").innerHTML = "Đơn giá phải là số dương";
+            }
+            if (!iSoluong.value.trim()) {
+                isValid = false;
+                document.getElementById("errorSoLuong").innerHTML = "Vui lòng nhập số lượng";
+            }
+            if (iSoluong.value < 0) {
+                isValid = false;
+                document.getElementById("errorSoLuong").innerHTML = "Số lượng phải là số dương";
+            }
+            if (!sNXB.value.trim()) {
+                isValid = false;
+                document.getElementById("errorNXB").innerHTML = "Vui lòng nhập nhà xuất bản";
+            }
+            if (!sTheloai.value.trim()) {
+                isValid = false;
+                document.getElementById("errorTheLoai").innerHTML = "Vui lòng nhập thể loại";
+            }
+
+            return isValid;
+        }
+
+        function resetError() {
+            document.getElementById("errorMaSach").innerHTML = "";
+            document.getElementById("errorTenSach").innerHTML = "";
+            document.getElementById("errorTenTG").innerHTML = "";
+            document.getElementById("errorDonGia").innerHTML = "";
+            document.getElementById("errorSoLuong").innerHTML = "";
+            document.getElementById("errorNXB").innerHTML = "";
+            document.getElementById("errorTheLoai").innerHTML = "";
+        }
+
+        // Trong form thêm mới
+        formAdd.addEventListener('submit', function (event) {
+            event.preventDefault();
+            let sMaSach = document.getElementById('sMasach');
+            let sTenSach = document.getElementById('sTensach');
+            let sTenTG = document.getElementById('sTenTG');
+            let iDongia = document.getElementById('iDongia');
+            let iSoluong = document.getElementById('iSoluong');
+            let sNXB = document.getElementById('sNXB');
+            let sTheloai = document.getElementById('sTheloai');
+            resetError()
+
+            let url = document.getElementById('bookForm').action;
+
+            if (!checkValid()) {
+                return;
+            } else {
+                $.ajax({
+                    url: url.includes('/cSach/update') ? '@Url.Action("Update", "cSach")' :'@Url.Action("Add", "cSach")',
+                    type: 'POST',
+                    data: {
+                        sMasach: sMasach.value,
+                        sTenSach: sTenSach.value,
+                        sTenTG: sTenTG.value,
+                        iDongia: iDongia.value,
+                        iSoluong: iSoluong.value,
+                        sNXB: sNXB.value,
+                        sTheloai: sTheloai.value
+                    },
+                    success: function (result) {
+                        // Chuyển hướng đến hành động Index sau khi xóa thành công
+                        window.location.href = '@Url.Action("Index", "cSach")';
+                    },
+                    error: function () {
+                        alert('Có lỗi xảy ra khi xóa nhân viên. Vui lòng thử lại.');
+                    }
+                });
+            }
+        });
+
+
 
     </script>
 </body>
