@@ -18,7 +18,7 @@
         <form action="/cSach/index">
             <div class="book-actions">
                 <div class="search-bar">
-                    <input type="search" id="searchInput" name="searchInput" value="@ViewBag.Search" placeholder="Nhập tên sách để tìm kiếm...">
+                    <input type="text"  id="searchInput" name="searchInput" value="@ViewBag.Search" placeholder="Nhập tên sách để tìm kiếm...">
                     <button id="searchBtn" type="submit" class="btn btn-secondary">Tìm kiếm</button>
                 </div>
             </div>
@@ -212,7 +212,6 @@
             let sNXB = document.getElementById('sNXB');
             let sTheloai = document.getElementById('sTheloai');
             let isValid = true;
-            console.log("checkValid được gọi ", iDongia.value, iSoluong.value);
 
             if (!sMaSach.value.trim()) {
                 isValid = false;
