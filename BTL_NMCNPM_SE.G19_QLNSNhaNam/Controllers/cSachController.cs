@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -50,9 +51,18 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
         [HttpPost]
         public ActionResult Add(tblSach sach)
         {
+            var existingBook = db.tblSaches.FirstOrDefault(b => b.sMasach == sach.sMasach);
+            if (existingBook != null)
+            {
+                // Trả về mã lỗi và thông báo lỗi
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { error = "Mã sách đã tồn tại." });
+            }
+
             db.tblSaches.Add(sach);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json(new { success = true });
+            //return RedirectToAction("Index");
         }
 
         [HttpPost]

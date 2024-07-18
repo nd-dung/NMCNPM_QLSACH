@@ -28,7 +28,7 @@
             <button id="addBookBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm Sách Mới</button>
         </div>
 
-
+         
         <table class="book-table">
             <thead>
                 <tr>
@@ -76,7 +76,7 @@
             <h2 id="modalTitle" class="mb-2">Thêm Sách Mới</h2>
             <form action="/cSach/add" id="bookForm" method="post" >
                 <p id="labelMaSach" class="label">Mã sách:</p>
-                <input type="text" id="sMasach" name="sMasach" placeholder="Nhập Mã Sách" maxlength="10">
+                <input type="text" id="sMasach" name="sMasach" placeholder="Nhập Mã Sách" oninput="validateInput(event)" maxlength="10">
                 <p id="errorMaSach" class="error"></p>
 
                 <p class="label">Tên sách:</p>
@@ -92,7 +92,7 @@
                 <p id="errorDonGia" class="error"></p>
 
                 <p class="label">Số Lượng:</p>
-                <input type="number" id="iSoluong" name="iSoluong" placeholder="Nhập Số lượng" >
+                <input type="number" id="iSoluong" value="0" name="iSoluong" placeholder="Nhập Số lượng" >
                 <p id="errorSoLuong" class="error"></p>
 
                 <p class="label">Nhà Xuất Bản:</p>
@@ -167,12 +167,26 @@
             }
         }
 
+        function validateInput(event) {
+            const input = event.target;
+            const value = input.value;
+
+            // Chỉ cho phép chữ hoa và số, không quá 10 ký tự
+            const regex = /^[A-Z0-9]{0,10}$/;
+
+            if (!regex.test(value)) {
+                // Nếu không hợp lệ, loại bỏ ký tự cuối cùng
+                input.value = value.slice(0, -1);
+            }
+        }
+
+
         function clearForm() {
             document.getElementById('sMasach').value = "";
             document.getElementById('sTensach').value = "";
             document.getElementById('sTenTG').value = "";
             document.getElementById('iDongia').value = "";
-            document.getElementById('iSoluong').value = "";
+            document.getElementById('iSoluong').value = "0";
             document.getElementById('sNXB').value = "";
             document.getElementById('sTheloai').value = "";
             document.getElementById('modalTitle').textContent = "Thêm Sách"
@@ -298,9 +312,19 @@
                     success: function (result) {
                         // Chuyển hướng đến hành động Index sau khi xóa thành công
                         window.location.href = '@Url.Action("Index", "cSach")';
+                        if (url.includes('/cSach/update')) {
+                            alert("Thông tin sách đã được cập nhật thành công.")
+                        } else {
+                            alert("Thông tin sách đã được thêm thành công.")
+                        }
                     },
-                    error: function () {
-                        alert('Có lỗi xảy ra khi xóa nhân viên. Vui lòng thử lại.');
+                    error: function (xhr) {
+                        // Hiển thị thông báo lỗi từ phản hồi
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            alert(xhr.responseJSON.error);
+                        } else {
+                            alert(`${url.includes('/cSach/update') ? "Cập nhật" : "Thêm"} sách thất bại. Hãy thử lại!`);
+                        }
                     }
                 });
             }
