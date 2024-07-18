@@ -300,6 +300,7 @@
     <Content Include="Views\cBanhang\vDSSP.cshtml" />
     <Content Include="Views\cBanhang\vHoadonGanday.cshtml" />
     <Content Include="Views\cDangnhap\Login.cshtml" />
+    <Content Include="Views\Shared\ListNVView.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

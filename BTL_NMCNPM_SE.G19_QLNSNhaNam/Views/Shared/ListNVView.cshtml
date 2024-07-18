@@ -1,0 +1,41 @@
+﻿@model List<BTL_NMCNPM_SE.G19_QLNSNhaNam.Models.viewNVPW>
+<table id="employeeTable">
+    <thead>
+        <tr>
+            <th>Mã NV</th>
+            <th>Tên NV</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Địa chỉ</th>
+            <th>Ngày vào làm</th>
+            <th>Trạng thái</th>
+            <th>Vai trò</th>
+            <th>Lương</th>
+            <th>Số điện thoại</th>
+            <th>Mật khẩu</th>
+            <th>Thao Tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.sMaNV</td>
+                <td>@item.sTenNV</td>
+                <td>@(item.dNgaysinh?.ToString("d/M/yyyy"))</td>
+                <td> @(item.bGioitinh ?? false ? "Nam" : "Nữ")</td>
+                <td>@item.sDiachi</td>
+                <td>@(item.dNgayvaolam?.ToString("d/M/yyyy"))</td>
+                <td> @(item.bTrangthai ?? false ? "Làm" : "Nghỉ")</td>
+                <td> @(item.bVaitro ?? false ? "QL" : "NV")</td>
+                <td>@item.fLuong</td>
+                <td>@item.sSĐT</td>
+                <td>************</td>
+                <td class="action-buttons">
+                    <button class="edit-btn" onclick="onUpdateNV('@item.sMaNV')">Sửa</button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
