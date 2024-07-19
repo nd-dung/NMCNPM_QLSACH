@@ -34,10 +34,10 @@
                 <tr>
                     <th>Mã Sách</th>
                     <th>Tên Sách</th>
-                    <th>Tác Giả</th>
+                    <th>Tên tác Giả</th>
                     <th>Đơn Giá</th>
                     <th>Số Lượng</th>
-                    <th>NXB</th>
+                    <th>Nhà xuất bản</th>
                     <th>Thể Loại</th>
                     <th>Thao Tác</th>
                 </tr>
@@ -55,7 +55,7 @@
                         <td>@item.sTheloai</td>
                         <td class="action-buttons">
                             <button class="btn btn-secondary" onclick="onUpdate('@item.sMasach')">Sửa</button>
-                            <button class="btn btn-danger" onclick="confirmDelete('@item.sMasach')">Xóa</button>
+                            <button class="btn btn-danger" onclick="confirmDelete('@item.sMasach', '@item.sTensach')">Xóa</button>
                         </td>
                     </tr>
                 }
@@ -83,7 +83,7 @@
                 <input type="text" id="sTensach" name="sTensach" placeholder="Nhập Tên Sách"  maxlength="100">
                 <p id="errorTenSach" class="error"></p>
 
-                <p class="label">Tác giả:</p>
+                <p class="label">Tên tác giả:</p>
                 <input type="text" id="sTenTG" name="sTenTG" placeholder="Nhập Tác giả"  maxlength="100" >
                 <p id="errorTenTG" class="error"></p>
 
@@ -197,18 +197,19 @@
         }
 
 
-        function confirmDelete(sMasach) {
-            if (confirm("Bạn có chắc chắn muốn xóa sách này?")) {
+        function confirmDelete(sMasach, sTensach) {
+            if (confirm(` Bạn có muốn xóa ${sTensach} không?`)) {
                 $.ajax({
                     url: '@Url.Action("Delete", "cSach")',
                     type: 'POST',
                     data: { sMasach: sMasach },
                     success: function(result) {
-                            // Chuyển hướng đến hành động Index sau khi xóa thành công
+                        // Chuyển hướng đến hành động Index sau khi xóa thành công
+                        alert(`Sách ${sTensach} đã được xóa thành công! `);
                             window.location.href = '@Url.Action("Index", "cSach")';
                     },
                     error: function() {
-                        alert('Có lỗi xảy ra khi xóa nhân viên. Vui lòng thử lại.');
+                        alert('Xóa không thành công vui lòng thử lại!');
                     }
                 });
             }
@@ -246,7 +247,7 @@
                 isValid = false;
                 document.getElementById("errorDonGia").innerHTML = "Vui lòng nhập đơn giá";
             }
-            if (iDongia.value < 0) {
+            if (iDongia.value <= 0) {
                 isValid = false;
                 document.getElementById("errorDonGia").innerHTML = "Đơn giá phải là số dương";
             }
