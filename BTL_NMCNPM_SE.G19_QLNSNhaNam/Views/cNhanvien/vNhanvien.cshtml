@@ -1,8 +1,5 @@
 ﻿@model List<BTL_NMCNPM_SE.G19_QLNSNhaNam.Models.viewNVPW>
-@{
-    ViewBag.Title = "Quản lí nhân Viên";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@{ ViewBag.Title = "Quản lí nhân Viên"; Layout = "~/Views/Shared/_Layout.cshtml"; }
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -154,342 +151,277 @@
     </div>
     <script>
          function onUpdateNV(maNV) {
+           var employees = @Html.Raw(Json.Encode(Model));
+           for (var i = 0; i < employees.length; i++) {
+             if (employees[i].sMaNV === maNV) {
+               employee = employees[i];
+               break;
+             }
+           }
+           $('#employeeModalU').css('display', 'block');
+           document.getElementById('pMaNVU').textContent = employee.sMaNV;
+           document.getElementById('sMaNVU').value = employee.sMaNV;
+           document.getElementById('sTenNVU').value = employee.sTenNV;
+           document.getElementById('dNgaysinhU').value = convertJsonDate(employee.dNgaysinh);
+           document.getElementById('bGioiTinhU').value = employee.bGioitinh;
+           document.getElementById('bTrangThaiU').value = employee.bTrangthai;
+           document.getElementById('sDiaChiU').value = employee.sDiachi;
+           document.getElementById('dNgayvaolamU').value = convertJsonDate(employee.dNgayvaolam);
+           document.getElementById('sSDTU').value = employee.sSĐT;
+           document.getElementById('fLuongU').value = employee.fLuong;
+           document.getElementById('sCCCDU').value = employee.sCCCD;
+           document.getElementById('sMatkhauU').value = employee.sMatkhau;
+         }
 
-          var employees = @Html.Raw(Json.Encode(Model));
-         for (var i = 0; i < employees.length; i++) {
-         if (employees[i].sMaNV === maNV) {
-         employee = employees[i];
-         break;
-         }
-         }
-         $('#employeeModalU').css('display', 'block');
-         document.getElementById('pMaNVU').textContent = employee.sMaNV;
-         document.getElementById('sMaNVU').value = employee.sMaNV;
-         document.getElementById('sTenNVU').value = employee.sTenNV;
-         document.getElementById('dNgaysinhU').value = convertJsonDate(employee.dNgaysinh);
-         document.getElementById('bGioiTinhU').value = employee.bGioitinh;
-         document.getElementById('bTrangThaiU').value = employee.bTrangthai;
-         document.getElementById('sDiaChiU').value = employee.sDiachi;
-         document.getElementById('dNgayvaolamU').value = convertJsonDate(employee.dNgayvaolam);
-         document.getElementById('sSDTU').value = employee.sSĐT;
-         document.getElementById('fLuongU').value = employee.fLuong;
-         document.getElementById('sCCCDU').value = employee.sCCCD;
-         document.getElementById('sMatkhauU').value = employee.sMatkhau;
-         }
          function convertJsonDate(jsonDate) {
-         // Extract timestamp from "/Date(799657200000)/"
-         var timestamp = parseInt(jsonDate.match(/\d+/)[0]);
-
-         // Create a Date object
-         var date = new Date(timestamp);
-
-         // Format Date object to YYYY-MM-DD
-         var formattedDate = date.toISOString().slice(0, 10);
-
-         return formattedDate;
+           // Extract timestamp from "/Date(799657200000)/"
+           var timestamp = parseInt(jsonDate.match(/\d+/)[0]);
+           // Create a Date object
+           var date = new Date(timestamp);
+           // Format Date object to YYYY-MM-DD
+           var formattedDate = date.toISOString().slice(0, 10);
+           return formattedDate;
          }
-
          const formS = document.getElementById('formSearch')
-         formS.addEventListener('submit', function (event) {
-         event.preventDefault();
-         let searchk = document.getElementById('searchtext').value.trim();
-         if (!searchk) {
-         alert("Vui lòng nhập từ khóa!");
-         return;
-         } else {
-         $.ajax({
-         url: '@Url.Action("Search", "cNhanVien")',
-         type: 'POST',
-         data: {
-         searchtext: searchk
-         },
-         success: function (result) {
-         if (result.success) {
-             $('#tablenv').html(result.html);
-         } else {
-             alert(result.message);
-         }
-         },
-         error: function (xhr, status, error) {
-         alert('Error: ' + error);
-         }
+         formS.addEventListener('submit', function(event) {
+           event.preventDefault();
+           let searchk = document.getElementById('searchtext').value.trim();
+           if (!searchk) {
+             alert("Vui lòng nhập từ khóa!");
+             return;
+           } else {
+             $.ajax({
+               url: '@Url.Action("Search", "cNhanVien")',
+               type: 'POST',
+               data: {
+                 searchtext: searchk
+               },
+               success: function(result) {
+                 if (result.success) {
+                   $('#tablenv').html(result.html);
+                 } else {
+                   alert(result.message);
+                 }
+               },
+               error: function(xhr, status, error) {
+                 alert('Error: ' + error);
+               }
+             });
+           }
          });
-         }
-         });
-
-
-
-
-         $(document).ready(function () {
-         // Open modal when clicking "Thêm Nhân Viên"
-         $('#addButton').click(function () {
-         $('#employeeModal').css('display', 'block');
-         });
-
-
-         // Close modal when clicking the close button
-         $('.close, .close-btn').click(function () {
-         $('#employeeModal').css('display', 'none');
-         $('#employeeModalU').css('display', 'none');
-         });
-
-         // Close modal when clicking outside of the modal
-         $(window).click(function (event) {
-         if (event.target.id === 'employeeModal') {
+         $(document).ready(function() {
+           // Open modal when clicking "Thêm Nhân Viên"
+           $('#addButton').click(function() {
+             $('#employeeModal').css('display', 'block');
+           });
+           // Close modal when clicking the close button
+           $('.close, .close-btn').click(function() {
              $('#employeeModal').css('display', 'none');
              $('#employeeModalU').css('display', 'none');
-         }
+           });
+           // Close modal when clicking outside of the modal
+           $(window).click(function(event) {
+             if (event.target.id === 'employeeModal') {
+               $('#employeeModal').css('display', 'none');
+               $('#employeeModalU').css('display', 'none');
+             }
+           });
          });
-
-
-         });
-
          const formA = document.getElementById('employeeForm')
-
          // Trong form thêm mới
-         formA.addEventListener('submit', function (event) {
-         event.preventDefault();
-         // Declare the variables
-         let sMaNVI = document.getElementById('sMaNVI').value.trim();
-         let sTenNV = document.getElementById('sTenNV').value.trim();
-         let dNgaysinh = document.getElementById('dNgaysinh').value.trim();
-         let bGioiTinh = document.getElementById('bGioiTinh').value.trim();
-         let bTrangThai = document.getElementById('bTrangThai').value.trim();
-         let sDiaChi = document.getElementById('sDiaChi').value.trim();
-         let dNgayvaolam = document.getElementById('dNgayvaolam').value.trim();
-         let sSDT = document.getElementById('sSDT').value.trim();
-         let fLuong = document.getElementById('fLuong').value.trim();
-         let sCCCD = document.getElementById('sCCCD').value.trim();
-         let sMatkhau = document.getElementById('sMatkhau').value.trim();
-
-         // Call the checkRong() function with the declared variables
-         if (checkRong(false, sMaNVI, sTenNV, dNgaysinh, bGioiTinh, bTrangThai, sDiaChi, dNgayvaolam, sSDT, fLuong, sCCCD, sMatkhau)) {
-         // Code to be executed if the checkRong() function returns true
-
-         return;
-         }
-
-
-         if (checkValid(sMaNVI, sTenNV, dNgaysinh, dNgayvaolam, sSDT, sCCCD, fLuong, sMatkhau)) {
-         SendNV(false,
-             $('#sMaNVI').val(),
-             $('#sTenNV').val(),
-             $('#dNgaysinh').val(),
-             $('#bGioiTinh').val(),
-             $('#bTrangThai').val(),
-             $('#sDiaChi').val(),
-             $('#dNgayvaolam').val(),
-             $('#sSDT').val(),
-             $('#fLuong').val(),
-             $('#sCCCD').val(),
-             $('#sMatkhau').val()
-         );
-         }
+         formA.addEventListener('submit', function(event) {
+           event.preventDefault();
+           // Declare the variables
+           let sMaNVI = document.getElementById('sMaNVI').value.trim();
+           let sTenNV = document.getElementById('sTenNV').value.trim();
+           let dNgaysinh = document.getElementById('dNgaysinh').value.trim();
+           let bGioiTinh = document.getElementById('bGioiTinh').value.trim();
+           let bTrangThai = document.getElementById('bTrangThai').value.trim();
+           let sDiaChi = document.getElementById('sDiaChi').value.trim();
+           let dNgayvaolam = document.getElementById('dNgayvaolam').value.trim();
+           let sSDT = document.getElementById('sSDT').value.trim();
+           let fLuong = document.getElementById('fLuong').value.trim();
+           let sCCCD = document.getElementById('sCCCD').value.trim();
+           let sMatkhau = document.getElementById('sMatkhau').value.trim();
+           // Call the checkRong() function with the declared variables
+           if (checkRong(false, sMaNVI, sTenNV, dNgaysinh, bGioiTinh, bTrangThai, sDiaChi, dNgayvaolam, sSDT, fLuong, sCCCD, sMatkhau)) {
+             // Code to be executed if the checkRong() function returns true
+             return;
+             }
+             if (checkValid(sMaNVI, sTenNV, dNgaysinh, dNgayvaolam, sDiaChi, sSDT, sCCCD, fLuong, sMatkhau)) {
+             SendNV(false, sMaNVI, sTenNV, dNgaysinh, bGioiTinh, bTrangThai, sDiaChi, dNgayvaolam, sSDT, fLuong, sCCCD, sMatkhau);
+           }
          });
 
-         function SendNV(updatemode,sMaNV, sTenNV, dNgaysinh, bGioitinh, bTrangthai, sDiachi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) {
-         let action = '';
-         if (updatemode == false) {
-         action = '@Url.Action("Create", "cNhanVien")';
-         }
-         else {
-         action = '@Url.Action("Update", "cNhanVien")';
-         }
-
-         $.ajax({
-         url: action,
-         type: 'POST',
-         data: {
-         sMaNV: sMaNV,
-         sTenNV: sTenNV,
-         dNgaysinh: dNgaysinh,
-         bGioitinh: bGioitinh,
-         bTrangthai: bTrangthai,
-         sDiachi: sDiachi,
-         dNgayvaolam: dNgayvaolam,
-         sSĐT: sSĐT,
-         fLuong: fLuong,
-         sCCCD: sCCCD,
-         sMatkhau: sMatkhau
-         },
-         success: function (result) {
-             if (result.success) {
+         function SendNV(updatemode, sMaNV, sTenNV, dNgaysinh, bGioitinh, bTrangthai, sDiachi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) {
+           let action = '';
+           if (updatemode == false) {
+             action = '@Url.Action("Create", "cNhanVien")';
+           } else {
+             action = '@Url.Action("Update", "cNhanVien")';
+           }
+           $.ajax({
+             url: action,
+             type: 'POST',
+             data: {
+               sMaNV: sMaNV,
+               sTenNV: sTenNV,
+               dNgaysinh: dNgaysinh,
+               bGioitinh: bGioitinh,
+               bTrangthai: bTrangthai,
+               sDiachi: sDiachi,
+               dNgayvaolam: dNgayvaolam,
+               sSĐT: sSĐT,
+               fLuong: fLuong,
+               sCCCD: sCCCD,
+               sMatkhau: sMatkhau
+             },
+             success: function(result) {
+               if (result.success) {
                  alert(result.message);
                  window.location.href = '@Url.Action("Index", "cNhanVien")';
-             }
-             else {
+               } else {
                  alert(result.message);
+               }
+             },
+             error: function(xhr, status, error) {
+               var errorMessage = xhr.responseText;
+               alert(errorMessage);
              }
-         },
-         error: function(xhr, status, error) {
-         var errorMessage = xhr.responseText;
-         alert(errorMessage);
+           });
          }
-         });
-         }
-
-
-
-
          const formU = document.getElementById('employeeFormU')
-
          // Trong form cập nhật
-         formU.addEventListener('submit', function (event) {
-         event.preventDefault();
-         // Declare the variables
-         let sMaNVU = document.getElementById('sMaNVU').value.trim();
-         let sTenNV = document.getElementById('sTenNVU').value.trim();
-         let dNgaysinh = document.getElementById('dNgaysinhU').value;
-         let bGioiTinh = document.getElementById('bGioiTinhU').value.trim();
-         let bTrangThai = document.getElementById('bTrangThaiU').value.trim();
-         let sDiaChi = document.getElementById('sDiaChiU').value.trim();
-         let dNgayvaolam = document.getElementById('dNgayvaolamU').value;
-         let sSDT = document.getElementById('sSDTU').value.trim();
-         let fLuong = document.getElementById('fLuongU').value.trim();
-         let sCCCD = document.getElementById('sCCCDU').value.trim();
-         let sMatkhau = document.getElementById('sMatkhauU').value.trim();
-
-         // Call the checkRong() function with the declared variables
-         if (checkRong(true, sMaNVI, sTenNV, dNgaysinh, bGioiTinh, bTrangThai, sDiaChi, dNgayvaolam, sSDT, fLuong, sCCCD, sMatkhau)) {
-         // Code to be executed if the checkRong() function returns true
-
-         return;
-         }
-
-         if (checkValid(sMaNVU, sTenNV, dNgaysinh, dNgayvaolam, sSDT, sCCCD, fLuong, sMatkhau)) {
-         SendNV(true,
-             $('#sMaNVU').val(),
-             $('#sTenNVU').val(),
-             $('#dNgaysinhU').val(),
-             $('#bGioiTinhU').val(),
-             $('#bTrangThaiU').val(),
-             $('#sDiaChiU').val(),
-             $('#dNgayvaolamU').val(),
-             $('#sSDTU').val(),
-             $('#fLuongU').val(),
-             $('#sCCCDU').val(),
-             $('#sMatkhauU').val()
-         );
-         }
+         formU.addEventListener('submit', function(event) {
+           event.preventDefault();
+           // Declare the variables
+           let sMaNVU = document.getElementById('sMaNVU').value.trim();
+           let sTenNV = document.getElementById('sTenNVU').value.trim();
+           let dNgaysinh = document.getElementById('dNgaysinhU').value;
+           let bGioiTinh = document.getElementById('bGioiTinhU').value.trim();
+           let bTrangThai = document.getElementById('bTrangThaiU').value.trim();
+           let sDiaChi = document.getElementById('sDiaChiU').value.trim();
+           let dNgayvaolam = document.getElementById('dNgayvaolamU').value;
+           let sSDT = document.getElementById('sSDTU').value.trim();
+           let fLuong = document.getElementById('fLuongU').value.trim();
+           let sCCCD = document.getElementById('sCCCDU').value.trim();
+           let sMatkhau = document.getElementById('sMatkhauU').value.trim();
+           // Call the checkRong() function with the declared variables
+           if (checkRong(true, sMaNVI, sTenNV, dNgaysinh, bGioiTinh, bTrangThai, sDiaChi, dNgayvaolam, sSDT, fLuong, sCCCD, sMatkhau)) {
+             // Code to be executed if the checkRong() function returns true
+             return;
+           }
+             if (checkValid(sMaNVU, sTenNV, dNgaysinh, dNgayvaolam, sDiaChi, sSDT, sCCCD, fLuong, sMatkhau)) {
+             SendNV(true, sMaNVU, sTenNV, dNgaysinh, bGioiTinh, bTrangThai, sDiaChi, dNgayvaolam, sSDT, fLuong, sCCCD, sMatkhau);
+           }
          });
 
          function checkRong(isUpdate, sMaNV, sTenNV, dNgaysinh, bGioiTinh, bTrangThai, sDiaChi, dNgayvaolam, sSĐT, fLuong, sCCCD, sMatkhau) {
-         let isValid = false;
-         if (isUpdate == false) {
-         if (!sMaNV) {
-             isValid = true;
-             alert("Vui lòng nhập mã nhân viên");
-         }
-         }
-         if (!sTenNV) {
-         isValid = true;
-         alert("Vui lòng nhập tên nhân viên");
-         }
-
-         if (!dNgaysinh) {
-         isValid = true;
-         alert("Vui lòng chọn ngày sinh");
-         }
-
-         if (!bGioiTinh) {
-         isValid = true;
-         alert("Vui lòng chọn giới tính");
-         }
-         if (!bTrangThai) {
-         isValid = true;
-         alert("Vui lòng chọn trạng thái");
-         }
-
-         if (!sDiaChi) {
-         isValid = true;
-         alert("Vui lòng nhập địa chỉ");
-         }
-
-         if (!dNgayvaolam) {
-         isValid = true;
-         alert("Vui lòng nhập ngày vào làm");
-         }
-
-         if (!sSĐT) {
-         isValid = true;
-         alert("Vui lòng nhập số điện thoại");
-         }
-
-         if (!fLuong) {
-         isValid = true;
-         alert("Vui lòng nhập lương");
-         }
-
-         if (!sCCCD) {
-         isValid = true;
-         alert("Vui lòng nhập CCCD");
-         }
-
-         if (!sMatkhau) {
-         isValid = true;
-         alert("Vui lòng nhập mật khẩu");
-         }
-
-         return isValid;
-         }
-
-
-
-         function checkValid(sMaNV,sTenNV,dNgaysinh,dNgayvaolam,sSDT, sCCCD, fLuong,sMatkhau) {
-         const psMaNV = /^(?=.*[A-Z])(?=.*\d)[A-Z0-9]+$/;
-         const psTenNV = /^[\p{L}\s]+$/u;
-         const pMatkhau = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\p{P}\p{S}])[a-zA-Z0-9\p{P}\p{S}]{8,10}$/u;
-         const pSo = /^[0-9]+$/;
-         var today = new Date();
-         var dNgaysinh = new Date(dNgaysinh);
-         var dNgayvaolam = new Date(dNgayvaolam);
-         var age = today.getFullYear() - dNgaysinh.getFullYear();
-         var monthDiff = today.getMonth() - dNgaysinh.getMonth();
-         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dNgaysinh.getDate())) {
-         age--;
-         }
-
-         let isValid = true
-         if (!psMaNV.test(sMaNV) || sMaNV.length>10) {
-         alert("Mã nhân viên không đúng định dạng");
-         isValid = false;
-         }
-         if (!psTenNV.test(sTenNV) || sTenNV.length>100) {
-         alert("Tên nhân viên không đúng định dạng");
-         isValid = false;
-         }
-         if (age < 18) {
-         alert("Nhân viên phải đủ 18 tuổi trở lên");
-         isValid = false;
-         }
-         if (dNgayvaolam > today) {
-         alert("Ngày vào làm không hợp lệ");
-         isValid = false;
-         }
-
-
-             if (!pSo.test(sSDT) || sSDT.length!=10) {
-         alert("Số điện thoại không đúng định dạng")
-         isValid = false;
+           let isValid = false;
+           if (isUpdate == false) {
+             if (!sMaNV) {
+               isValid = true;
+               alert("Vui lòng nhập mã nhân viên");
              }
-             if (!pSo.test(sCCCD) || sCCCD.length!=13) {
-         alert("Số CCCD không hợp lệ")
-         isValid = false;
-         };
-         if (!pSo.test(fLuong) || fLuong.length <= 0) {
-         alert("Lương phải là số dương")
-         isValid = false
+           }
+           if (!sTenNV) {
+             isValid = true;
+             alert("Vui lòng nhập tên nhân viên");
+           }
+           if (!dNgaysinh) {
+             isValid = true;
+             alert("Vui lòng chọn ngày sinh");
+           }
+           if (!bGioiTinh) {
+             isValid = true;
+             alert("Vui lòng chọn giới tính");
+           }
+           if (!bTrangThai) {
+             isValid = true;
+             alert("Vui lòng chọn trạng thái");
+           }
+           if (!sDiaChi) {
+             isValid = true;
+             alert("Vui lòng nhập địa chỉ");
+           }
+           if (!dNgayvaolam) {
+             isValid = true;
+             alert("Vui lòng nhập ngày vào làm");
+           }
+           if (!sSĐT) {
+             isValid = true;
+             alert("Vui lòng nhập số điện thoại");
+           }
+           if (!fLuong) {
+             isValid = true;
+             alert("Vui lòng nhập lương");
+           }
+           if (!sCCCD) {
+             isValid = true;
+             alert("Vui lòng nhập CCCD");
+           }
+           if (!sMatkhau) {
+             isValid = true;
+             alert("Vui lòng nhập mật khẩu");
+           }
+           return isValid;
          }
 
-         if (!pMatkhau.test(sMatkhau)) {
-         alert("Mật khẩu vừa nhập không đúng định dạng phải bao gồm chữ hoa thường,số, kí tự đặc biệt lớn hơn 8 và nhỏ hơn 10 kí tự");
-         isValid = false;
+         function checkValid(sMaNV, sTenNV, dNgaysinh, dNgayvaolam, sDiachi, sSDT, sCCCD, fLuong, sMatkhau) {
+           const psMaNV = /^(?=.*[A-Z])(?=.*\d)[A-Z0-9]+$/;
+           const psTenNV = /^[\p{L}\s]+$/u;
+           const pMatkhau = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\p{P}\p{S}])[a-zA-Z0-9\p{P}\p{S}]{8,10}$/u;
+           const pSo = /^[0-9]+$/;
+           const pSDT = /^0\d{9}$/;
+           const pCCCD = /^\d{13}$/;
+           const pDiachi = /^(?=.*[\p{L}])[\p{L}\p{N}\p{P}\p{Z}]{1,100}$/u;
+           var today = new Date();
+           var dNgaysinh = new Date(dNgaysinh);
+           var dNgayvaolam = new Date(dNgayvaolam);
+           var age = today.getFullYear() - dNgaysinh.getFullYear();
+           var monthDiff = today.getMonth() - dNgaysinh.getMonth();
+           if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dNgaysinh.getDate())) {
+             age--;
+           }
+           let isValid = true
+           if (!psMaNV.test(sMaNV) || sMaNV.length > 10) {
+             alert("Mã nhân viên không đúng định dạng");
+             isValid = false;
+           }
+           if (!psTenNV.test(sTenNV) || sTenNV.length > 100) {
+             alert("Tên nhân viên không đúng định dạng");
+             isValid = false;
+           }
+           if (age < 18) {
+             alert("Nhân viên phải đủ 18 tuổi trở lên");
+             isValid = false;
+           }
+           if (dNgayvaolam > today) {
+             alert("Ngày vào làm không hợp lệ");
+             isValid = false;
+           }
+           if (!pDiachi.test(sDiachi)) {
+             alert("Địa chỉ không đúng định dạng");
+             isValid = false;
+           }
+           if (!pSDT.test(sSDT)) {
+             alert("Số điện thoại không đúng định dạng");
+             isValid = false;
+           }
+           if (!pCCCD.test(sCCCD)) {
+             alert("Số CCCD không hợp lệ");
+             isValid = false;
+           };
+           if (!pSo.test(fLuong) || fLuong.length <= 0) {
+             alert("Lương phải là số dương");
+             isValid = false
+           }
+           if (!pMatkhau.test(sMatkhau)) {
+             alert("Mật khẩu vừa nhập không đúng định dạng phải bao gồm chữ hoa thường,số, kí tự đặc biệt lớn hơn 8 và nhỏ hơn 10 kí tự");
+             isValid = false;
+           }
+           return isValid
          }
-         return isValid
-         }
-
-
-
     </script>
 </body>
 </html>
