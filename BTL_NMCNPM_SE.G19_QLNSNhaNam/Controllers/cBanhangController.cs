@@ -12,10 +12,10 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
     {
         protected readonly dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
 
-        //public cBanhangController(dbQuanlyBanHangNhaSachNhaNamEntities1 dbContext)
-        //{
-        //     db = dbContext;
-        //}
+        public cBanhangController(dbQuanlyBanHangNhaSachNhaNamEntities dbContext)
+        {
+             db = dbContext;
+        }
 
         // GET: cBanhang
         public ActionResult Index()
