@@ -11,7 +11,8 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
     public class cDangnhapController : Controller
     {
         // GET: cDangnhap
-        dbQuanlyBanHangNhaSachNhaNamEntities db1 = new dbQuanlyBanHangNhaSachNhaNamEntities();
+        dbQuanlyBanHangNhaSachNhaNamEntities1 db1 = new dbQuanlyBanHangNhaSachNhaNamEntities1();
+
         public ActionResult Index()
         {
             return View();
@@ -23,16 +24,31 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         [HttpPost]
         public ActionResult Login(tblTaiKhoan user)
         {
-            var userCheck = db1.tblTaiKhoans.SingleOrDefault(m=>m.sMaNV.Equals(user.sMaNV) && m.sMatkhau.Equals(user.sMatkhau));
-            if (userCheck != null )
-            { 
-                    Session["User"] = userCheck.sMaNV;
-                    return RedirectToAction("Index", "cBanhang");
-                
+            var userCheck = db1.tblTaiKhoans.SingleOrDefault(m => m.sMaNV.Equals(user.sMaNV) && m.sMatkhau.Equals(user.sMatkhau));
+
+            if (ModelState.IsValid)
+            {
+                var userNV = db1.tblNhanViens.SingleOrDefault(x => x.sMaNV == user.sMaNV && x.bTrangthai.ToString().Equals("False"));
+                if (userNV != null) { ViewBag.NhanVien = "Tài khoản của bạn đã bị khóa"; return View(); }
+                else
+                {
+                    if (userCheck != null)
+                    {
+                        Session["User"] = userCheck.sMaNV;
+                        return RedirectToAction("Index", "cBanhang");
+
+                    }
+                    else
+                    {
+                        ViewBag.LoginFail = "Đăng nhập thất bại, vui lòng kiểm tra lại!";
+                        return View();
+                    }
+                }
             }
             else
             {
-                ViewBag.LoginFail = "Đăng nhập thất bại, vui lòng kiểm tra lại!";
+
+                ViewBag.LoginFail = "";
                 return View();
             }
         }
@@ -42,6 +58,6 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
-        
+
     }
 }

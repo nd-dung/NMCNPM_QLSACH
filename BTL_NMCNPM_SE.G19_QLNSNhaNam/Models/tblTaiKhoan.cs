@@ -11,12 +11,15 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblTaiKhoan
     {
+        [Required(ErrorMessage = "Username field is required")]
         public string sMaNV { get; set; }
+        [Required(ErrorMessage = "Password field is required")]
         public string sMatkhau { get; set; }
-    
+
         public virtual tblNhanVien tblNhanVien { get; set; }
     }
 }
