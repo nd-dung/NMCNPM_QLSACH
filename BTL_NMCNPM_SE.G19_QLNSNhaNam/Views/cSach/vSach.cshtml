@@ -238,7 +238,7 @@
         }
 
         function checkCotainSpecialCharacter(string) {
-            const regex = /[^a-zA-Z0-9\s]/;
+            const regex = /[`!@@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~]/;
             return regex.test(string);
         }
 
