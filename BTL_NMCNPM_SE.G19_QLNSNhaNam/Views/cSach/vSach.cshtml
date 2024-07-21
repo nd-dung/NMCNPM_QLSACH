@@ -238,7 +238,7 @@
         }
 
         function checkCotainSpecialCharacter(string) {
-            const regex = /[^a-zA-Z0-9\s]/;
+            const regex = /[`!@@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~]/;
             return regex.test(string);
         }
 
@@ -288,7 +288,7 @@
                 isValid = false;
                 document.getElementById("errorDonGia").innerHTML = "Vui lòng nhập giá sách";
             }
-            
+
             if (!iSoluong.value.trim()) {
                 isValid = false;
                 document.getElementById("errorSoLuong").innerHTML = "Vui lòng nhập số lượng";
