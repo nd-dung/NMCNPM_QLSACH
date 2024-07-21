@@ -21,9 +21,10 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Models
             }
             else
             {
+                string searchParam = searchInput == "" ? "" : searchInput.Trim();
                 List<tblSach> listSach = db.tblSaches.Where(
                 row => row.sTensach.Contains(searchInput)).ToList();
-                ViewBag.Search = searchInput.Trim();
+                ViewBag.Search = searchInput;
 
                 var settings = new JsonSerializerSettings
                 {

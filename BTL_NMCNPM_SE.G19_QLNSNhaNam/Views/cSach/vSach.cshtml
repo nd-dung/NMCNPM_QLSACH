@@ -43,20 +43,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @if (Model.Count > 0)
+                {
+                    foreach(var item in Model)
+                    {
+                        <tr>
+                            <td>@item.sMasach</td>
+                            <td>@item.sTensach</td>
+                            <td>@item.sTenTG</td>
+                            <td>@item.iDongia</td>
+                            <td>@item.iSoluong</td>
+                            <td>@item.sNXB</td>
+                            <td>@item.sTheloai</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-secondary" onclick="onUpdate('@item.sMasach')">Sửa</button>
+                                <button class="btn btn-danger" onclick="confirmDelete('@item.sMasach', '@item.sTensach')">Xóa</button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@item.sMasach</td>
-                        <td>@item.sTensach</td>
-                        <td>@item.sTenTG</td>
-                        <td>@item.iDongia</td>
-                        <td>@item.iSoluong</td>
-                        <td>@item.sNXB</td>
-                        <td>@item.sTheloai</td>
-                        <td class="action-buttons">
-                            <button class="btn btn-secondary" onclick="onUpdate('@item.sMasach')">Sửa</button>
-                            <button class="btn btn-danger" onclick="confirmDelete('@item.sMasach', '@item.sTensach')">Xóa</button>
-                        </td>
+                        <td colspan="8">Không tìm thấy sách cần tìm!</td>
                     </tr>
                 }
             </tbody>
@@ -218,6 +227,22 @@
         const formAdd = document.getElementById('bookForm');
 
 
+        function checkLetterAndNumber(string) {
+            const regex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+$/;
+            return regex.test(string);
+        }
+
+        function checkCotainString(string) {
+            const regex = /[a-zA-Z]/;
+            return regex.test(string);
+        }
+
+        function checkCotainSpecialCharacter(string) {
+            const regex = /[^a-zA-Z0-9\s]/;
+            return regex.test(string);
+        }
+
+
         function checkValid() {
             let sMaSach = document.getElementById('sMasach');
             let sTenSach = document.getElementById('sTensach');
@@ -232,10 +257,18 @@
                 isValid = false;
                 document.getElementById("errorMaSach").innerHTML = "Vui lòng nhập mã sách";
             }
+            if (sMaSach.value.trim() !== "" && !checkLetterAndNumber(sMaSach.value.trim())) {
+                isValid = false;
+                document.getElementById("errorMaSach").innerHTML = "Mã sách không đúng định dạng";
+            }
 
             if (!sTenSach.value.trim()) {
                 isValid = false;
                 document.getElementById("errorTenSach").innerHTML = "Vui lòng nhập tên sách";
+            }
+            if (sTenSach.value.trim() !== "" && (!checkCotainString(sTenSach.value.trim()) || checkCotainSpecialCharacter(sTenSach.value.trim())) ) {
+                isValid = false;
+                document.getElementById("errorTenSach").innerHTML = "Tên sách không đúng định dạng";
             }
 
             if (!sTenTG.value.trim()) {
@@ -243,14 +276,19 @@
                 document.getElementById("errorTenTG").innerHTML = "Vui lòng nhập tên tác giả";
             }
 
-            if (!iDongia.value.trim()) {
+            if (sTenTG.value.trim() !== "" && (!checkCotainString(sTenTG.value.trim()) || checkCotainSpecialCharacter(sTenTG.value.trim())) ) {
                 isValid = false;
-                document.getElementById("errorDonGia").innerHTML = "Vui lòng nhập đơn giá";
+                document.getElementById("errorTenTG").innerHTML = "Tên tác giả không đúng định dạng";
             }
             if (iDongia.value <= 0) {
                 isValid = false;
                 document.getElementById("errorDonGia").innerHTML = "Đơn giá phải là số dương";
             }
+            if (!iDongia.value.trim()) {
+                isValid = false;
+                document.getElementById("errorDonGia").innerHTML = "Vui lòng nhập giá sách";
+            }
+            
             if (!iSoluong.value.trim()) {
                 isValid = false;
                 document.getElementById("errorSoLuong").innerHTML = "Vui lòng nhập số lượng";
@@ -263,11 +301,18 @@
                 isValid = false;
                 document.getElementById("errorNXB").innerHTML = "Vui lòng nhập nhà xuất bản";
             }
+            if (sNXB.value.trim() !== "" && (!checkCotainString(sNXB.value.trim()) || checkCotainSpecialCharacter(sNXB.value.trim()))) {
+                isValid = false;
+                document.getElementById("errorNXB").innerHTML = "Nhà xuất bản không đúng định dạng";
+            }
             if (!sTheloai.value.trim()) {
                 isValid = false;
                 document.getElementById("errorTheLoai").innerHTML = "Vui lòng nhập thể loại";
             }
-
+            if (sTheloai.value.trim() !== "" && (!checkCotainString(sTheloai.value.trim()) || checkCotainSpecialCharacter(sTheloai.value.trim())) ) {
+                isValid = false;
+                document.getElementById("errorTheLoai").innerHTML = "Thể loại không đúng định dạng";
+            }
             return isValid;
         }
 
@@ -302,13 +347,13 @@
                     url: url.includes('/cSach/update') ? '@Url.Action("Update", "cSach")' :'@Url.Action("Add", "cSach")',
                     type: 'POST',
                     data: {
-                        sMasach: sMasach.value,
-                        sTenSach: sTenSach.value,
-                        sTenTG: sTenTG.value,
+                        sMasach: sMasach.value.trim(),
+                        sTenSach: sTenSach.value.trim(),
+                        sTenTG: sTenTG.value.trim(),
                         iDongia: iDongia.value,
                         iSoluong: iSoluong.value,
-                        sNXB: sNXB.value,
-                        sTheloai: sTheloai.value
+                        sNXB: sNXB.value.trim(),
+                        sTheloai: sTheloai.value.trim()
                     },
                     success: function (result) {
                         // Chuyển hướng đến hành động Index sau khi xóa thành công
