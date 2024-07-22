@@ -38,7 +38,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
             n.bLoai = bn.bLoai;
             db.tblNhaps.Add(n);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json(new { success = true,message = "Thêm thành công" });
         }
     }
 }
