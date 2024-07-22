@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     $("#navbar-placeholder").load("navbar.html");
 });
 $(document).ready(function () {
@@ -101,31 +101,7 @@ $(document).ready(function () {
     }
 
     // Function to validate form
-    function validateForm() {
-        let isValid = true;
-        const bookCode = $('#bookCode').val().trim();
-        if (!bookCode) {
-            $('#bookCodeError').text('Vui lòng nhập mã sách');
-            isValid = false;
-        } else if (!/^[A-Z0-9]{1,10}$/.test(bookCode)) {
-            $('#bookCodeError').text('Mã sách không đúng định dạng');
-            isValid = false;
-        }
 
-        const quantity = $('#quantity').val();
-        if (quantity <= 0) {
-            $('#quantityError').text('Số lượng phải là số dương');
-            isValid = false;
-        }
-
-        const unitPrice = $('#unitPrice').val();
-        if (unitPrice < 0) {
-            $('#unitPriceError').text('Đơn giá phải là số dương');
-            isValid = false;
-        }
-
-        return isValid;
-    }
 
     // Function to calculate total price
     function calculateTotalPrice() {
@@ -145,79 +121,97 @@ $(document).ready(function () {
         return 'EMP001';
     }
 });
+
+
 function validateForm() {
     let isValid = true;
-    $('.error-message').text(''); // Clear previous error messages
+    let errorMessage = '';
 
     const recordCode = $('#recordCode').val().trim();
     if (!recordCode) {
-        alert('Vui lòng nhập mã phiếu');
+        errorMessage += 'Vui lòng nhập mã phiếu\n';
         isValid = false;
     }
 
     const employeeId = $('#employeeId').val().trim();
     if (!employeeId) {
-        $('#employeeIdError').text('Vui lòng nhập mã nhân viên');
+        errorMessage += 'Vui lòng nhập mã nhân viên\n';
         isValid = false;
     }
 
     const recordType = $('#recordType').val().trim();
     if (!recordType) {
-        $('#recordTypeError').text('Vui lòng chọn loại phiếu');
+        errorMessage += 'Vui lòng chọn loại phiếu\n';
         isValid = false;
     }
 
     const bookCode = $('#bookCode').val().trim();
     if (!bookCode) {
-        $('#bookCodeError').text('Vui lòng nhập mã sách');
+        errorMessage += 'Vui lòng nhập mã sách\n';
         isValid = false;
     } else if (!/^[A-Z0-9]{1,10}$/.test(bookCode)) {
-        $('#bookCodeError').text('Mã sách không đúng định dạng');
+        errorMessage += 'Mã sách không đúng định dạng\n';
         isValid = false;
     }
 
     const quantity = $('#quantity').val();
     if (quantity <= 0) {
-        $('#quantityError').text('Số lượng phải là số dương');
+        errorMessage += 'Số lượng phải là số dương\n';
         isValid = false;
     }
 
     const unitPrice = $('#unitPrice').val();
     if (unitPrice < 0) {
-        $('#unitPriceError').text('Đơn giá phải là số dương');
+        errorMessage += 'Đơn giá phải là số dương\n';
         isValid = false;
+    }
+
+    if (!isValid) {
+        alert(errorMessage);
     }
 
     return isValid;
 }
-
-// Handle form submit and print
-document.getElementById('recordForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Ngăn chặn form submit ngay lập tức
-
+$('#printBtn').on('click', function (e) {
     if (validateForm()) {
-        window.print(); // Gọi hàm print
-
-        setTimeout(() => {
-            this.submit(); // Submit form sau khi print
-        }, 1000); // Thời gian chờ (1000ms = 1s) để đảm bảo window.print hoàn tất
+        e.preventDefault(); // Ngăn chặn form submit mặc định
+        $('#navbar-placeholder').hide();
+        $('#tittle').hide();
+        $('#tittle2').show();
+        $('#createReceiptBtn').hide();
+        $('#createReturnBtn').hide();
+        $('#printBtn').hide();
+        window.print(); // In form
+        $('#recordForm').submit(); // Submit form sau khi in
     }
-});
-document.getElementById('createReceiptBtn').addEventListener('click', function () {
-    document.getElementById('recordForm').style.display = 'block';
-    document.getElementById('printBtn').style.display = 'block';
+
 });
 
-// Handle print button click
-document.getElementById('printBtn').addEventListener('click', function () {
-    $('#navbar-placeholder').hide();
-    $('#tittle').hide();
-    $('#tittle2').show();
-    $('#createReceiptBtn').hide();
-    $('#createReturnBtn').hide();
-    $('#printBtn').hide();
-    window.print();
-    setTimeout(() => {
-        this.submit(); // Submit form sau khi print
-    }, 1000);
+// Submit form khi nhấn nút submit
+$('#recordForm').on('submit', function (e) {
+    // Xử lý form submit tại đây
+    e.preventDefault();
+
+    // Bạn có thể thêm mã gửi form bằng ajax hoặc xử lý khác ở đây
+    var formData = {
+        MaPN: $('#recordCode').val(),
+        sMaNV: $('#employeeId').val(),
+        dNgaylap: $('#recordDate').val(),
+        bLoai: $('#recordType').val() === 'nhap_kho' ? true : false,
+        // Các trường khác nếu cần
+    };
+    console.log('Sending form data:', formData);
+    $.ajax({
+        type: "POST",
+        url: '/cPhieunhap/Create',
+        data: formData,
+        success: function () {
+            alert('Phiếu gửi thành công');
+            location.reload(); // Tải lại trang sau khi submit
+        },
+        error: function () {
+            alert('Phiếu gửi bị lỗi');
+        }
+    });
 });
+
