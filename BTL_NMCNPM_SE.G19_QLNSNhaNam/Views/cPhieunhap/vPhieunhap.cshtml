@@ -1,4 +1,4 @@
-﻿@model List<BTL_NMCNPM_SE.G19_QLNSNhaNam.Models.tblNhap>
+@model List<BTL_NMCNPM_SE.G19_QLNSNhaNam.Models.bangnhap>
 
 @{
     ViewBag.Title = "cPhieunhap";
@@ -38,7 +38,7 @@
         </div>
 
         <!-- Form for Receipts and Returns -->
-        <form id="recordForm" style="display: none;" method="post" action="/cphieunhap/Create">
+        <form id="recordForm" style="display: none;" method="post" action="/cPhieunhap/Create">
             <input type="hidden" id="recordId">
             <div class="form-group">
                 <label for="recordCode">Mã Phiếu</label>
@@ -83,16 +83,18 @@
                 <label for="totalPrice">Thành Tiền</label>
                 <input type="text" id="totalPrice" readonly>
             </div>
-        </form>
-
-        <button type="submit" id="printBtn" class="btn btn-secondary" style="display: none;">
-            In
-            Phiếu
-        </button>
+            <button type="submit" id="printBtn" class="btn btn-secondary" style="display: none;">
+                In
+                Phiếu
+            </button>
+        </form>     
     </div>
 
     <script src="~/Front-end/js/receiptManagement.js"></script>
 </body>
+
+</html>
+
 
 </html>
 
