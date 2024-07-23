@@ -14,7 +14,7 @@ namespace UnitTest_PrjQLNSNN
     public class cPhieunhapControllerTests
     {
         private cPhieunhapController _controller;
-        private Mock<DB1> _dbContext;
+        private Mock<dbQuanlyBanHangNhaSachNhaNamEntities> _dbContext;
         private Mock<DbSet<bangnhap>> _mockBangnhaps;
         private Mock<DbSet<tblNhap>> _mockTblNhaps;
 
