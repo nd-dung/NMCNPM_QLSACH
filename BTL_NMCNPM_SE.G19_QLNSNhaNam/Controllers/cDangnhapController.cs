@@ -21,6 +21,10 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         {
             return View();
         }
+        public cDangnhapController(dbQuanlyBanHangNhaSachNhaNamEntities dbContext)
+        {
+            db = dbContext;
+        }
         [HttpPost]
         public ActionResult Login(tblTaiKhoan user)
         {
@@ -58,6 +62,6 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
-
+        
     }
 }
