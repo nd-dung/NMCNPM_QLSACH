@@ -11,6 +11,14 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
 {
     public class cPhieunhapController : Controller
     {
+        private dbQuanlyBanHangNhaSachNhaNamEntities _db;
+
+        public cPhieunhapController() : this(new dbQuanlyBanHangNhaSachNhaNamEntities()) { }
+
+        public cPhieunhapController(dbQuanlyBanHangNhaSachNhaNamEntities db)
+        {
+            _db = db;
+        }
         // GET: cPhieunhap
         public ActionResult Index()
         {
