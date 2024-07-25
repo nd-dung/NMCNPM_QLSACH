@@ -11,7 +11,7 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
     public class cDangnhapController : Controller
     {
         // GET: cDangnhap
-        dbQuanlyBanHangNhaSachNhaNamEntities1 db1 = new dbQuanlyBanHangNhaSachNhaNamEntities1();
+        dbQuanlyBanHangNhaSachNhaNamEntities db = new dbQuanlyBanHangNhaSachNhaNamEntities();
 
         public ActionResult Index()
         {
@@ -24,11 +24,11 @@ namespace BTL_NMCNPM_SE.G19_QLNSNhaNam.Controllers
         [HttpPost]
         public ActionResult Login(tblTaiKhoan user)
         {
-            var userCheck = db1.tblTaiKhoans.SingleOrDefault(m => m.sMaNV.Equals(user.sMaNV) && m.sMatkhau.Equals(user.sMatkhau));
+            var userCheck = db.tblTaiKhoans.SingleOrDefault(m => m.sMaNV.Equals(user.sMaNV) && m.sMatkhau.Equals(user.sMatkhau));
 
             if (ModelState.IsValid)
             {
-                var userNV = db1.tblNhanViens.SingleOrDefault(x => x.sMaNV == user.sMaNV && x.bTrangthai.ToString().Equals("False"));
+                var userNV = db.tblNhanViens.SingleOrDefault(x => x.sMaNV == user.sMaNV && x.bTrangthai.ToString().Equals("False"));
                 if (userNV != null) { ViewBag.NhanVien = "Tài khoản của bạn đã bị khóa"; return View(); }
                 else
                 {
